@@ -4843,8 +4843,22 @@ class PlayState extends MusicBeatState
 		
 		if(instakillOnMiss)
 		{
-			vocals.volume = 0;
+			if(daNote.noteType != 'Restart PC Note')
+				vocals.volume = 0;
+
 			doDeathCheck(true);
+		}
+
+		if(!daNote.noMissAnimation)
+		{
+			switch(daNote.noteType) {
+				case 'Restart PC Note': //used for rsod
+				 	camOther.flash(FlxColor.BLACK, 4.5, null, true);
+					camHUD.shake(0.0055, 0.35);
+					FlxG.camera.flash(FlxColor.BLACK, 1, null, true);
+					health -= 1;
+					if(allowHUDcamToZoom) camHUD.zoom = 1.1; // no += cuz it would mess with doubles ones
+			}
 		}
 
 		//For testing purposes
@@ -5019,6 +5033,16 @@ class PlayState extends MusicBeatState
 					note.destroy();
 				}
 				return;
+			}
+
+			if(!note.noMissAnimation)
+			{
+				switch(note.noteType) {
+					case 'Restart PC Note': //used for rsod
+						camHUD.shake(0.0055, 0.35);
+						if(allowHUDcamToZoom) camHUD.zoom = 1.115;
+						if(allowGamecamToZoom && !doingSMzoom) FlxG.camera.zoom += 0.055;
+				}
 			}
 
 			if (!note.isSustainNote)
