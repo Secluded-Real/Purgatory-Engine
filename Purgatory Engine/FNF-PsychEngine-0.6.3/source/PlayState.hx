@@ -1077,8 +1077,12 @@ class PlayState extends MusicBeatState
 		add(timeTxt);
 		timeBarBG.sprTracker = timeBar;
 
+		altStrumLine = new FlxSprite(0, 0);
+
 		strumLineNotes = new FlxTypedGroup<StrumNote>();
 		add(strumLineNotes);
+		altStrumLineNotes = new FlxTypedGroup<StrumNote>();
+		add(altStrumLineNotes);
 		add(grpNoteSplashes);
 
 		if(ClientPrefs.timeBarType == 'Song Name')
@@ -1093,6 +1097,7 @@ class PlayState extends MusicBeatState
 
 		opponentStrums = new FlxTypedGroup<StrumNote>();
 		playerStrums = new FlxTypedGroup<StrumNote>();
+		altStrums = new FlxTypedGroup<StrumNote>();
 
 		// startCountdown();
 
