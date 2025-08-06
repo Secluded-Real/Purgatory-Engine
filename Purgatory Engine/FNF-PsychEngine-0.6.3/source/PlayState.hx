@@ -353,6 +353,13 @@ class PlayState extends MusicBeatState
 	private var keysArray:Array<Dynamic>;
 	private var controlArray:Array<String>;
 
+	// shit that messes with the camera (mostly for like events like eyesores) //
+	private var shakeCam:Bool = false;
+	private var glitchCam:Bool = false;
+	var camZoomSnap:Bool = false;
+	var camTilt:Bool = false;
+	var goofyZoom:Bool = false;
+
 	var precacheList:Map<String, String> = new Map<String, String>();
 	
 	// stores the last judgement object
@@ -958,6 +965,21 @@ class PlayState extends MusicBeatState
 		if(doPush)
 			luaArray.push(new FunkinLua(luaFile));
 		#end
+
+		if (ClientPrefs.shaders)
+		{
+			screenshader = new PulseEffect();
+			screenshader.waveAmplitude = 1;
+	        screenshader.waveFrequency = 2;
+	        screenshader.waveSpeed = 1;
+	        screenshader.shader.uTime.value[0] = new flixel.math.FlxRandom().float(-100000, 100000);
+
+	        FlxG.camera.setFilters([new ShaderFilter(screenshader.shader)]); 
+
+			glitchShader = new BlockedGlitchEffect();
+	        camHUD.setFilters([new ShaderFilter(glitchShader.shader)]); 
+    	}
+
 
 		var gfVersion:String = SONG.gfVersion;
 		if(gfVersion == null || gfVersion.length < 1)
@@ -2623,6 +2645,12 @@ class PlayState extends MusicBeatState
 
 				swagNote.scrollFactor.set();
 
+				if (swagNote.noteType == 'Alt Strum') {
+					swagNote.scrollFactor.set(1.25,1.25);
+					swagNote.cameras = [camGame];
+					swagNote.mustPress = false; // since you're probably only gonna use it for the opponent
+				}
+
 				var susLength:Float = swagNote.sustainLength;
 
 				susLength = susLength / Conductor.stepCrochet;
@@ -2639,6 +2667,11 @@ class PlayState extends MusicBeatState
 						sustainNote.gfNote = (section.gfSection && (songNotes[1]<4));
 						sustainNote.noteType = swagNote.noteType;
 						sustainNote.scrollFactor.set();
+						if (sustainNote.noteType == 'Alt Strum') {
+							sustainNote.scrollFactor.set(1.25,1.25);
+							sustainNote.cameras = [camGame];
+							sustainNote.mustPress = false; // since you're probably only gonna use it for the opponent
+						}
 						swagNote.tail.push(sustainNote);
 						sustainNote.parent = swagNote;
 						unspawnNotes.push(sustainNote);
@@ -3980,6 +4013,20 @@ class PlayState extends MusicBeatState
 					});
 				}
 
+			case 'Toggle Blocked Glitch':
+				var newvariable:Int = Std.parseInt(value1);
+				switch (newvariable)
+				{
+                    case 0:
+						glitchCam = false;
+						defaultCamZoom -= 0.1;
+						//FlxTween.tween(blackScreendeez, {alpha: 0}, Conductor.stepCrochet / 500);
+					case 1: 
+						glitchCam = true;
+						defaultCamZoom += 0.1;
+						//FlxTween.tween(blackScreendeez, {alpha: 0.35}, Conductor.stepCrochet / 500);
+				}
+				
 			case 'Show/Hide Alt Strumlines':
 				var iCame:Int = Std.parseInt(value1);
 				switch (iCame)
