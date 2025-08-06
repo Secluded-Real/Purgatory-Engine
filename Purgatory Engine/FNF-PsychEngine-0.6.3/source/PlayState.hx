@@ -3227,6 +3227,21 @@ class PlayState extends MusicBeatState
 			botplayTxt.alpha = 1 - Math.sin((Math.PI * botplaySine) / 180);
 		}
 
+		if(ClientPrefs.shaders)
+		{
+			screenshader.shader.uTime.value[0] += elapsed;
+			if (shakeCam && eyesoreson) {
+				screenshader.shader.uampmul.value[0] = 1;
+			} else {
+				screenshader.shader.uampmul.value[0] -= (elapsed / 2);
+			}
+			screenshader.Enabled = shakeCam && eyesoreson;
+
+			glitchShader.update(elapsed);
+			glitchShader.set_Enabled(glitchCam);
+		}
+
+
 		if (controls.PAUSE && startedCountdown && canPause)
 		{
 			var ret:Dynamic = callOnLuas('onPause', [], false);
