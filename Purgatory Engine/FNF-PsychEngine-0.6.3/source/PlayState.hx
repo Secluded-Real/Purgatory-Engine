@@ -288,6 +288,8 @@ class PlayState extends MusicBeatState
 	var timeTxt:FlxText;
 	var scoreTxtTween:FlxTween;
 
+	var notesHitArray:Array<Date> = []; // for the NPS code
+
 	// FlxSprite but not a sprite //
 	var composersBG:FlxSprite;
 
@@ -1068,7 +1070,7 @@ class PlayState extends MusicBeatState
 		timeTxt.setFormat(Paths.font("Comic Sans MS Bold.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeTxt.scrollFactor.set();
 		timeTxt.alpha = 0;
-		timeTxt.borderSize = 2;
+		timeTxt.borderSize = 1.25;
 		timeTxt.visible = showTime;
 		if(ClientPrefs.downScroll) timeTxt.y = FlxG.height - 44;
 
@@ -2377,10 +2379,13 @@ class PlayState extends MusicBeatState
 
 	public function updateScore(miss:Bool = false)
 	{
-		scoreTxt.text = 'Score: ' + songScore
-		+ ' | Combo Breaks: ' + songMisses
-		+ ' | Accuracy: ' + ratingName
-		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
+		scoreTxt.text =  'NPS: ' + nps
+			+ ' (Max ' + maxNPS + ')' 
+			+ ' | ' + 'Score: ' + songScore 
+			+ ' | Combo Breaks: ' + songMisses 
+			+ ' | Accuracy: ' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%' 
+			+ ' | '
+			+ (ratingName != '?' ? '($ratingFC) ' + ratingName : 'N/A');
 
 		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
 		{
@@ -3127,6 +3132,20 @@ class PlayState extends MusicBeatState
 
 		setOnLuas('curDecStep', curDecStep);
 		setOnLuas('curDecBeat', curDecBeat);
+
+		var balls = notesHitArray.length - 1;
+			while (balls >= 0)
+			{
+				var cock:Date = notesHitArray[balls];
+				if (cock != null && cock.getTime() + 1000 < Date.now().getTime())
+					notesHitArray.remove(cock);
+				else
+					balls = 0;
+				balls--;
+			}
+			nps = notesHitArray.length;
+			if (nps > maxNPS)
+				maxNPS = nps;
 
 		if(botplayTxt.visible) {
 			botplaySine += 180 * elapsed;
@@ -4805,6 +4824,8 @@ class PlayState extends MusicBeatState
 		}
 	}
 
+	var nps:Int = 0;
+	var maxNPS:Int = 0;
 	function goodNoteHit(note:Note):Void
 	{
 		if (!note.wasGoodHit)
