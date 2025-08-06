@@ -1121,7 +1121,7 @@ class PlayState extends MusicBeatState
 		FlxG.fixedTimestep = false;
 		moveCameraSection();
 
-		healthBarBG = new AttachedSprite('healthBar');
+		healthBarBG = new AttachedSprite('healthBarNew');
 		healthBarBG.y = FlxG.height * 0.89;
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
@@ -1139,6 +1139,17 @@ class PlayState extends MusicBeatState
 		healthBar.alpha = ClientPrefs.healthBarAlpha;
 		add(healthBar);
 		healthBarBG.sprTracker = healthBar;
+
+		healthBarOverlay = new AttachedSprite('healthBarOverlay');
+		healthBarOverlay.screenCenter(X);
+		healthBarOverlay.scrollFactor.set();
+		healthBarOverlay.visible = !ClientPrefs.hideHud;
+        	healthBarOverlay.color = FlxColor.BLACK;
+		healthBarOverlay.blend = MULTIPLY;
+		healthBarOverlay.xAdd = -4;
+		healthBarOverlay.yAdd = -4;
+		add(healthBarOverlay);
+		healthBarOverlay.sprTracker = healthBar;
 
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
 		iconP1.y = healthBar.y - 75;
