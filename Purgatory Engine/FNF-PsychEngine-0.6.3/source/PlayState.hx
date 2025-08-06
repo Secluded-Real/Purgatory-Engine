@@ -1210,7 +1210,7 @@ class PlayState extends MusicBeatState
 		if(chartingMode)
 			songinfoBar.text += ' [CHARTING MODE]';
 		songinfoBar.scrollFactor.set();
-		if (ClientPrefs.songinfoBar != 'Disabled') {
+		if (ClientPrefs.songinfoBar == true) {
 			add(songinfoBar);
 		}
 
