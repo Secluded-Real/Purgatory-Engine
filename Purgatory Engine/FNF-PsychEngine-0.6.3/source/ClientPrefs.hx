@@ -32,6 +32,10 @@ class ClientPrefs {
 	public static var hitsoundVolume:Float = 0;
 	public static var pauseMusic:String = 'Tea Time';
 	public static var checkForUpdates:Bool = true;
+	// CUSTOM SETTINGS START HERE
+	public static var judgementCounter:String = 'Disabled';
+	public static var follownote:Bool = false;
+	// ENDS HERE
 	public static var comboStacking = true;
 	public static var gameplaySettings:Map<String, Dynamic> = [
 		'scrollspeed' => 1.0,
@@ -129,6 +133,10 @@ class ClientPrefs {
 		FlxG.save.data.hitsoundVolume = hitsoundVolume;
 		FlxG.save.data.pauseMusic = pauseMusic;
 		FlxG.save.data.checkForUpdates = checkForUpdates;
+		// CUSTOM SETTINGS START HERE
+		FlxG.save.data.judgementCounter = judgementCounter;
+		FlxG.save.data.follownote = follownote;
+		// ENDS HERE
 		FlxG.save.data.comboStacking = comboStacking;
 	
 		FlxG.save.flush();
