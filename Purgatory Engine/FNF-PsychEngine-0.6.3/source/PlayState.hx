@@ -1078,7 +1078,7 @@ class PlayState extends MusicBeatState
 		}
 		updateTime = showTime;
 
-		timeBarBG = new AttachedSprite('timeBar');
+		timeBarBG = new AttachedSprite('healthBarNew');
 		timeBarBG.x = timeTxt.x;
 		timeBarBG.y = timeTxt.y + (timeTxt.height / 4);
 		timeBarBG.scrollFactor.set();
@@ -1096,7 +1096,7 @@ class PlayState extends MusicBeatState
 		timeBar.numDivisions = 800; //How much lag this causes?? Should i tone it down to idk, 400 or 200?
 		timeBar.alpha = 0;
 		timeBar.visible = showTime;
-		add(timeBar);
+		insert(members.indexOf(timeBarBG), timeBar);
 		add(timeTxt);
 		timeBarBG.sprTracker = timeBar;
 
@@ -1567,7 +1567,9 @@ class PlayState extends MusicBeatState
 		healthBar.createFilledBar(FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]),
 			FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]));
 
+		timeBar.createFilledBar(0xFF121212, FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]));
 		healthBar.updateBar();
+		timeBar.updateBar();
 	}
 
 	public function addCharacterToList(newCharacter:String, type:Int) {
@@ -1603,7 +1605,7 @@ class PlayState extends MusicBeatState
 					startCharacterLua(newGf.curCharacter);
 				}
 				
-				case 3:
+			case 3:
 				if(!player3Map.exists(newCharacter)) {
 					var newPlayer3:Character = new Character(0, 0, newCharacter);
 					player3Map.set(newCharacter, newPlayer3);
