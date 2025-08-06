@@ -35,6 +35,7 @@ class ClientPrefs {
 	// CUSTOM SETTINGS START HERE
 	public static var judgementCounter:String = 'Disabled';
 	public static var follownote:Bool = false;
+	public static var songinfoBar:Bool = false;
 	// ENDS HERE
 	public static var comboStacking = true;
 	public static var gameplaySettings:Map<String, Dynamic> = [
