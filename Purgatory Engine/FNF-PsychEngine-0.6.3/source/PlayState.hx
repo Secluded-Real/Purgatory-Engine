@@ -266,6 +266,8 @@ class PlayState extends MusicBeatState
 	var santa:BGSprite;
 	var heyTimer:Float;
 
+	var blackScreendeez:FlxSprite;
+
 	var bgGirls:BackgroundGirls;
 	var wiggleShit:WiggleEffect = new WiggleEffect();
 	var bgGhouls:BGSprite;
@@ -429,6 +431,11 @@ class PlayState extends MusicBeatState
 
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
+
+		blackScreendeez = new FlxSprite(-120, -120).makeGraphic(Std.int(FlxG.width * 100), Std.int(FlxG.height * 150), FlxColor.BLACK);
+		blackScreendeez.scrollFactor.set();
+		blackScreendeez.alpha = 0;
+		add(blackScreendeez);
 
 		#if desktop
 		storyDifficultyText = CoolUtil.difficulties[storyDifficulty];
@@ -1197,6 +1204,7 @@ class PlayState extends MusicBeatState
 			botplayTxt.y = timeBarBG.y - 78;
 		}
 
+		blackScreendeez.cameras = [camHUD];
 		strumLineNotes.cameras = [camHUD];
 		grpNoteSplashes.cameras = [camHUD];
 		notes.cameras = [camHUD];
@@ -2338,7 +2346,7 @@ class PlayState extends MusicBeatState
 	{
 		scoreTxt.text = 'Score: ' + songScore
 		+ ' | Combo Breaks: ' + songMisses
-		+ ' | Rating: ' + ratingName
+		+ ' | Accuracy: ' + ratingName
 		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
 
 		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
@@ -3838,6 +3846,15 @@ class PlayState extends MusicBeatState
 					FunkinLua.setVarInArray(FunkinLua.getPropertyLoopThingWhatever(killMe, true, true), killMe[killMe.length-1], value2);
 				} else {
 					FunkinLua.setVarInArray(this, value1, value2);
+				}
+				case 'Slightly transparent Black Screen' | 'Thunderstorm type black screen': // ig u could say its for backwards compatibility??
+				var ballsId:Int = Std.parseInt(value1);
+				switch (ballsId)
+				{
+					case 0: 
+						FlxTween.tween(blackScreendeez, {alpha: 0}, Conductor.stepCrochet / 500);
+			     	case 1:
+						FlxTween.tween(blackScreendeez, {alpha: 0.35}, Conductor.stepCrochet / 500);
 				}
 		}
 		callOnLuas('onEvent', [eventName, value1, value2]);
