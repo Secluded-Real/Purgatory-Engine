@@ -83,16 +83,23 @@ class PlayState extends MusicBeatState
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
 	public static var ratingStuff:Array<Dynamic> = [
-		['You Suck!', 0.2], //From 0% to 19%
-		['Shit', 0.4], //From 20% to 39%
-		['Bad', 0.5], //From 40% to 49%
-		['Bruh', 0.6], //From 50% to 59%
-		['Meh', 0.69], //From 60% to 68%
-		['Nice', 0.7], //69%
-		['Good', 0.8], //From 70% to 79%
-		['Great', 0.9], //From 80% to 89%
-		['Sick!', 1], //From 90% to 99%
-		['Perfect!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
+		['D', 0.6], //From 0% to 59%
+		['C', 0.7], //From 60% to 69%
+		['B', 0.8], //From 70% to 79%
+		['A', 0.85], //From 80% to 84%
+		['A.', 0.9], //From 85% to 89%
+		['A:', 0.93], //From 90% to 92%
+		['AA', 0.9650], //From 93% to 96.49%
+		['AA.', 0.99], //From 96.50% to 98%
+		['AA:', 0.9970], //from 99 to 99.69%
+		['AAA', 0.9980], //From 99.70% to 99.79%
+		['AAA.', 0.9990], //From 99.80 to 99.89%
+		['AAA:', 0.99955], //From 99.90% to 99.954%
+		['AAAA', 0.99970], //From 99.954% to 99.969%
+		['AAAA.', 0.99980], //From 99.970% to 99.979%
+		['AAAA:', 0.999935], //From 99.80% to 99.9934%
+		['AAAAA', 1], //from 99.9935 to 100%
+		['AAAAA', 1] //The value on this one isn't used actually, since Perfect is always "1" // your m
 	];
 
 	//event variables
@@ -1056,7 +1063,7 @@ class PlayState extends MusicBeatState
 		timeBar = new FlxBar(timeBarBG.x + 4, timeBarBG.y + 4, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 8), Std.int(timeBarBG.height - 8), this,
 			'songPercent', 0, 1);
 		timeBar.scrollFactor.set();
-		timeBar.createFilledBar(0xFF000000, 0xFFFFFFFF);
+		//timeBar.createFilledBar(0xFF000000, 0xFFFFFFFF);
 		timeBar.numDivisions = 800; //How much lag this causes?? Should i tone it down to idk, 400 or 200?
 		timeBar.alpha = 0;
 		timeBar.visible = showTime;
