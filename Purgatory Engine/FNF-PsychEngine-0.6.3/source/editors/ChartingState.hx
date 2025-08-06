@@ -68,6 +68,7 @@ class ChartingState extends MusicBeatState
 		'Hurt Note',
 		'GF Sing',
 		'No Animation',
+		'Restart PC Note',
 		'Alt Strum'
 	];
 	private var noteTypeIntMap:Map<Int, String> = new Map<Int, String>();
@@ -93,6 +94,7 @@ class ChartingState extends MusicBeatState
 		['Change Character', "Value 1: Character to change (Dad, BF, GF, Player3)\nValue 2: New character's name"],
 		['Change Scroll Speed', "Value 1: Scroll Speed Multiplier (1 is default)\nValue 2: Time it takes to change fully in seconds."],
 		['Set Property', "Value 1: Variable name\nValue 2: New value"],
+		['Toggle Eyesores', "Toggle on or off the eyesores like on polygonized glitch and furiosity\n(On value 1: 0 = off | 1 = on)"],
 		['Toggle Blocked Glitch', "Toggles the glitch effect as seen in blocked\n(On value 1: 0 = off | 1 = on)"],
 		['Show/Hide Alt Strumlines', "Shows or hides the alt strumlines\n(On value 1: 0 = off | 1 = on)"],
 		['Move Alt Strumlines', "Changes the position of the alt strumlines\nOn value 1: x, y (ex. 100,80)"],

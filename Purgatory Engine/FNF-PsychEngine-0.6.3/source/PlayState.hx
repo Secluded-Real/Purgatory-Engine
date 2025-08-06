@@ -3592,6 +3592,10 @@ class PlayState extends MusicBeatState
 				boyfriend.stunned = true;
 				deathCounter++;
 
+				shakeCam = false;
+				if (ClientPrefs.shaders)
+					screenshader.Enabled = false;
+
 				paused = true;
 
 				vocals.stop();
@@ -4030,6 +4034,16 @@ class PlayState extends MusicBeatState
 							songSpeedTween = null;
 						}
 					});
+				}
+
+			case 'Toggle Eyesores':
+				var a1000YOMAMAjokesCanYouWatchThemAllquestionmarkId:Int = Std.parseInt(value1);
+				switch (a1000YOMAMAjokesCanYouWatchThemAllquestionmarkId)
+				{
+                    case 0:
+						shakeCam = false;
+					case 1: 
+						shakeCam = true;
 				}
 
 			case 'Toggle Blocked Glitch':
