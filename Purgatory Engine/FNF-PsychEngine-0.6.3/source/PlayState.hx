@@ -3297,7 +3297,7 @@ class PlayState extends MusicBeatState
 			{
 				var fakeCrochet:Float = (60 / SONG.bpm) * 1000;
 				notes.forEachAlive(function(daNote:Note)
-			{
+				{
 				var strumGroup:FlxTypedGroup<StrumNote> = playerStrums;
 				if(!daNote.mustPress) {
 					strumGroup = opponentStrums;
@@ -4710,9 +4710,6 @@ class PlayState extends MusicBeatState
 		if(daNote.gfNote) {
 			char = gf;
 		}
-		if(daNote.altStrum) {
-			char = player3;
-		}
 
 		if(char != null && !daNote.noMissAnimation && char.hasMissAnimations)
 		{
@@ -4792,6 +4789,9 @@ class PlayState extends MusicBeatState
 			var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))] + altAnim;
 			if(note.gfNote) {
 				char = gf;
+			}
+			if(daNote.altStrum) {
+			char = player3;
 			}
 
 			if(char != null)

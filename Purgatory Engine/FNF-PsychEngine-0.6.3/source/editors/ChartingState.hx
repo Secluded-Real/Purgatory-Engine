@@ -546,10 +546,10 @@ class ChartingState extends MusicBeatState
 		gfVersionDropDown.selectedLabel = _song.gfVersion;
 		blockPressWhileScrolling.push(gfVersionDropDown);
 
-		var text:FlxText = new FlxText(player1DropDown.x + 140, gfVersionDropDown.y + 40, 0, "Song Credit:");
-		tab_group_event.add(text);
-		songCreditInputText = new FlxUIInputText(player1DropDown.x + 140, gfVersionDropDown.y - 40, 100, "");
-		blockPressWhileTypingOn.push(songCreditInputText);
+		//var text:FlxText = new FlxText(player1DropDown.x + 140, gfVersionDropDown.y + 40, 0, "Song Credit:");
+		//tab_group_event.add(text);
+		//songCreditInputText = new FlxUIInputText(player1DropDown.x + 140, gfVersionDropDown.y - 40, 100, "");
+		//blockPressWhileTypingOn.push(songCreditInputText);
 
 		var player2DropDown = new FlxUIDropDownMenuCustom(player1DropDown.x, gfVersionDropDown.y + 40, FlxUIDropDownMenuCustom.makeStrIdLabelArray(characters, true), function(character:String)
 		{
