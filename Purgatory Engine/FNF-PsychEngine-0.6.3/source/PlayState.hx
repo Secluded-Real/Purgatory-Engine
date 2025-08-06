@@ -2865,7 +2865,6 @@ class PlayState extends MusicBeatState
 			}
 
 			babyArrow.downScroll = ClientPrefs.downScroll;
-
 			if (player < 2) {
 				if (!skipArrowStartTween)
 				{
@@ -2908,6 +2907,7 @@ class PlayState extends MusicBeatState
 			{
 				strumLineNotes.add(babyArrow);
 			}
+			
 			babyArrow.postAddedToGroup();
 		}
 	}
