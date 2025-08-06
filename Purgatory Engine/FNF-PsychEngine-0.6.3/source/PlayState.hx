@@ -300,6 +300,8 @@ class PlayState extends MusicBeatState
 
 	var notesHitArray:Array<Date> = []; // for the NPS code
 
+	public static var eyesoreson = true;
+
 	// FlxSprite but not a sprite //
 	var composersBG:FlxSprite;
 
@@ -373,6 +375,8 @@ class PlayState extends MusicBeatState
 	{
 		//trace('Playback Rate: ' + playbackRate);
 		Paths.clearStoredMemory();
+
+		eyesoreson = ClientPrefs.flashing;
 
 		// for lua
 		instance = this;
