@@ -64,6 +64,9 @@ import Conductor.Rating;
 #if !flash 
 import flixel.addons.display.FlxRuntimeShader;
 import openfl.filters.ShaderFilter;
+import Shaders.PulseEffect;
+import Shaders.BlockedGlitchEffect;
+import Shaders;
 #end
 
 #if sys
@@ -156,6 +159,10 @@ class PlayState extends MusicBeatState
 	public static var storyWeek:Int = 0;
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 1;
+
+	// shader shit
+	public var screenshader:PulseEffect;
+	public var glitchShader:BlockedGlitchEffect;
 
 	public var spawnTime:Float = 2000;
 
@@ -4711,6 +4718,34 @@ class PlayState extends MusicBeatState
 		return ret;
 	}
 
+	function cameraMoveOnNote(note:Int, character:String)
+	{
+		var amount:Array<Float> = new Array<Float>();
+		var followAmount:Float = ClientPrefs.follownote ? 20 : 0;
+		switch (note)
+		{
+			case 0:
+				amount[0] = -followAmount;
+				amount[1] = 0;
+			case 1:
+				amount[0] = 0;
+				amount[1] = followAmount;
+			case 2:
+				amount[0] = 0;
+				amount[1] = -followAmount;
+			case 3:
+				amount[0] = followAmount;
+				amount[1] = 0;
+		}
+		switch (character)
+		{
+			case 'dad':
+				dadNoteCamOffset = amount;
+			case 'bf':
+				bfNoteCamOffset = amount;
+		}
+	}
+
 	function noteMiss(daNote:Note):Void { //You didn't hit the key and let it go offscreen, also used by Hurt Notes
 		//Dupe note remove
 		notes.forEachAlive(function(note:Note) {
@@ -4854,6 +4889,8 @@ class PlayState extends MusicBeatState
 			notes.remove(note, true);
 			note.destroy();
 		}
+
+		if (!note.altStrum) cameraMoveOnNote(note.noteData, 'dad');
 	}
 
 	var nps:Int = 0;
@@ -4939,6 +4976,7 @@ class PlayState extends MusicBeatState
 						gf.heyTimer = 0.6;
 					}
 				}
+				cameraMoveOnNote(note.noteData, 'bf');
 			}
 
 			if(cpuControlled) {
