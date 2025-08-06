@@ -4633,7 +4633,7 @@ class PlayState extends MusicBeatState
 		if(daNote.gfNote) {
 			char = gf;
 		}
-		if(note.altStrum) {
+		if(daNote.altStrum) {
 			char = player3;
 		}
 
