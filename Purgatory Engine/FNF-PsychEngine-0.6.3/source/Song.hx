@@ -20,11 +20,13 @@ typedef SwagSong =
 	var bpm:Float;
 	var needsVoices:Bool;
 	var speed:Float;
+	var songCredit:String;
 
 	var player1:String;
 	var player2:String;
 	var gfVersion:String;
 	var stage:String;
+	var player3:String;
 
 	var arrowSkin:String;
 	var splashSkin:String;
@@ -44,6 +46,8 @@ class Song
 	public var stage:String;
 	public var player1:String = 'bf';
 	public var player2:String = 'dad';
+	public var player3:String = 'dad';
+	public var songCredit:String = 'Unknown!';
 	public var gfVersion:String = 'gf';
 
 	private static function onLoadJson(songJson:Dynamic) // Convert old charts to newest format
