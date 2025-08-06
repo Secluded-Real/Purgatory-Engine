@@ -2172,6 +2172,11 @@ class PlayState extends MusicBeatState
 				setOnLuas('defaultOpponentStrumY' + i, opponentStrums.members[i].y);
 				//if(ClientPrefs.middleScroll) opponentStrums.members[i].visible = false;
 			}
+			for (i in 0...altStrums.length) {
+				setOnLuas('defaultAltStrumX' + i, altStrums.members[i].x);
+				setOnLuas('defaultAltStrumY' + i, altStrums.members[i].y);
+				//if(ClientPrefs.middleScroll) opponentStrums.members[i].visible = false;
+			}
 
 			startedCountdown = true;
 			Conductor.songPosition = -Conductor.crochet * 5;
@@ -2767,23 +2772,38 @@ class PlayState extends MusicBeatState
 				if(!ClientPrefs.opponentStrums) targetAlpha = 0;
 				else if(ClientPrefs.middleScroll) targetAlpha = 0.35;
 			}
-
-			var babyArrow:StrumNote = new StrumNote(ClientPrefs.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, strumLine.y, i, player);
-			babyArrow.downScroll = ClientPrefs.downScroll;
-			if (!isStoryMode && !skipArrowStartTween)
-			{
-				//babyArrow.y -= 10;
+			var babyArrow:StrumNote;
+			if (player < 2)
+				babyArrow = new StrumNote(ClientPrefs.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, strumLine.y, i, player);
+			else {
+				babyArrow = new StrumNote(altStrumLine.x, altStrumLine.y, i, 0);
+				babyArrow.scrollFactor.set(1.5,1.5);
 				babyArrow.alpha = 0;
-				FlxTween.tween(babyArrow, {/*y: babyArrow.y + 10,*/ alpha: targetAlpha}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
 			}
-			else
-			{
-				babyArrow.alpha = targetAlpha;
-			}
+
+			babyArrow.downScroll = ClientPrefs.downScroll;
+
+			if (player < 2) {
+				if (!skipArrowStartTween)
+				{
+					babyArrow.y -= 10;
+					babyArrow.alpha = 0;
+					FlxTween.tween(babyArrow, {y: babyArrow.y + 10, alpha: targetAlpha}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + assDelayy + (0.2 * i)});
+				}
+				else
+				{
+					babyArrow.alpha = targetAlpha;
+				}
+			} else
+				babyArrow.alpha = 0;
 
 			if (player == 1)
 			{
 				playerStrums.add(babyArrow);
+			}
+			else if (player == 2)
+			{
+				altStrums.add(babyArrow);
 			}
 			else
 			{
@@ -2797,7 +2817,14 @@ class PlayState extends MusicBeatState
 				opponentStrums.add(babyArrow);
 			}
 
-			strumLineNotes.add(babyArrow);
+			if (player == 2)
+			{
+				altStrumLineNotes.add(babyArrow);
+			}
+			else
+			{
+				strumLineNotes.add(babyArrow);
+			}
 			babyArrow.postAddedToGroup();
 		}
 	}
@@ -3250,7 +3277,13 @@ class PlayState extends MusicBeatState
 				notes.forEachAlive(function(daNote:Note)
 				{
 					var strumGroup:FlxTypedGroup<StrumNote> = playerStrums;
-					if(!daNote.mustPress) strumGroup = opponentStrums;
+					if(!daNote.mustPress) {
+					strumGroup = opponentStrums;
+					if(daNote.altStrum) {
+						strumGroup = altStrums;
+						daNote.scrollFactor.set(1.5, 1.5);
+					}
+					}
 
 					var strumX:Float = strumGroup.members[daNote.noteData].x;
 					var strumY:Float = strumGroup.members[daNote.noteData].y;
@@ -3882,6 +3915,28 @@ class PlayState extends MusicBeatState
 						}
 					});
 				}
+
+			case 'Show/Hide Alt Strumlines':
+				var iCame:Int = Std.parseInt(value1);
+				switch (iCame)
+				{
+                    case 0:
+						altStrums.forEach(function(spr:StrumNote){
+							FlxTween.tween(spr, {alpha: 0}, 1, {ease: FlxEase.circOut, startDelay: 0 + (0.1 * spr.ID)});
+						});
+					case 1: 
+						altStrums.forEach(function(spr:StrumNote){
+							FlxTween.tween(spr, {alpha: 1}, 1, {ease: FlxEase.circOut, startDelay: 0 + (0.1 * spr.ID)});
+						});
+				}
+			case 'Move Alt Strumlines':
+				var split:Array<String> = value1.split(',');
+
+				altStrums.forEach(function(spr:StrumNote){
+					spr.x = Std.parseInt(split[0]);
+					spr.y = Std.parseInt(split[1]);
+					spr.postAddedToGroup();
+				});
 
 			case 'Set Property':
 				var killMe:Array<String> = value1.split('.');
@@ -4731,7 +4786,10 @@ class PlayState extends MusicBeatState
 		if(note.isSustainNote && !note.animation.curAnim.name.endsWith('end')) {
 			time += 0.15;
 		}
-		StrumPlayAnim(true, Std.int(Math.abs(note.noteData)), time);
+		if(!note.altStrum)
+			StrumPlayAnim(true, Std.int(Math.abs(note.noteData)), time);
+		else
+			StrumPlayAnim(true, Std.int(Math.abs(note.noteData)), time, true);
 		note.hitByOpponent = true;
 
 		callOnLuas('opponentNoteHit', [notes.members.indexOf(note), Math.abs(note.noteData), note.noteType, note.isSustainNote]);
@@ -5279,7 +5337,10 @@ class PlayState extends MusicBeatState
 	function StrumPlayAnim(isDad:Bool, id:Int, time:Float) {
 		var spr:StrumNote = null;
 		if(isDad) {
-			spr = strumLineNotes.members[id];
+			if (!isAlt)
+				spr = strumLineNotes.members[id];
+			else
+				spr = altStrumLineNotes.members[id];
 		} else {
 			spr = playerStrums.members[id];
 		}
