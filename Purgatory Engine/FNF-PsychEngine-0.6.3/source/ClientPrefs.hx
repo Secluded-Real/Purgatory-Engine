@@ -136,6 +136,7 @@ class ClientPrefs {
 		// CUSTOM SETTINGS START HERE
 		FlxG.save.data.judgementCounter = judgementCounter;
 		FlxG.save.data.follownote = follownote;
+		FlxG.save.data.songinfoBar = songinfoBar;
 		// ENDS HERE
 		FlxG.save.data.comboStacking = comboStacking;
 	

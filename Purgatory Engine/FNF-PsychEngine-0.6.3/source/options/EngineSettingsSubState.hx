@@ -41,6 +41,13 @@ class EngineSettingsSubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+        var option:Option = new Option('Song Name',
+			"If checked, it will show the name of the song in the bottom left corner.",
+			'songinfoBar',
+			'bool',
+			true);
+		addOption(option);
+
 		var option:Option = new Option('Judgement Counter:',
 			"Shows a judgement counter at the left of the screen (Example: Sicks: 93,\nGoods:0, Bads: 1, 'Shits: 0)",
 			'judgementCounter',

@@ -294,6 +294,7 @@ class PlayState extends MusicBeatState
 	var composersBG:FlxSprite;
 
 	// PurgE Texts //
+	var songinfoBar:FlxText;
 	var composersText:FlxText;
 	var judgementCounter:FlxText;
 
@@ -1201,6 +1202,17 @@ class PlayState extends MusicBeatState
 		iconP2.alpha = ClientPrefs.healthBarAlpha;
 		add(iconP2);
 		reloadHealthBarColors();
+	
+
+		songinfoBar = new FlxText(5, healthBarBG.y + 50, FlxG.width, SONG.song, 20);
+		songinfoBar.setFormat(Paths.font("comic.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		songinfoBar.borderSize = 1.25;
+		if(chartingMode)
+			songinfoBar.text += ' [CHARTING MODE]';
+		songinfoBar.scrollFactor.set();
+		if (ClientPrefs.songinfoBar != 'Disabled') {
+			add(songinfoBar);
+		}
 
 		scoreTxt = new FlxText(0, healthBarBG.y + 50, FlxG.width, "", 20);
 		scoreTxt.setFormat(Paths.font("Comic Sans MS Bold.ttf"), 17, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -1244,6 +1256,7 @@ class PlayState extends MusicBeatState
 		healthBarBG.cameras = [camHUD];
 		healthBarOverlay.cameras = [camHUD];
 		judgementCounter.cameras = [camHUD];
+		songinfoBar.cameras = [camHUD];
 		iconP1.cameras = [camHUD];
 		iconP2.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
