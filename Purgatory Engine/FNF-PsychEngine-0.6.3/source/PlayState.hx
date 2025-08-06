@@ -4837,6 +4837,11 @@ class PlayState extends MusicBeatState
 				FlxG.sound.play(Paths.sound('hitsound'), ClientPrefs.hitsoundVolume);
 			}
 
+			// add newest note to front of notesHitArray
+	        // the oldest notes are at the end and are removed first
+			if (!note.isSustainNote)
+        		notesHitArray.unshift(Date.now());
+
 			if(note.hitCausesMiss) {
 				noteMiss(note);
 				if(!note.noteSplashDisabled && !note.isSustainNote) {
