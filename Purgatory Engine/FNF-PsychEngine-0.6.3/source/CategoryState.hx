@@ -43,7 +43,7 @@ class CategoryState extends MusicBeatState
 	private var camFollow:FlxObject;
 	private static var prevCamFollow:FlxObject;
 
-	private var AllPossibleSongs:Array<String> = ["main", "extra"];
+	private var AllPossibleSongs:Array<String> = ["story", "extra"];
 
 	private var CurrentPack:Int = 0;
 
@@ -82,15 +82,6 @@ class CategoryState extends MusicBeatState
 			CurrentSongIcon.y = (FlxG.height / 2) - 256;
 			CurrentSongIcon.setGraphicSize(Std.int(CurrentSongIcon.width * 0.7));
 			CurrentSongIcon.antialiasing = true;
-	
-			var NameAlpha:Alphabet = new Alphabet(40, (FlxG.height / 2) - 282, AllPossibleSongs[i], true, false);
-			NameAlpha.x = CurrentSongIcon.x;
-	
-			add(CurrentSongIcon);
-			icons.push(CurrentSongIcon);
-			add(NameAlpha);
-			NameAlpha.alpha = 0; // nobody will know!!!
-			titles.push(NameAlpha);
 		}
 
 		var scale:Float = 1;
@@ -201,23 +192,3 @@ class CategoryState extends MusicBeatState
 
 
 
-class SongMetadata
-{
-	public var songName:String = "";
-	public var week:Int = 0;
-	public var songCharacter:String = "";
-	public var color:Int = -7179779;
-	public var folder:String = "";
-	public var blocked:Bool = false;
-
-	public function new(song:String, week:Int, songCharacter:String, color:Int, blocked:Bool)
-	{
-		this.songName = song;
-		this.week = week;
-		this.songCharacter = songCharacter;
-		this.color = color;
-		this.folder = Paths.currentModDirectory;
-		this.blocked = blocked;
-		if(this.folder == null) this.folder = '';
-	}
-}
