@@ -2760,6 +2760,7 @@ class PlayState extends MusicBeatState
 		return FlxSort.byValues(FlxSort.ASCENDING, Obj1.strumTime, Obj2.strumTime);
 	}
 
+	var assDelayy:Int = 0;
 	public var skipArrowStartTween:Bool = false; //for lua
 	private function generateStaticArrows(player:Int):Void
 	{
@@ -3275,15 +3276,15 @@ class PlayState extends MusicBeatState
 			{
 				var fakeCrochet:Float = (60 / SONG.bpm) * 1000;
 				notes.forEachAlive(function(daNote:Note)
-				{
-					var strumGroup:FlxTypedGroup<StrumNote> = playerStrums;
-					if(!daNote.mustPress) {
+			{
+				var strumGroup:FlxTypedGroup<StrumNote> = playerStrums;
+				if(!daNote.mustPress) {
 					strumGroup = opponentStrums;
 					if(daNote.altStrum) {
 						strumGroup = altStrums;
 						daNote.scrollFactor.set(1.5, 1.5);
 					}
-					}
+				}
 
 					var strumX:Float = strumGroup.members[daNote.noteData].x;
 					var strumY:Float = strumGroup.members[daNote.noteData].y;
@@ -5334,7 +5335,7 @@ class PlayState extends MusicBeatState
 		#end
 	}
 
-	function StrumPlayAnim(isDad:Bool, id:Int, time:Float) {
+	function StrumPlayAnim(isDad:Bool, id:Int, time:Float, isAlt:Bool = false) {
 		var spr:StrumNote = null;
 		if(isDad) {
 			if (!isAlt)
