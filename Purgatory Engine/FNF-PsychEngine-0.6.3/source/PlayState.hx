@@ -210,6 +210,9 @@ class PlayState extends MusicBeatState
 	private var timeBarBG:AttachedSprite;
 	public var timeBar:FlxBar;
 
+	var bfNoteCamOffset:Array<Float> = new Array<Float>();
+	var dadNoteCamOffset:Array<Float> = new Array<Float>();
+
 	public var ratingsData:Array<Rating> = [];
 	public var sicks:Int = 0;
 	public var goods:Int = 0;
