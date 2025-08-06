@@ -221,7 +221,7 @@ class ChartingState extends MusicBeatState
 				splashSkin: 'noteSplashes',//idk it would crash if i didn't
 				player1: 'bf',
 				player2: 'dad',
-				songCredit: 'your mother',
+				//songCredit: 'your mother',
 				gfVersion: 'gf',
 				speed: 1,
 				stage: 'stage',
