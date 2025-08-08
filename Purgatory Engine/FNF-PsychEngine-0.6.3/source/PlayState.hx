@@ -1253,6 +1253,7 @@ class PlayState extends MusicBeatState
 		songinfoBar = new FlxText(5, healthBarBG.y + 50, FlxG.width, SONG.song, 20);
 		songinfoBar.setFormat(Paths.font("comic.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		songinfoBar.borderSize = 1.25;
+		songinfoBar.text += " (" + storyDifficultyText + ")";
 		if(chartingMode)
 			songinfoBar.text += ' [CHARTING MODE]';
 		songinfoBar.scrollFactor.set();
@@ -4566,7 +4567,8 @@ class PlayState extends MusicBeatState
 		for (i in seperatedScore)
 		{
 			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'num' + Std.int(i) + pixelShitPart2));
-			numScore.cameras = [camHUD];
+			if (ClientPrefs.ratingsinHUD)
+				numScore.cameras = [camHUD];
 			numScore.screenCenter();
 			numScore.x = coolText.x + (43 * daLoop) - 90;
 			numScore.y += 80;
