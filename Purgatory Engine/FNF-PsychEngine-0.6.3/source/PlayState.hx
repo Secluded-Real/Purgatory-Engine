@@ -3223,6 +3223,10 @@ class PlayState extends MusicBeatState
 		setOnLuas('curDecStep', curDecStep);
 		setOnLuas('curDecBeat', curDecBeat);
 
+		// follownote fix
+		if (generatedMusic && !endingSong && !isCameraOnForcedPos)
+			moveCameraSection();
+
 		var balls = notesHitArray.length - 1;
 			while (balls >= 0)
 			{
@@ -3351,6 +3355,9 @@ class PlayState extends MusicBeatState
 
 					if(ClientPrefs.timeBarType != 'Song Name')
 						timeTxt.text = FlxStringUtil.formatTime(secondsTotal, false);
+
+					if(ClientPrefs.timeBarType == 'Time Elapsed + Song Name')
+						timeTxt.text = SONG.song + ' (' + FlxStringUtil.formatTime(secondsTotal, false) + " / " +  FlxStringUtil.formatTime(sexLol, false) + ')';
 				}
 			}
 
