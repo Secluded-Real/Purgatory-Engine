@@ -53,7 +53,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			'timeBarType',
 			'string',
 			'Time Left',
-			['Time Left', 'Time Elapsed', 'Song Name', 'Time Elapsed + Song Name', 'Disabled']);
+			['Time Left', 'Time Elapsed', 'Song Name', 'Elapsed + Song Name', 'Disabled']);
 		addOption(option);
 
 		var option:Option = new Option('Flashing Lights',
@@ -73,6 +73,20 @@ class VisualsUISubState extends BaseOptionsMenu
 		var option:Option = new Option('Score Text Zoom on Hit',
 			"If unchecked, disables the Score text zooming\neverytime you hit a note.",
 			'scoreZoom',
+			'bool',
+			true);
+		addOption(option);
+
+		var option:Option = new Option('Health Bar Overlay',
+			"If unchecked, disables the semi-visible lines on\nthe health bar.",
+			'healthOverlay',
+			'bool',
+			true);
+		addOption(option);
+
+		var option:Option = new Option('Rounded Health Bar',
+			"If checked, the health bar becomes rounded, similar\nto Dave and Bambi 3.0.",
+			'roundHealth',
 			'bool',
 			true);
 		addOption(option);
@@ -111,7 +125,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			'pauseMusic',
 			'string',
 			'Tea Time',
-			['None', 'Breakfast', 'Tea Time', 'Dave and Bambi']);
+			['None', 'Breakfast', 'Tea Time', 'DnB']);
 		addOption(option);
 		option.onChange = onChangePauseMusic;
 		

@@ -37,6 +37,8 @@ class ClientPrefs {
 	public static var follownote:Bool = false;
 	public static var songinfoBar:Bool = false;
 	public static var ratingsinHUD:Bool = true;
+	public static var healthOverlay:Bool = true;
+	public static var roundHealth:Bool = true;
 	// ENDS HERE
 	public static var comboStacking = true;
 	public static var gameplaySettings:Map<String, Dynamic> = [
@@ -140,6 +142,8 @@ class ClientPrefs {
 		FlxG.save.data.follownote = follownote;
 		FlxG.save.data.songinfoBar = songinfoBar;
 		FlxG.save.data.ratingsinHUD = ratingsinHUD;
+		FlxG.save.data.healthOverlay = healthOverlay;
+		FlxG.save.data.roundHealth = roundHealth;
 		// ENDS HERE
 		FlxG.save.data.comboStacking = comboStacking;
 	
@@ -280,6 +284,7 @@ class ClientPrefs {
 			comboStacking = FlxG.save.data.comboStacking;
 
 		// modded shit starts here
+
 		if (FlxG.save.data.judgementCounter != null)
 			judgementCounter = FlxG.save.data.judgementCounter;
 
@@ -291,6 +296,12 @@ class ClientPrefs {
 
 		if (FlxG.save.data.ratingsinHUD != null)
 			ratingsinHUD = FlxG.save.data.ratingsinHUD;
+
+		if (FlxG.save.data.healthOverlay != null)
+			healthOverlay = FlxG.save.data.healthOverlay;
+
+		if (FlxG.save.data.roundHealth != null)
+			roundHealth = FlxG.save.data.roundHealth;
 
 		// ends here
 

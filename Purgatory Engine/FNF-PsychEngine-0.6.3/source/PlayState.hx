@@ -1205,7 +1205,12 @@ class PlayState extends MusicBeatState
 		FlxG.fixedTimestep = false;
 		moveCameraSection();
 
-		healthBarBG = new AttachedSprite('healthBarNew');
+		if (ClientPrefs.roundHealth){
+			healthBarBG = new AttachedSprite('healthBarNew');
+		}
+		else{
+			healthBarBG = new AttachedSprite('healthBar');
+		}
 		healthBarBG.y = FlxG.height * 0.89;
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
@@ -1229,11 +1234,12 @@ class PlayState extends MusicBeatState
 		healthBarOverlay.screenCenter(X);
 		healthBarOverlay.scrollFactor.set();
 		healthBarOverlay.visible = !ClientPrefs.hideHud;
-        	healthBarOverlay.color = FlxColor.BLACK;
+        healthBarOverlay.color = FlxColor.BLACK;
 		healthBarOverlay.blend = MULTIPLY;
 		healthBarOverlay.xAdd = -4;
 		healthBarOverlay.yAdd = -4;
-		add(healthBarOverlay);
+		if (ClientPrefs.healthOverlay)
+			add(healthBarOverlay);
 		healthBarOverlay.sprTracker = healthBar;
 
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
@@ -3223,9 +3229,10 @@ class PlayState extends MusicBeatState
 		setOnLuas('curDecStep', curDecStep);
 		setOnLuas('curDecBeat', curDecBeat);
 
-		// follownote fix
 		if (generatedMusic && !endingSong && !isCameraOnForcedPos)
+		{
 			moveCameraSection();
+		}
 
 		var balls = notesHitArray.length - 1;
 			while (balls >= 0)
@@ -3355,9 +3362,6 @@ class PlayState extends MusicBeatState
 
 					if(ClientPrefs.timeBarType != 'Song Name')
 						timeTxt.text = FlxStringUtil.formatTime(secondsTotal, false);
-
-					if(ClientPrefs.timeBarType == 'Time Elapsed + Song Name')
-						timeTxt.text = SONG.song + ' (' + FlxStringUtil.formatTime(secondsTotal, false) + " / " +  FlxStringUtil.formatTime(sexLol, false) + ')';
 				}
 			}
 
