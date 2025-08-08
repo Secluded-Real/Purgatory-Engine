@@ -36,6 +36,7 @@ class ClientPrefs {
 	public static var judgementCounter:String = 'Disabled';
 	public static var follownote:Bool = false;
 	public static var songinfoBar:Bool = false;
+	public static var ratingsinHUD:Bool = true;
 	// ENDS HERE
 	public static var comboStacking = true;
 	public static var gameplaySettings:Map<String, Dynamic> = [
@@ -138,6 +139,7 @@ class ClientPrefs {
 		FlxG.save.data.judgementCounter = judgementCounter;
 		FlxG.save.data.follownote = follownote;
 		FlxG.save.data.songinfoBar = songinfoBar;
+		FlxG.save.data.ratingsinHUD = ratingsinHUD;
 		// ENDS HERE
 		FlxG.save.data.comboStacking = comboStacking;
 	
@@ -276,6 +278,21 @@ class ClientPrefs {
 		}
 		if (FlxG.save.data.comboStacking != null)
 			comboStacking = FlxG.save.data.comboStacking;
+
+		// modded shit starts here
+		if (FlxG.save.data.judgementCounter != null)
+			judgementCounter = FlxG.save.data.judgementCounter;
+
+		if (FlxG.save.data.follownote != null)
+			follownote = FlxG.save.data.follownote;
+
+		if (FlxG.save.data.songinfoBar != null)
+			songinfoBar = FlxG.save.data.songinfoBar;
+
+		if (FlxG.save.data.ratingsinHUD != null)
+			ratingsinHUD = FlxG.save.data.ratingsinHUD;
+
+		// ends here
 
 		var save:FlxSave = new FlxSave();
 		save.bind('controls_v2', 'ninjamuffin99');

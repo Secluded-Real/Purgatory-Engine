@@ -77,6 +77,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Ratings in HUD',
+			"If checked, your rating will appear inside\nthe HUD instead of the game.",
+			'ratingsinHUD',
+			'bool',
+			true);
+		addOption(option);
+
 		var option:Option = new Option('Health Bar Transparency',
 			'How much transparent should the health bar and icons be.',
 			'healthBarAlpha',
