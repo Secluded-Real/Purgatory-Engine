@@ -1226,7 +1226,12 @@ class PlayState extends MusicBeatState
 		// healthBar
 		healthBar.visible = !ClientPrefs.hideHud;
 		healthBar.alpha = ClientPrefs.healthBarAlpha;
-		insert(members.indexOf(healthBarBG), healthBar);
+		if (ClientPrefs.roundHealth){
+			insert(members.indexOf(healthBarBG), healthBar);
+		}
+		else{
+			add(healthBar);
+		}	
 		healthBarBG.sprTracker = healthBar;
 
 		healthBarOverlay = new AttachedSprite('healthBarOverlay');
@@ -4459,8 +4464,13 @@ class PlayState extends MusicBeatState
 
 		var coolText:FlxText = new FlxText(0, 0, 0, placement, 32);
 		coolText.screenCenter();
-		coolText.x = FlxG.width * 0.35;
-		//
+		if (ClientPrefs.ratingsinHUD){
+			coolText.x = FlxG.width * 0.35;
+		}
+		else{
+			coolText.x = FlxG.width * 0.55;
+		}
+		// this comment was empty so i added somethign
 
 		var rating:FlxSprite = new FlxSprite();
 		var score:Int = 350;
@@ -4508,8 +4518,10 @@ class PlayState extends MusicBeatState
 		rating.velocity.y -= FlxG.random.int(140, 175) * playbackRate;
 		rating.velocity.x -= FlxG.random.int(0, 10) * playbackRate;
 		rating.visible = (!ClientPrefs.hideHud && showRating);
-		rating.x += ClientPrefs.comboOffset[0];
-		rating.y -= ClientPrefs.comboOffset[1];
+		if(ClientPrefs.ratingsinHUD) {
+	    	rating.x += ClientPrefs.comboOffset[0];
+	    	rating.y -= ClientPrefs.comboOffset[1];
+		}
 
 		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'combo' + pixelShitPart2));
 		comboSpr.cameras = [camHUD];
