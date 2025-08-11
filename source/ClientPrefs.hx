@@ -40,6 +40,7 @@ class ClientPrefs {
 	public static var healthOverlay:Bool = true;
 	public static var roundHealth:Bool = true;
 	public static var daModcharts:Bool = true;
+	public static var comboAppearLol:Bool = true;
 	// ENDS HERE
 	public static var comboStacking = true;
 	public static var gameplaySettings:Map<String, Dynamic> = [
@@ -146,6 +147,7 @@ class ClientPrefs {
 		FlxG.save.data.healthOverlay = healthOverlay;
 		FlxG.save.data.roundHealth = roundHealth;
 		FlxG.save.data.daModcharts = daModcharts;
+		FlxG.save.data.comboAppearLol = comboAppearLol;
 		// ENDS HERE
 		FlxG.save.data.comboStacking = comboStacking;
 	
@@ -307,6 +309,9 @@ class ClientPrefs {
 
 		if (FlxG.save.data.daModcharts != null)
 			daModcharts = FlxG.save.data.daModcharts;
+
+		if (FlxG.save.data.comboAppearLol != null)
+			comboAppearLol = FlxG.save.data.comboAppearLol;
 
 		// ends here
 

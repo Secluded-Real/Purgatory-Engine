@@ -98,6 +98,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Combo Sprite',
+			"If checked, after you get at least a combo\nof 10, a COMBO graphic will appear.",
+			'comboAppearLol',
+			'bool',
+			true);
+		addOption(option);
+
 		var option:Option = new Option('Health Bar Transparency',
 			'How much transparent should the health bar and icons be.',
 			'healthBarAlpha',
