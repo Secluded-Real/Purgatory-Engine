@@ -4523,6 +4523,13 @@ class PlayState extends MusicBeatState
 	    	rating.y -= ClientPrefs.comboOffset[1];
 		}
 
+		if (combo > 10 && ClientPrefs.comboAppearLol){
+			showCombo = true;
+		}
+		else{
+			showCombo = false;
+		}
+
 		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'combo' + pixelShitPart2));
 		comboSpr.cameras = [camHUD];
 		comboSpr.screenCenter();
