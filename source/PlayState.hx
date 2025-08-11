@@ -5018,7 +5018,7 @@ class PlayState extends MusicBeatState
 				char = gf;
 			}
 			if(note.altStrum) {
-			char = player3;
+				char = player3;
 			}
 
 			if(char != null)
