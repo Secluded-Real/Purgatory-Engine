@@ -15,7 +15,8 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
 import lime.utils.Assets;
-import flixel.system.FlxSound;
+#if (flixel >= "5.2.2") import flixel.sound.FlxSound;
+#else import flixel.system.FlxSound; #end
 import openfl.utils.Assets as OpenFlAssets;
 import WeekData;
 #if MODS_ALLOWED

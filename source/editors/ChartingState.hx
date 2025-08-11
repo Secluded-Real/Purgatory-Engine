@@ -30,7 +30,8 @@ import flixel.group.FlxSpriteGroup;
 import flixel.input.keyboard.FlxKey;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
-import flixel.system.FlxSound;
+#if (flixel >= "5.2.2") import flixel.sound.FlxSound;
+#else import flixel.system.FlxSound; #end
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -55,7 +56,8 @@ import sys.io.File;
 #end
 
 
-@:access(flixel.system.FlxSound._sound)
+#if (flixel >= "5.2.2") @:access(flixel.sound.FlxSound._sound)
+#else @:access(flixel.system.FlxSound._sound) #end
 @:access(openfl.media.Sound.__buffer)
 
 class ChartingState extends MusicBeatState
