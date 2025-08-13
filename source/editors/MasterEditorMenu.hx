@@ -27,7 +27,8 @@ class MasterEditorMenu extends MusicBeatState
 		'Dialogue Portrait Editor',
 		'Character Editor',
 		'Chart Editor',
-		'Icon Editor'
+		'Icon Editor',
+		'Test Category State'
 	];
 	private var grpTexts:FlxTypedGroup<Alphabet>;
 	private var directories:Array<String> = [null];
@@ -129,6 +130,8 @@ class MasterEditorMenu extends MusicBeatState
 					LoadingState.loadAndSwitchState(new ChartingState(), false);
 				case 'Icon Editor': //big fucking placeholder
 					LoadingState.loadAndSwitchState(new ChartingState(), false);
+				case 'Test Category State':
+					LoadingState.loadAndSwitchState(new CategoryState(), false);
 			}
 			FlxG.sound.music.volume = 0;
 			#if PRELOAD_ALL
