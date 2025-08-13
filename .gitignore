@@ -19,3 +19,5 @@ export/*
 !.vscode/launch.json
 !.vscode/extensions.json
 /Purgatory Engine/FNF-PsychEngine-0.6.3/export
+/source/flixel/system
+/source/lime
