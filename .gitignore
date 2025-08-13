@@ -21,3 +21,4 @@ export/*
 /Purgatory Engine/FNF-PsychEngine-0.6.3/export
 /source/flixel/system
 /source/lime
+source/flixel/animation/FlxAnimationController.hx
