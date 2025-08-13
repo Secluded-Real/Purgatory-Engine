@@ -115,7 +115,7 @@ class CharacterEditorState extends MusicBeatState
 
 		loadChar(!daAnim.startsWith('bf'), false);
 
-		healthBarBG = new FlxSprite(30, FlxG.height - 75).loadGraphic(Paths.image('healthBar'));
+		healthBarBG = new FlxSprite(30, FlxG.height - 75).loadGraphic(Paths.image('healthBarNew'));
 		healthBarBG.scrollFactor.set();
 		add(healthBarBG);
 		healthBarBG.cameras = [camHUD];
@@ -398,6 +398,7 @@ class CharacterEditorState extends MusicBeatState
 				0
 			],
 			"healthicon": "face",
+			"danoteskin": "NOTE_assets",
 			"flip_x": false,
 			"healthbar_colors": [
 				161,
@@ -470,6 +471,7 @@ class CharacterEditorState extends MusicBeatState
 				character.noAntialiasing = parsedJson.no_antialiasing;
 				character.originalFlipX = parsedJson.flip_x;
 				character.healthIcon = parsedJson.healthicon;
+				character.daNoteSkin = parsedJson.danoteskin;
 				character.healthColorArray = parsedJson.healthbar_colors;
 				character.setPosition(character.positionArray[0] + OFFSET_X + 100, character.positionArray[1]);
 			}
@@ -1279,6 +1281,7 @@ class CharacterEditorState extends MusicBeatState
 			"scale": char.jsonScale,
 			"sing_duration": char.singDuration,
 			"healthicon": char.healthIcon,
+			"danoteskin": char.daNoteSkin,
 
 			"position":	char.positionArray,
 			"camera_position": char.cameraPosition,
