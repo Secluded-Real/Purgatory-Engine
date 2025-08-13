@@ -4047,6 +4047,10 @@ class PlayState extends MusicBeatState
 			case 'BG Freaks Expression':
 				if(bgGirls != null) bgGirls.swapDanceType();
 
+			case 'Change Camera Speed':
+				var bitch:Float = Std.parseFloat(value1);
+				cameraSpeed = bitch;
+
 			case 'Change Scroll Speed':
 				if (songSpeedType == "constant")
 					return;
@@ -4124,7 +4128,7 @@ class PlayState extends MusicBeatState
 				} else {
 					FunkinLua.setVarInArray(this, value1, value2);
 				}
-				case 'Slightly transparent Black Screen' | 'Thunderstorm type black screen': // ig u could say its for backwards compatibility??
+			case 'Slightly transparent Black Screen' | 'Thunderstorm type black screen': // ig u could say its for backwards compatibility??
 				var ballsId:Int = Std.parseInt(value1);
 				switch (ballsId)
 				{
@@ -4539,7 +4543,7 @@ class PlayState extends MusicBeatState
 		comboSpr.x = coolText.x;
 		comboSpr.acceleration.y = FlxG.random.int(200, 300) * playbackRate * playbackRate;
 		if (ClientPrefs.ratingsinHUD){
-			comboSpr.x = coolText.x + (43 * daLoop) + 60;
+			comboSpr.x = coolText.x + 60;
 			comboSpr.y += 80;
 		}
 		comboSpr.velocity.y -= FlxG.random.int(140, 160) * playbackRate;
