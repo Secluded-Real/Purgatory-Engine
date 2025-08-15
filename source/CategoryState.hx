@@ -43,7 +43,7 @@ class CategoryState extends MusicBeatState
 	private var camFollow:FlxObject;
 	private static var prevCamFollow:FlxObject;
 
-	private var AllPossibleSongs:Array<String> = ["story", "extras"];
+	private var AllPossibleSongs:Array<String> = ["story", "extras", "remixes", "secret"];
 
 	private var CurrentPack:Int = 0;
 
@@ -116,9 +116,9 @@ class CategoryState extends MusicBeatState
 	{
 		switch (AllPossibleSongs[CurrentPack].toLowerCase())
 		{
-			case 'main':
+			case 'story':
 				FlxG.switchState(new FreeplayState());
-				categorySelected = 'main';
+				categorySelected = 'story';
 			case 'extras':
 				FlxG.switchState(new FreeplayState());
 				categorySelected = 'extras';
