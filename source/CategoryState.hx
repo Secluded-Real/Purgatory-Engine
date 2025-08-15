@@ -127,7 +127,7 @@ class CategoryState extends MusicBeatState
 				categorySelected = 'remixes';
 			case 'secret':
 				FlxG.switchState(new FreeplayState());
-				categorySelected = 'extras';
+				categorySelected = 'secret';
 		}
 	}
 
