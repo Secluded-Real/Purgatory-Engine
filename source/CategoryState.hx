@@ -47,9 +47,6 @@ class CategoryState extends MusicBeatState
 	var directories:Array<String> = [Paths.mods(), Paths.getPreloadPath()];
 	var originalLength:Int = directories.length;
 	var modsDirectories:Array<String> = Paths.getModDirectories();
-	#else
-	var directories:Array<String> = [Paths.getPreloadPath()];
-	var originalLength:Int = directories.length;
 	#end
 	private var AllPossibleSongs:Array<String> = ["story", "extras", "remixes", "secret"];
 
