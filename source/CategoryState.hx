@@ -43,7 +43,7 @@ class CategoryState extends MusicBeatState
 	private var camFollow:FlxObject;
 	private static var prevCamFollow:FlxObject;
 
-	private var AllPossibleSongs:Array<String> = ["story", "extra"];
+	private var AllPossibleSongs:Array<String> = ["story", "extras"];
 
 	private var CurrentPack:Int = 0;
 
@@ -67,7 +67,7 @@ class CategoryState extends MusicBeatState
 		#if desktop DiscordClient.changePresence("In the Freeplay Menus", null); #end
 
 		// lmao
-		bg.loadGraphic(randomizeBG());
+		bg.loadGraphic(Paths.image('menuBGBlue', "preload"));
 		bg.color = 0xFF202020;
 		bg.scrollFactor.set();
 		add(bg);
@@ -119,9 +119,9 @@ class CategoryState extends MusicBeatState
 			case 'main':
 				FlxG.switchState(new FreeplayState());
 				categorySelected = 'main';
-			case 'extra':
+			case 'extras':
 				FlxG.switchState(new FreeplayState());
-				categorySelected = 'extra';
+				categorySelected = 'extras';
 		}
 	}
 
