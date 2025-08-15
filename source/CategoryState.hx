@@ -43,11 +43,6 @@ class CategoryState extends MusicBeatState
 	private var camFollow:FlxObject;
 	private static var prevCamFollow:FlxObject;
 
-	#if MODS_ALLOWED
-	var directories:Array<String> = [Paths.mods(), Paths.getPreloadPath()];
-	var originalLength:Int = directories.length;
-	var modsDirectories:Array<String> = Paths.getModDirectories();
-	#end
 	private var AllPossibleSongs:Array<String> = ["story", "extras", "remixes", "secret"];
 
 	private var CurrentPack:Int = 0;
@@ -69,6 +64,15 @@ class CategoryState extends MusicBeatState
 
 	override function create()
 	{
+		#if MODS_ALLOWED
+		var directories:Array<String> = [Paths.mods(), Paths.getPreloadPath()];
+		var originalLength:Int = directories.length;
+		var modsDirectories:Array<String> = Paths.getModDirectories();
+		#else
+		var directories:Array<String> = [Paths.getPreloadPath()];
+		var originalLength:Int = directories.length;
+		#end
+		
 		#if desktop DiscordClient.changePresence("In the Freeplay Menus", null); #end
 
 		// lmao
