@@ -65,14 +65,75 @@ class CategoryState extends MusicBeatState
 	override function create()
 	{
 		#if MODS_ALLOWED
+		var disabledMods:Array<String> = [];
 		var directories:Array<String> = [Paths.mods(), Paths.getPreloadPath()];
 		var originalLength:Int = directories.length;
 		var modsDirectories:Array<String> = Paths.getModDirectories();
+		var modsListPath:String = 'modsList.txt';
+		if(FileSystem.exists(modsListPath))
+		{
+			var stuff:Array<String> = CoolUtil.coolTextFile(modsListPath);
+			for (i in 0...stuff.length)
+			{
+				var splitName:Array<String> = stuff[i].trim().split('|');
+				if(splitName[1] == '0') // Disable mod
+				{
+					disabledMods.push(splitName[0]);
+				}
+				else // Sort mod loading order based on modsList.txt file
+				{
+					var path = haxe.io.Path.join([Paths.mods(), splitName[0]]);
+					//trace('trying to push: ' + splitName[0]);
+					if (sys.FileSystem.isDirectory(path) && !Paths.ignoreModFolders.contains(splitName[0]) && !disabledMods.contains(splitName[0]) && !directories.contains(path + '/'))
+					{
+						directories.push(path + '/');
+						//trace('pushed Directory: ' + splitName[0]);
+					}
+				}
+			}
+		}
+
+		var modsDirectories:Array<String> = Paths.getModDirectories();
+		for (folder in modsDirectories)
+		{
+			var pathThing:String = haxe.io.Path.join([Paths.mods(), folder]) + '/';
+			if (!disabledMods.contains(folder) && !directories.contains(pathThing))
+			{
+				directories.push(pathThing);
+				//trace('pushed Directory: ' + folder);
+			}
+		}
 		#else
 		var directories:Array<String> = [Paths.getPreloadPath()];
 		var originalLength:Int = directories.length;
 		#end
-		
+
+		#if MODS_ALLOWED
+		for (i in 0...directories.length) {
+			var directory:String = directories[i] + 'categories.txt';
+			if(FileSystem.exists(directory)) {
+				var listOfWeeks:Array<String> = CoolUtil.coolTextFile(directory + 'weekList.txt');
+				for (daWeek in listOfWeeks)
+				{
+					var path:String = directory + daWeek + '.txt';
+					if(sys.FileSystem.exists(path))
+					{
+						AllPossibleSongs += [''];
+					}
+				}
+
+				for (file in FileSystem.readDirectory(directory))
+				{
+					var path = haxe.io.Path.join([directory, file]);
+					if (!sys.FileSystem.isDirectory(path) && file.endsWith('.txt'))
+					{
+						
+					}
+				}
+			}
+		}
+		#end
+
 		#if desktop DiscordClient.changePresence("In the Freeplay Menus", null); #end
 
 		// lmao
