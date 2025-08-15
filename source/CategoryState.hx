@@ -38,8 +38,6 @@ class CategoryState extends MusicBeatState
 
 	private var CurrentSongIcon:FlxSprite;
 
-	private var daShit:String;
-
 	var icons:Array<FlxSprite> = [];
 	var titles:Array<FlxSprite> = [];
 	private var camFollow:FlxObject;
@@ -116,11 +114,20 @@ class CategoryState extends MusicBeatState
 
 	public function LoadProperPack()
 	{
-		daShit = AllPossibleSongs[CurrentPack].toLowerCase(); // easier shit lmao
 		switch (AllPossibleSongs[CurrentPack].toLowerCase())
 		{
-			FlxG.switchState(new FreeplayState());
-			categorySelected = daShit;
+			case 'story':
+				FlxG.switchState(new FreeplayState());
+				categorySelected = 'story';
+			case 'extras':
+				FlxG.switchState(new FreeplayState());
+				categorySelected = 'extras';
+			case 'remixes':
+				FlxG.switchState(new FreeplayState());
+				categorySelected = 'remixes';
+			case 'secret':
+				FlxG.switchState(new FreeplayState());
+				categorySelected = 'extras';
 		}
 	}
 
