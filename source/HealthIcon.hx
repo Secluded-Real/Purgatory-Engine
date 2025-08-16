@@ -38,9 +38,23 @@ class HealthIcon extends FlxSprite
 	public function changeIcon(char:String) {
 		if(this.char != char) {
 			var name:String = 'icons/' + char;
+			var xmlPath:String = 'icons/' + char; //shitty.
 			if(!Paths.fileExists('images/' + name + '.png', IMAGE)) name = 'icons/icon-' + char; //Older versions of psych engine's support
 			if(!Paths.fileExists('images/' + name + '.png', IMAGE)) name = 'icons/icon-face'; //Prevents crash from missing icon
 			if(!Paths.fileExists('images/' + name + '.png', IMAGE)) name = 'icons/face'; //Prevents crash from missing icon
+
+			//Prevents crashes on Animated icons (i think???).
+			if(!Paths.fileExists('images/' + xmlPath + '.xml', IMAGE)) xmlPath = 'icons/icon-' + char; //Older versions of psych engine's support
+			if(!Paths.fileExists('images/' + xmlPath + '.xml', IMAGE)) xmlPath = 'icons/icon-face'; //Prevents crash from missing icon
+			if(!Paths.fileExists('images/' + xmlPath + '.xml', IMAGE)) xmlPath = 'icons/face'; //Prevents crash from missing icon
+
+			if (File.exists(xmlPath)) {
+            	trace("XML file exists: " + xmlPath);
+				animation.addByPrefix('neutral', 'Neutral', 12, true, isPlayer);
+				animation.addByPrefix('defeat', 'Defeat', 12, true, isPlayer);
+				animation.addByPrefix('winning', 'Winning', 12, true, isPlayer);
+				animation.play('neutral');
+			}
 					
 			var graphic = Paths.image(name);
 			var iSize:Float = Math.round(graphic.width / graphic.height);
