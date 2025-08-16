@@ -118,7 +118,7 @@ class CategoryState extends MusicBeatState
 					var path:String = directory + daWeek + '.txt';
 					if(sys.FileSystem.exists(path))
 					{
-						AllPossibleSongs += [''];
+						//AllPossibleSongs += [''];
 					}
 				}
 
