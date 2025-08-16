@@ -1160,7 +1160,7 @@ class PlayState extends MusicBeatState
 		add(altStrumLineNotes);
 		add(grpNoteSplashes);
 
-		if(ClientPrefs.timeBarType == 'Song Name')
+		if(ClientPrefs.timeBarType == 'Song Name' || ClientPrefs.timeBarType == 'Elapsed + Song Name')
 		{
 			timeTxt.size = 24;
 			timeTxt.y += 3;
@@ -3311,6 +3311,14 @@ class PlayState extends MusicBeatState
 		if (healthBar.percent < 20){
 			iconP1.animation.curAnim.curFrame = 1;
 			iconP2.animation.curAnim.curFrame = 2;
+
+			if (ClientPrefs.scoreTxtFlash){
+				if(curBeat % 2 == 0)
+					//FlxTween.tween(scoreTxt, {color:0xFFFF0000}, 0.1 / playbackRate);
+		   	 	FlxTween.color(scoreTxt, Conductor.stepCrochet / 500, 0xFFFF0000, FlxColor.WHITE, {ease: FlxEase.circOut});
+				if(curBeat % 4 == 2)
+					FlxTween.tween(scoreTxt, {color:0xFFFFFFFF}, 0.1 / playbackRate);
+			}
 		}
 		else if (healthBar.percent > 80){
 			iconP1.animation.curAnim.curFrame = 2;
@@ -3364,15 +3372,16 @@ class PlayState extends MusicBeatState
 					var songCalc:Float = (songLength - curTime);
 					if(ClientPrefs.timeBarType == 'Time Elapsed') songCalc = curTime;
 
+					var sexLol:Int = Math.floor(songLength / 1000);
+
 					var secondsTotal:Int = Math.floor(songCalc / 1000);
 					if(secondsTotal < 0) secondsTotal = 0;
 
 					if (ClientPrefs.timeBarType == 'Elapsed + Song Name'){
-						timeTxt.text = SONG.song;
-						timeTxt.text += FlxStringUtil.formatTime(secondsTotal, false);
+						timeTxt.text = SONG.song + ' (' + FlxStringUtil.formatTime(secondsTotal, false) + " / " +  FlxStringUtil.formatTime(sexLol, false) + ')';
 					}
 
-					if(ClientPrefs.timeBarType != 'Song Name')
+					if(ClientPrefs.timeBarType != 'Song Name' && ClientPrefs.timeBarType != 'Elapsed + Song Name')
 						timeTxt.text = FlxStringUtil.formatTime(secondsTotal, false);
 				}
 			}

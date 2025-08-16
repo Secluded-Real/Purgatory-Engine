@@ -76,6 +76,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			'bool',
 			true);
 		addOption(option);
+		
+		var option:Option = new Option('Score Text Flash Red',
+			"If checked, reaching danger levels on health\nwill make the score flash red.",
+			'scoreTxtFlash',
+			'bool',
+			true);
+		addOption(option);
 
 		var option:Option = new Option('Health Bar Overlay',
 			"If unchecked, disables the semi-visible lines on\nthe health bar.",

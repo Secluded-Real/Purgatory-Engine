@@ -1,9 +1,10 @@
 package;
 
 import flixel.FlxSprite;
-import sys.FileSystem;
-import haxe.Xml;
 import openfl.utils.Assets as OpenFlAssets;
+import openfl.utils.Assets;
+import openfl.utils.AssetType;
+
 
 using StringTools;
 
@@ -50,16 +51,16 @@ class HealthIcon extends FlxSprite
 			if(!Paths.fileExists('images/' + xmlPath + '.xml', IMAGE)) xmlPath = 'icons/icon-face'; //Prevents crash from missing icon
 			if(!Paths.fileExists('images/' + xmlPath + '.xml', IMAGE)) xmlPath = 'icons/face'; //Prevents crash from missing icon
 
-			if (Paths.fileExists(xmlPath, xmlContent)){
-            	trace("XML file exists: " + xmlPath);
-				var xmlContent = sys.io.File.getContent(xmlPath);
-				var xml = Xml.parse(xmlContent);
-				animation.addByPrefix('neutral', 'Neutral', 12, true, isPlayer);
-				animation.addByPrefix('defeat', 'Defeat', 12, true, isPlayer);
-				animation.addByPrefix('winning', 'Winning', 12, true, isPlayer);
-				animation.play('neutral');
-			}
+			var xmlPath:String = 'icons/' + char + '.xml';
+            trace("XML file exists: " + xmlPath);
+			animation.addByPrefix('neutral', 'Neutral', 12, true, isPlayer);
+			animation.addByPrefix('defeat', 'Defeat', 12, true, isPlayer);
+			animation.addByPrefix('winning', 'Winning', 12, true, isPlayer);
+			animation.play('neutral');
+			if (Assets.exists(xmlPath))
+				trace("holy shit it works");
 					
+			if (char != 'bambiGod2d'){
 			var graphic = Paths.image(name);
 			var iSize:Float = Math.round(graphic.width / graphic.height);
 			loadGraphic(graphic, true, Math.floor(graphic.width / iSize), Math.floor(graphic.height));
@@ -70,6 +71,7 @@ class HealthIcon extends FlxSprite
 			animation.add(char, [for(i in 0...frames.frames.length) i], 0, false, isPlayer);
 			animation.play(char);
 			this.char = char;
+			}
 		}
 	}
 
