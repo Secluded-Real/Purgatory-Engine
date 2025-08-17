@@ -27,6 +27,7 @@ import openfl.system.System;
 #end
 class FPS extends TextField
 {
+	var maxMemory:Float = 0;
 	/**
 		The current frame rate, expressed using frames-per-second
 	**/
@@ -90,7 +91,6 @@ class FPS extends TextField
 		{
 			text = "FPS: " + currentFPS;
 			var memoryMegas:Float = 0;
-			var maxMemory:Float = 0;
 			
 			#if openfl
 			memoryMegas = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
