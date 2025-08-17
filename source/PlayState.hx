@@ -107,6 +107,9 @@ class PlayState extends MusicBeatState
 
 	//event variables
 	private var isCameraOnForcedPos:Bool = false;
+	public var camGameShaders:Array<ShaderEffect> = [];
+	public var camHUDShaders:Array<ShaderEffect> = [];
+	public var camOtherShaders:Array<ShaderEffect> = [];
 
 	#if (haxe >= "4.0.0")
 	public var boyfriendMap:Map<String, Boyfriend> = new Map();
@@ -3470,12 +3473,6 @@ class PlayState extends MusicBeatState
 			trace("RESET = True");
 		}
 		doDeathCheck();
-
-		//testing
-		if (curSong.toLowerCase() == 'fresh'){
-			screenshader.uampmul.value[0] = 0;
-			screenshader.Enabled = false;
-		}
 
 		if (unspawnNotes[0] != null)
 		{
