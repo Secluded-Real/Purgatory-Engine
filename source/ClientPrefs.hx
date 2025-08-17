@@ -43,7 +43,7 @@ class ClientPrefs {
 	public static var comboAppearLol:Bool = true;
 	public static var scoreTxtFlash:Bool = true;
 	public static var iconBopShit:String = 'Psych';
-	public static var removePerfects:Bool = true;
+	public static var removePerfects:Bool = false;
 	// ENDS HERE
 	public static var comboStacking = true;
 	public static var gameplaySettings:Map<String, Dynamic> = [
