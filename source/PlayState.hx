@@ -217,6 +217,7 @@ class PlayState extends MusicBeatState
 	var dadNoteCamOffset:Array<Float> = new Array<Float>();
 
 	public var ratingsData:Array<Rating> = [];
+	public var perfects:Int = 0;
 	public var sicks:Int = 0;
 	public var goods:Int = 0;
 	public var bads:Int = 0;
@@ -414,7 +415,13 @@ class PlayState extends MusicBeatState
 		];
 
 		//Ratings
-		ratingsData.push(new Rating('sick')); //default rating
+		if (!ClientPrefs.removePerfects) ratingsData.push(new Rating('perfect')); //default rating
+
+		var rating:Rating = new Rating('sick');
+		rating.ratingMod = 1;
+		rating.score = 350;
+		rating.noteSplash = true;
+		ratingsData.push(rating);
 
 		var rating:Rating = new Rating('good');
 		rating.ratingMod = 0.7;
@@ -1293,9 +1300,15 @@ class PlayState extends MusicBeatState
 		judgementCounter.screenCenter(Y);
 		if (ClientPrefs.judgementCounter == 'Advanced') {
 			judgementCounter.text = 'Combo: ${combo}\nSicks: ${sicks}\nGoods: ${goods}\nBads: ${bads}\nShits: ${shits}\nTotal Notes: ${totalNotesHit}\nMisses: ${songMisses}';
+			if (!ClientPrefs.removePerfects){
+				judgementCounter.text = 'Combo: ${combo}\nPerfects: ${perfects}\nSicks: ${sicks}\nGoods: ${goods}\nBads: ${bads}\nShits: ${shits}\nTotal Notes: ${totalNotesHit}\nMisses: ${songMisses}';
+			}
 		}
 		if (ClientPrefs.judgementCounter == 'Simple') {
 			judgementCounter.text = 'Sicks: ${sicks}\nGoods: ${goods}\nBads: ${bads}\nShits: ${shits}\nMisses: ${songMisses}';
+			if (!ClientPrefs.removePerfects){
+				judgementCounter.text = 'Perfects: ${perfects}\nSicks: ${sicks}\nGoods: ${goods}\nBads: ${bads}\nShits: ${shits}\nMisses: ${songMisses}';
+			}
 		}
 		if (ClientPrefs.judgementCounter != 'Disabled') {
 			add(judgementCounter);
@@ -5775,6 +5788,7 @@ class PlayState extends MusicBeatState
 
 			// Rating FC
 			ratingFC = "";
+			if (perfects > 0 && !ClientPrefs.removePerfects) ratingFC = "PFC";
 			if (sicks > 0) ratingFC = "SFC";
 			if (goods > 0) ratingFC = "GFC";
 			if (bads > 0 || shits > 0) ratingFC = "FC";
@@ -5787,8 +5801,14 @@ class PlayState extends MusicBeatState
 		setOnLuas('ratingFC', ratingFC);
 		if (ClientPrefs.judgementCounter == 'Advanced') {
 				judgementCounter.text = 'Total Notes: ${totalPlayed}\nSicks: ${sicks}\nGoods: ${goods}\nBads: ${bads}\nShits: ${shits}\nCombo: ${combo}\nCombo Breaks: ${songMisses}';
+				if (!ClientPrefs.removePerfects){
+					judgementCounter.text = 'Total Notes: ${totalPlayed}\nPerfects: ${perfects}\nSicks: ${sicks}\nGoods: ${goods}\nBads: ${bads}\nShits: ${shits}\nCombo: ${combo}\nCombo Breaks: ${songMisses}';
+				}
 		} else if (ClientPrefs.judgementCounter == 'Simple') {
 			judgementCounter.text = 'Sicks: ${sicks}\nGoods: ${goods}\nBads: ${bads}\nShits: ${shits}\nCombo Breaks: ${songMisses}';
+			if (!ClientPrefs.removePerfects){
+				judgementCounter.text = 'Perfects: ${perfects}\nSicks: ${sicks}\nGoods: ${goods}\nBads: ${bads}\nShits: ${shits}\nCombo Breaks: ${songMisses}';
+			}
 		}
 	}
 

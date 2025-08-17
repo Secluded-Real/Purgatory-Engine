@@ -48,6 +48,13 @@ class EngineSettingsSubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Remove Perfect Rating',
+			"If unchecked, You can get a PERFECT rating.",
+			'removePerfects',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('Judgement Counter:',
 			"Shows a judgement counter at the left of the screen (Example: Sicks: 93,\nGoods:0, Bads: 1, 'Shits: 0)",
 			'judgementCounter',
