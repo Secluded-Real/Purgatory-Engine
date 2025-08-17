@@ -1744,6 +1744,54 @@ class PlayState extends MusicBeatState
 		#end
 	}
 
+
+	public function addShaderToCamera(cam:String,effect:Dynamic){ //stolen from OSEngine because i'm a lazy asshole
+	  
+	  
+	  
+		switch(cam.toLowerCase()) {
+			case 'camhud' | 'hud':
+					camHUDShaders.push(effect);
+					var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
+					for(i in camHUDShaders){
+					  newCamEffects.push(new ShaderFilter(i.shader));
+					}
+					camHUD.setFilters(newCamEffects);
+			case 'camother' | 'other':
+					camOtherShaders.push(effect);
+					var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
+					for(i in camOtherShaders){
+					  newCamEffects.push(new ShaderFilter(i.shader));
+					}
+					camOther.setFilters(newCamEffects);
+			case 'camgame' | 'game':
+					camGameShaders.push(effect);
+					var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
+					for(i in camGameShaders){
+					  newCamEffects.push(new ShaderFilter(i.shader));
+					}
+					camGame.setFilters(newCamEffects);
+			default:
+				if(modchartSprites.exists(cam)) {
+					Reflect.setProperty(modchartSprites.get(cam),"shader",effect.shader);
+				} else if(modchartTexts.exists(cam)) {
+					Reflect.setProperty(modchartTexts.get(cam),"shader",effect.shader);
+				} else {
+					var OBJ = Reflect.getProperty(PlayState.instance,cam);
+					Reflect.setProperty(OBJ,"shader", effect.shader);
+				}
+			
+			
+				
+				
+		}
+	  
+	  
+	  
+	  
+  }
+
+
 	public function getLuaObject(tag:String, text:Bool=true):FlxSprite {
 		if(modchartSprites.exists(tag)) return modchartSprites.get(tag);
 		if(text && modchartTexts.exists(tag)) return modchartTexts.get(tag);
@@ -2555,8 +2603,11 @@ class PlayState extends MusicBeatState
 
 		// Song duration in a float, useful for the time left feature
 		songLength = FlxG.sound.music.length;
+		timeTxt.scale.x = 1.095;
+		timeTxt.scale.y = 1.095;
 		FlxTween.tween(timeBar, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		FlxTween.tween(timeTxt.scale, {x: 1, y: 1}, 0.75, {ease: FlxEase.backOut});
 
 		switch(curStage)
 		{
@@ -3292,7 +3343,7 @@ class PlayState extends MusicBeatState
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);
 		var thingy = 0.88;
 
-		if (ClientPrefs.iconBopShit != 'Dave Engine'){
+		if (ClientPrefs.iconBopShit == 'Psych'){
 			var mult:Float = FlxMath.lerp(1, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 9 * playbackRate), 0, 1));
 			iconP1.scale.set(mult, mult);
 		}
@@ -3301,7 +3352,7 @@ class PlayState extends MusicBeatState
 		}
 		iconP1.updateHitbox();
 
-		if (ClientPrefs.iconBopShit != 'Dave Engine'){
+		if (ClientPrefs.iconBopShit == 'Psych'){
 			var mult:Float = FlxMath.lerp(1, iconP2.scale.x, CoolUtil.boundTo(1 - (elapsed * 9 * playbackRate), 0, 1));
 			iconP2.scale.set(mult, mult);
 		}
@@ -3419,6 +3470,12 @@ class PlayState extends MusicBeatState
 			trace("RESET = True");
 		}
 		doDeathCheck();
+
+		//testing
+		if (curSong.toLowerCase() == 'fresh'){
+			screenshader.uampmul.value[0] = 0;
+			screenshader.Enabled = false;
+		}
 
 		if (unspawnNotes[0] != null)
 		{
@@ -5499,7 +5556,7 @@ class PlayState extends MusicBeatState
 			notes.sort(FlxSort.byY, ClientPrefs.downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
 		}
 
-		if (ClientPrefs.iconBopShit != 'Disabled' && ClientPrefs.iconBopShit != 'Dave Engine'){
+		if (ClientPrefs.iconBopShit == 'Psych'){
 			iconP1.scale.set(1.2, 1.2);
 			iconP2.scale.set(1.2, 1.2);
 		}
@@ -5507,7 +5564,7 @@ class PlayState extends MusicBeatState
 		//idk.
 		var funny:Float = Math.max(Math.min(healthBar.value,1.9),0.1);//Math.clamp(healthBar.value,0.02,1.98);//Math.min(Math.min(healthBar.value,1.98),0.02);
 
-		if (ClientPrefs.iconBopShit == 'Dave Engine'){
+		if (ClientPrefs.iconBopShit == 'Dave Engine' || ClientPrefs.iconBopShit == "Bambi's Purgatory"){
 			iconP1.setGraphicSize(Std.int(iconP1.width + (50 * (funny + 0.1))),Std.int(iconP1.height - (25 * funny)));
 			iconP2.setGraphicSize(Std.int(iconP2.width + (50 * ((2 - funny) + 0.1))),Std.int(iconP2.height - (25 * ((2 - funny) + 0.1))));
 		}
@@ -5518,6 +5575,11 @@ class PlayState extends MusicBeatState
 		if (gf != null && curBeat % Math.round(gfSpeed * gf.danceEveryNumBeats) == 0 && gf.animation.curAnim != null && !gf.animation.curAnim.name.startsWith("sing") && !gf.stunned)
 		{
 			gf.dance();
+
+			if (ClientPrefs.iconBopShit == "Bambi's Purgatory"){
+				FlxTween.angle(iconP1, -15, 0, Conductor.crochet / 1300 * gfSpeed / playbackRate, {ease: FlxEase.quadOut});
+				FlxTween.angle(iconP2, 15, 0, Conductor.crochet / 1300 * gfSpeed /playbackRate, {ease: FlxEase.quadOut});
+			}
 		}
 		if (curBeat % boyfriend.danceEveryNumBeats == 0 && boyfriend.animation.curAnim != null && !boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.stunned)
 		{
