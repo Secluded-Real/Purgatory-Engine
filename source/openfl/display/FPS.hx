@@ -46,7 +46,13 @@ class FPS extends TextField
 		currentFPS = 0;
 		selectable = false;
 		mouseEnabled = false;
-		defaultTextFormat = new TextFormat("Comic Sans MS Bold", 16, color);
+		var daShittyFont = "_sans";
+		var mainSize = 14;
+		if (ClientPrefs.fpsCountType != 'Psych'){
+			daShittyFont = 'Comic Sans MS Bold';
+			mainSize = 16;
+		}
+		defaultTextFormat = new TextFormat(daShittyFont, mainSize, color);
 		autoSize = LEFT;
 		multiline = true;
 		text = "FPS: ";
@@ -84,16 +90,29 @@ class FPS extends TextField
 		{
 			text = "FPS: " + currentFPS;
 			var memoryMegas:Float = 0;
+			var maxMemory:Float = 0;
 			
 			#if openfl
 			memoryMegas = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
-			text += "\nMemory:\n" + memoryMegas + " MB";
+
+			//eat ass
+			if (memoryMegas > maxMemory)
+				maxMemory = memoryMegas;
+
+			if (ClientPrefs.fpsCountType == 'Psych')
+				text += "\nMemory: " + memoryMegas + " MB";
+			if (ClientPrefs.fpsCountType == 'Dave and Bambi')
+				text += "\nMemory:\n" + memoryMegas + " MB";
+			if (ClientPrefs.fpsCountType == 'Gapple 1.5')
+				text += "\nRAM Used: " + memoryMegas + " MB";
+			if (ClientPrefs.showMaxRam)
+				text += " / " + maxMemory + " MB";
 			#end
 
 			textColor = 0xFFFFFFFF;
 			if (memoryMegas > 2000 || currentFPS <= ClientPrefs.framerate / 1.5)
 			{
-				textColor = 0xFFD9FF00;
+				textColor = 0xFFFBFF00;
 			}
 			if (memoryMegas > 3000 || currentFPS <= ClientPrefs.framerate / 2)
 			{

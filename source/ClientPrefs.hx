@@ -44,6 +44,8 @@ class ClientPrefs {
 	public static var scoreTxtFlash:Bool = true;
 	public static var iconBopShit:String = 'Psych';
 	public static var removePerfects:Bool = false;
+	public static var fpsCountType:String = 'Dave and Bambi';
+	public static var showMaxRam:Bool = false;
 	// ENDS HERE
 	public static var comboStacking = true;
 	public static var gameplaySettings:Map<String, Dynamic> = [
@@ -154,6 +156,8 @@ class ClientPrefs {
 		FlxG.save.data.scoreTxtFlash = scoreTxtFlash;
 		FlxG.save.data.iconBopShit = iconBopShit;
 		FlxG.save.data.removePerfects = removePerfects;
+		FlxG.save.data.fpsCountType = fpsCountType;
+		FlxG.save.data.showMaxRam = showMaxRam;
 		// ENDS HERE
 		FlxG.save.data.comboStacking = comboStacking;
 	
@@ -327,6 +331,12 @@ class ClientPrefs {
 
 		if (FlxG.save.data.removePerfects != null)
 			removePerfects = FlxG.save.data.removePerfects;
+
+		if (FlxG.save.data.fpsCountType != null)
+			fpsCountType = FlxG.save.data.fpsCountType;
+
+		if (FlxG.save.data.showMaxRam != null)
+			showMaxRam = FlxG.save.data.showMaxRam;
 
 		// ends here
 

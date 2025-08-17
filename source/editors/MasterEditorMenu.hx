@@ -26,9 +26,7 @@ class MasterEditorMenu extends MusicBeatState
 		'Dialogue Editor',
 		'Dialogue Portrait Editor',
 		'Character Editor',
-		'Chart Editor',
-		'Icon Editor',
-		'Test Category State'
+		'Chart Editor'
 	];
 	private var grpTexts:FlxTypedGroup<Alphabet>;
 	private var directories:Array<String> = [null];
@@ -128,7 +126,7 @@ class MasterEditorMenu extends MusicBeatState
 					LoadingState.loadAndSwitchState(new DialogueEditorState(), false);
 				case 'Chart Editor'://felt it would be cool maybe
 					LoadingState.loadAndSwitchState(new ChartingState(), false);
-				case 'Icon Editor': //big fucking placeholder
+				case 'Icon Editor': //scrapped (for now)
 					LoadingState.loadAndSwitchState(new ChartingState(), false);
 				case 'Test Category State':
 					LoadingState.loadAndSwitchState(new CategoryState(), false);

@@ -141,6 +141,25 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 		option.onChange = onChangeFPSCounter;
 		#end
+
+		#if !mobile
+		var option:Option = new Option('FPS Counter Type:',
+			"Changes how the FPS counter looks in the\ntop left corner of the screen.",
+			'fpsCountType',
+			'string',
+			'Dave and Bambi',
+			['Psych', 'Dave and Bambi', 'Gapple 1.5']);
+		addOption(option);
+		#end
+
+		#if !mobile
+		var option:Option = new Option('Show Max RAM Usage',
+			"If checked, shows the most RAM\nyou've used.",
+			'showMaxRam',
+			'bool',
+			false);
+		addOption(option);
+		#end
 		
 		var option:Option = new Option('Pause Screen Song:',
 			"What song do you prefer for the Pause Screen?",
