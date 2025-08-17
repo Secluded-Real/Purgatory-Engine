@@ -42,6 +42,7 @@ class ClientPrefs {
 	public static var daModcharts:Bool = true;
 	public static var comboAppearLol:Bool = true;
 	public static var scoreTxtFlash:Bool = true;
+	public static var iconBopShit:String = true;
 	// ENDS HERE
 	public static var comboStacking = true;
 	public static var gameplaySettings:Map<String, Dynamic> = [
@@ -150,6 +151,7 @@ class ClientPrefs {
 		FlxG.save.data.daModcharts = daModcharts;
 		FlxG.save.data.comboAppearLol = comboAppearLol;
 		FlxG.save.data.scoreTxtFlash = scoreTxtFlash;
+		FlxG.save.data.iconBopShit = iconBopShit;
 		// ENDS HERE
 		FlxG.save.data.comboStacking = comboStacking;
 	
@@ -317,6 +319,9 @@ class ClientPrefs {
 
 		if (FlxG.save.data.scoreTxtFlash != null)
 			scoreTxtFlash = FlxG.save.data.scoreTxtFlash;
+
+		if (FlxG.save.data.iconBopShit != null)
+			iconBopShit = FlxG.save.data.iconBopShit;
 
 		// ends here
 

@@ -98,6 +98,14 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Icon Bop Type:',
+			"How should the icons bop?",
+			'iconBopShit',
+			'string',
+			'Time Left',
+			['Psych', 'Dave Engine', "Bambi's Purgatory", 'Disabled']);
+		addOption(option);
+
 		var option:Option = new Option('Ratings in HUD',
 			"If checked, your rating will appear inside\nthe HUD instead of the game.",
 			'ratingsinHUD',
