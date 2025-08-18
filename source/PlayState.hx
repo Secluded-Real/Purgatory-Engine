@@ -420,7 +420,7 @@ class PlayState extends MusicBeatState
 		var rating:Rating = new Rating('sick');
 		rating.ratingMod = 1;
 		if (!ClientPrefs.removePerfects)
-			rating.ratingMod = 0.7;
+			rating.ratingMod = 0.6;
 		rating.score = 350;
 		rating.noteSplash = true;
 		ratingsData.push(rating);
@@ -428,7 +428,7 @@ class PlayState extends MusicBeatState
 		var rating:Rating = new Rating('good');
 		rating.ratingMod = 0.7;
 		if (!ClientPrefs.removePerfects)
-			rating.ratingMod = 0.6;
+			rating.ratingMod = 0.5;
 		rating.score = 200;
 		rating.noteSplash = false;
 		ratingsData.push(rating);

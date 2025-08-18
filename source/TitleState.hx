@@ -411,8 +411,10 @@ class TitleState extends MusicBeatState
 
 		if (initialized)
 			skipIntro();
-		else
+		else{
 			initialized = true;
+			FlxG.camera.zoom = 1.5;
+		}
 
 		// credGroup.add(credTextShit);
 	}
