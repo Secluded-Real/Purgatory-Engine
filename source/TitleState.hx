@@ -620,6 +620,10 @@ class TitleState extends MusicBeatState
 	{
 		super.beatHit();
 
+		//sorry JS Engine
+		FlxG.camera.zoom += 0.015;
+		FlxTween.tween(FlxG.camera, {zoom: 1}, Conductor.crochet / 1200, {ease: FlxEase.quadOut});
+
 		if(logoBl != null)
 			logoBl.animation.play('bump', true);
 
@@ -643,7 +647,7 @@ class TitleState extends MusicBeatState
 					#if PSYCH_WATERMARKS
 					createCoolText(['Psych Engine by'], 15);
 					#else
-					createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
+					createCoolText(['Purgatory Engine by'], 15);
 					#end
 				// credTextShit.visible = true;
 				case 4:
@@ -652,7 +656,8 @@ class TitleState extends MusicBeatState
 					addMoreText('RiverOaken', 15);
 					addMoreText('shubs', 15);
 					#else
-					addMoreText('present');
+					addMoreText('Secluded', 15);
+					addMoreText('YuyioYT', 15);
 					#end
 				// credTextShit.text += '\npresent...';
 				// credTextShit.addText();
@@ -665,7 +670,7 @@ class TitleState extends MusicBeatState
 					#if PSYCH_WATERMARKS
 					createCoolText(['Not associated', 'with'], -40);
 					#else
-					createCoolText(['In association', 'with'], -40);
+					createCoolText(['Not associated', 'with'], -40);
 					#end
 				case 8:
 					addMoreText('newgrounds', -40);

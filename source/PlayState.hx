@@ -5119,8 +5119,7 @@ class PlayState extends MusicBeatState
 			dad.specialAnim = true;
 			dad.heyTimer = 0.6;
 		}
-
-		if(note.noteType == 'Hey!' && dad.animOffsets.exists('hey')) {
+		else if(note.noteType == 'Hey!' && dad.animOffsets.exists('hey')) {
 			dad.playAnim('hey', true);
 			dad.specialAnim = true;
 			dad.heyTimer = 0.6;
