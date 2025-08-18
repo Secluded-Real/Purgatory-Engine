@@ -1327,6 +1327,9 @@ class PlayState extends MusicBeatState
 		var composersWatermark:String;
 		composersWatermark = SONG.songCredit;
 
+		if (composersWatermark == null)
+			composersWatermark == 'Unknown!';
+
 		// credits shit //
 
 		composersText = new FlxText(20, 40/*hi remember that this is the y pos*/, 0, "", 20);
@@ -1338,7 +1341,7 @@ class PlayState extends MusicBeatState
 		composersText.scrollFactor.set();
 		composersText.cameras = [camOther];
         composersText.text = 'Song by ' + composersWatermark;
-    	if(composersWatermark != ' ')
+    	if(composersWatermark != ' ' && ClientPrefs.songCreditShow)
 	    	add(composersText);
 
 		composersBG = new FlxSprite().makeGraphic(Std.int((composersText.textField.width) + 20), Std.int((composersText.height / 2)) + 30,
@@ -1350,7 +1353,7 @@ class PlayState extends MusicBeatState
 		composersBG.updateHitbox();
 		composersBG.cameras = [camOther];
 		#if !debug
-		if(composersWatermark != ' ')
+		if(composersWatermark != ' ' && ClientPrefs.songCreditShow)
 	    	insert(members.indexOf(composersText), composersBG);
 		#end
 

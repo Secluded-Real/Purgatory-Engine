@@ -48,6 +48,13 @@ class EngineSettingsSubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Show Song Credits',
+			"If checked, it will show the name of the composer on the left.",
+			'songCreditShow',
+			'bool',
+			true);
+		addOption(option);
+
 		var option:Option = new Option('Remove Perfect Rating',
 			"If unchecked, You can get a PERFECT rating.",
 			'removePerfects',

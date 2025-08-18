@@ -101,19 +101,20 @@ class FPS extends TextField
 				megaByteString = " GB";
 			if (maxMemory > 1000)
 				maxMegaString = " GB";
+			//unused because i learned an easier wa   y	
 
 			//eat ass
 			if (memoryMegas > maxMemory)
 				maxMemory = memoryMegas;
 
 			if (ClientPrefs.fpsCountType == 'Psych')
-				text += "\nMemory: " + memoryMegas + megaByteString;
+				text += "\nMemory: " + FlxStringUtil.formatBytes(memoryMegas);
 			if (ClientPrefs.fpsCountType == 'Dave and Bambi')
-				text += "\nMemory:\n" + memoryMegas + megaByteString;
+				text += "\nMemory:\n" + FlxStringUtil.formatBytes(memoryMegas);
 			if (ClientPrefs.fpsCountType == 'Gapple 1.5')
-				text += "\nRAM Used: " + memoryMegas + megaByteString;
+				text += "\nRAM Used: " + memoryMegas;
 			if (ClientPrefs.showMaxRam)
-				text += " / " + maxMemory + maxMegaString;
+				text += " / " + maxMemory + FlxStringUtil.formatBytes(maxMegaString);
 			#end
 
 			textColor = 0xFFFFFFFF;

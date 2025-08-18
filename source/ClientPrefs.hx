@@ -46,6 +46,7 @@ class ClientPrefs {
 	public static var removePerfects:Bool = false;
 	public static var fpsCountType:String = 'Dave and Bambi';
 	public static var showMaxRam:Bool = false;
+	public static var songCreditShow:Bool = true;
 	// ENDS HERE
 	public static var comboStacking = true;
 	public static var gameplaySettings:Map<String, Dynamic> = [
@@ -158,6 +159,7 @@ class ClientPrefs {
 		FlxG.save.data.removePerfects = removePerfects;
 		FlxG.save.data.fpsCountType = fpsCountType;
 		FlxG.save.data.showMaxRam = showMaxRam;
+		FlxG.save.data.songCreditShow = songCreditShow;
 		// ENDS HERE
 		FlxG.save.data.comboStacking = comboStacking;
 	
@@ -337,6 +339,9 @@ class ClientPrefs {
 
 		if (FlxG.save.data.showMaxRam != null)
 			showMaxRam = FlxG.save.data.showMaxRam;
+
+		if (FlxG.save.data.songCreditShow != null)
+			songCreditShow = FlxG.save.data.songCreditShow;
 
 		// ends here
 
