@@ -420,13 +420,15 @@ class PlayState extends MusicBeatState
 		var rating:Rating = new Rating('sick');
 		rating.ratingMod = 1;
 		if (!ClientPrefs.removePerfects)
-			rating.ratingMod = 0.8;
+			rating.ratingMod = 0.7;
 		rating.score = 350;
 		rating.noteSplash = true;
 		ratingsData.push(rating);
 
 		var rating:Rating = new Rating('good');
 		rating.ratingMod = 0.7;
+		if (!ClientPrefs.removePerfects)
+			rating.ratingMod = 0.6;
 		rating.score = 200;
 		rating.noteSplash = false;
 		ratingsData.push(rating);
@@ -5110,6 +5112,13 @@ class PlayState extends MusicBeatState
 	{
 		if (Paths.formatToSongPath(SONG.song) != 'tutorial')
 			camZooming = true;
+
+		//only exists for opponent because lazy
+		if (note.noteType == 'Phone Smash' && dad.animOffsets.exists('smash')){
+			dad.playAnim('smash', true);
+			dad.specialAnim = true;
+			dad.heyTimer = 0.6;
+		}
 
 		if(note.noteType == 'Hey!' && dad.animOffsets.exists('hey')) {
 			dad.playAnim('hey', true);

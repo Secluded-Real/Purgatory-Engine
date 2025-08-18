@@ -28,6 +28,7 @@ class Note extends FlxSprite
 	public var tooLate:Bool = false;
 	public var wasGoodHit:Bool = false;
 	public var ignoreNote:Bool = false;
+
 	public var hitByOpponent:Bool = false;
 	public var noteWasHit:Bool = false;
 	public var prevNote:Note;
@@ -161,6 +162,11 @@ class Note extends FlxSprite
 					gfNote = true;
 				case 'Alt Strum':
 					altStrum = true;
+				case 'Phone Alt Animation':
+					reloadNote('PHONE');
+					animSuffix = '-phone';
+				case 'Phone Smash':
+					reloadNote('PHONE');
 			}
 			noteType = value;
 		}
