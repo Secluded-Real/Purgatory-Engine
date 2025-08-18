@@ -1327,7 +1327,7 @@ class PlayState extends MusicBeatState
 		var composersWatermark:String;
 		composersWatermark = SONG.songCredit;
 
-		if (composersWatermark == null)
+		if (composersWatermark == null || composersWatermark == 'null')
 			composersWatermark == 'Unknown!';
 
 		// credits shit //

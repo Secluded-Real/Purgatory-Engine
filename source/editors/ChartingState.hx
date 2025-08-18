@@ -1510,6 +1510,9 @@ class ChartingState extends MusicBeatState
 			if(sender == noteSplashesInputText) {
 				_song.splashSkin = noteSplashesInputText.text;
 			}
+			if (sender == songCreditInputText){
+				_song.songCredit = songCreditInputText.text;
+			}
 			else if(curSelectedNote != null)
 			{
 				if(sender == value1InputText) {
