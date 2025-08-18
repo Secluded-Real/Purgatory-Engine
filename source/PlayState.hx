@@ -4206,17 +4206,20 @@ class PlayState extends MusicBeatState
 
 			case 'Section By Text':
 				var sexo:Float = Std.parseFloat(value1);
-				composersWatermark = sexo;
-				for (dicknballs in [composersText, composersBG]) {
-					if (dicknballs != null) {
-						FlxTween.tween(dicknballs, {x:0}, 1.5, {
+				composersText.x = 20;
+				composersText.y = 200;
+				composersText.x -= 600;
+				composersText.text = 'Section by: ' + sexo;
+				for (cocknballs in [composersText, composersBG]) {
+					if (cocknballs != null) {
+						FlxTween.tween(cocknballs, {x:0}, 1.5, {
 							ease: FlxEase.elasticInOut
 						});
 
-						FlxTween.tween(dicknballs, {x:-1000}, 1.5, {
+						FlxTween.tween(cocknballs, {x:-1000}, 1.5, {
 							startDelay: 6,
 							onComplete: function(tween:FlxTween) {
-								remove(dicknballs);
+								remove(cocknballs);
 							},
 							ease: FlxEase.elasticInOut
 						});
