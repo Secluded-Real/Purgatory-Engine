@@ -73,7 +73,7 @@ class FreeplayState extends MusicBeatState
 		DiscordClient.changePresence("In the Menus", null);
 		#end
 
-		if (WeekData.weeksList.length == 0){
+		if (WeekData.weeksList.length < 3){
 			addSong("Test", 1, 'bf-pixel', 0x000000);
 		}
 
