@@ -103,7 +103,8 @@ class ChartingState extends MusicBeatState
 		['Show/Hide Alt Strumlines', "Shows or hides the alt strumlines\n(On value 1: 0 = off | 1 = on)"],
 		['Move Alt Strumlines', "Changes the position of the alt strumlines\nOn value 1: x, y (ex. 100,80)"],
 		['Thunderstorm type black screen', "adds a thunderstom from the shaggy mod type black screen\nValue 1: (0: Turn off, 1: turn on)"],
-		['Change Camera Speed', "Changes how fast the camrea moves.\nValue 1: Camera Speed"]
+		['Change Camera Speed', "Changes how fast the camrea moves.\nValue 1: Camera Speed"],
+		['Section By Text'. "Displays a Section By: text on the left.\nValue 1: Composer"]
 	];
 
 	// if you're wondering "Why not just put the note types here", my answer is, i'm using this for the description ONLY.

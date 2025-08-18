@@ -4204,6 +4204,25 @@ class PlayState extends MusicBeatState
 				var bitch:Float = Std.parseFloat(value1);
 				cameraSpeed = bitch;
 
+			case 'Section By Text':
+				var sexo:Float = Std.parseFloat(value1);
+				composersWatermark = sexo;
+				for (dicknballs in [composersText, composersBG]) {
+					if (dicknballs != null) {
+						FlxTween.tween(dicknballs, {x:0}, 1.5, {
+							ease: FlxEase.elasticInOut
+						});
+
+						FlxTween.tween(dicknballs, {x:-1000}, 1.5, {
+							startDelay: 6,
+							onComplete: function(tween:FlxTween) {
+								remove(dicknballs);
+							},
+							ease: FlxEase.elasticInOut
+						});
+					}
+				}
+
 			case 'Change Scroll Speed':
 				if (songSpeedType == "constant")
 					return;
