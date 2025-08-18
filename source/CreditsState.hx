@@ -81,12 +81,12 @@ class CreditsState extends MusicBeatState
 		#end
 
 		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
-			['Purgatory Engine Team'],
-			['Secluded',		'secluded',		'Main Programmer and Creator of\n Purgatory Engine',				'https://twitter.com/Secludedig',		'FF0000'],
+			['Purga Engine Team'],
+			['Secluded',		'secluded',			'Main Programmer and Creator of\n Purgatory Engine',				'https://twitter.com/Secludedig',		'FF0000'],
 			['YuyioYT',			'shadowmario',		'Contributor of Purgatory Engine',									'https://twitter.com/Secludedig',		'FFA500'],
 			[''],
-			['Purgatory Engine Contributors'],
-			['Bambi',			'shadowmario',		'Playtester',														'https://twitter.com/Secludedig',		'22CF00'],
+			['Purga Engine Helpers'],
+			['Bambox',			'bambox',			'Playtester',														'https://twitter.com/Secludedig',		'FF0000'],
 			['Psych Engine Team'],
 			['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',								'https://twitter.com/Shadow_Mario_',	'444444'],
 			['RiverOaken',			'river',			'Main Artist/Animator of Psych Engine',							'https://twitter.com/RiverOaken',		'B42F71'],

@@ -170,7 +170,7 @@ class CategoryState extends MusicBeatState
 		textBG.alpha = 0.6;
 		textBG.scrollFactor.set();
 		var leText:String = "< / > Change Category | ACCEPT to proceed | BACK to return";
-		text = new FlxText(textBG.x + -10, textBG.y + 3, FlxG.width, leText, 21);
+		text = new FlxText(textBG.x + -10, textBG.y + 2, FlxG.width, leText, 21);
 		text.setFormat(Paths.font("comic-sans.ttf"), 18, FlxColor.WHITE, CENTER);
 		text.scrollFactor.set();
 		add(textBG);
