@@ -3,92 +3,65 @@
 	"difficulties": "Hard",
 	"hideFreeplay": false,
 	"weekBackground": "stage",
+	"weekBefore": "tutorial",
 	"freeplayColor": [
 		146,
 		113,
 		253
 	],
-	"weekBefore": "tutorial",
 	"startUnlocked": true,
-	"weekCharacters": [
-		"",
-		"",
-		""
-	],
+	"hideStoryMode": true,
 	"songs": [
 		[
-			"Splitathon",
-			"the-duo",
+			"Bopeebo Erect",
+			"dad",
 			[
-				0,
+				146,
 				113,
 				253
 			]
 		],
 		[
-			"Synergy",
-			"bambi",
+			"Fresh Erect",
+			"dad",
+			[
+				146,
+				113,
+				253
+			]
+		],
+		[
+			"Dad Battle Erect",
+			"dad",
+			[
+				146,
+				113,
+				253
+			]
+		],
+		[
+			"Spookeez Erect",
+			"spooky",
 			[
 				255,
-				0,
+				120,
 				0
 			]
 		],
 		[
-			"Roasted",
-			"banbodi",
+			"South Erect",
+			"spooky",
 			[
 				255,
-				255,
-				255
-			]
-		],
-		[
-			"Devastation",
-			"gaytrio",
-			[
-				255,
-				255,
-				255
-			]
-		],
-		[
-			"Detrimental Duo",
-			"baiburg",
-			[
-				255,
-				0,
-				0
-			]
-		],
-		[
-			"Disposition V2",
-			"bambiGod3d",
-			[
-				255,
-				255,
-				255
-			]
-		],
-		[
-			"Shredtagonism",
-			"ohfuck",
-			[
-				255,
-				0,
-				0
-			]
-		],
-		[
-			"Fight Or Bite",
-			"starved",
-			[
-				255,
-				190,
+				120,
 				0
 			]
 		]
 	],
-	"hideStoryMode": false,
-	"weekName": "Rage Week"
+	"weekCharacters": [
+		"",
+		"",
+		""
+	],
+	"weekName": "Remixes"
 }
