@@ -106,6 +106,15 @@ class ChartingState extends MusicBeatState
 		['Change Camera Speed', "Changes how fast the camrea moves.\nValue 1: Camera Speed"]
 	];
 
+	// if you're wondering "Why not just put the note types here", my answer is, i'm using this for the description ONLY.
+	var noteStuff:Array<Dynamic> =
+	[
+		['', "Basic Note."],
+		['Alt Animation', "Makes a character sing with an alternate animation."],
+		['Hey!', "Makes the character do the Hey! Pose."],
+		['Hurt Note', "Creates a note that will harm you\nupon pressing it."]
+	];
+
 	var _file:FileReference;
 
 	var UI_box:FlxUITabMenu;
@@ -554,11 +563,6 @@ class ChartingState extends MusicBeatState
 		gfVersionDropDown.selectedLabel = _song.gfVersion;
 		blockPressWhileScrolling.push(gfVersionDropDown);
 
-		//var text:FlxText = new FlxText(player1DropDown.x + 140, gfVersionDropDown.y + 40, 0, "Song Credit:");
-		//tab_group_event.add(text);
-		//songCreditInputText = new FlxUIInputText(player1DropDown.x + 140, gfVersionDropDown.y - 40, 100, "");
-		//blockPressWhileTypingOn.push(songCreditInputText);
-
 		var player2DropDown = new FlxUIDropDownMenuCustom(player1DropDown.x, gfVersionDropDown.y + 40, FlxUIDropDownMenuCustom.makeStrIdLabelArray(characters, true), function(character:String)
 		{
 			_song.player2 = characters[Std.parseInt(character)];
@@ -574,6 +578,11 @@ class ChartingState extends MusicBeatState
 		});
 		player3DropDown.selectedLabel = _song.player3;
 		blockPressWhileScrolling.push(player3DropDown);
+
+		songCreditInputText = new FlxUIInputText(player3DropDown.x, gfVersionDropDown.y, 100, "");
+		_song.songCredit = songCreditInputText.text;
+		blockPressWhileTypingOn.push(songCreditInputText);
+		
 
 		#if MODS_ALLOWED
 		var directories:Array<String> = [Paths.mods('stages/'), Paths.mods(Paths.currentModDirectory + '/stages/'), Paths.getPreloadPath('stages/')];
@@ -658,12 +667,14 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(new FlxText(gfVersionDropDown.x, gfVersionDropDown.y - 15, 0, 'Girlfriend:'));
 		tab_group_song.add(new FlxText(player1DropDown.x, player1DropDown.y - 15, 0, 'Boyfriend:'));
 		tab_group_song.add(new FlxText(player3DropDown.x, player3DropDown.y - 15, 0, 'Alt Opponent:'));
+		tab_group_song.add(new FlxText(player3DropDown.x, gfVersionDropDown.y - 15, 0, 'Song Credit Text:'));
 		tab_group_song.add(new FlxText(stageDropDown.x, stageDropDown.y - 15, 0, 'Stage:'));
 		tab_group_song.add(new FlxText(noteSkinInputText.x, noteSkinInputText.y - 15, 0, 'Note Texture:'));
 		tab_group_song.add(new FlxText(noteSplashesInputText.x, noteSplashesInputText.y - 15, 0, 'Note Splashes Texture:'));
 		tab_group_song.add(player2DropDown);
 		tab_group_song.add(player3DropDown);
 		tab_group_song.add(gfVersionDropDown);
+		tab_group_song.add(songCreditInputText);
 		tab_group_song.add(player1DropDown);
 		tab_group_song.add(stageDropDown);
 

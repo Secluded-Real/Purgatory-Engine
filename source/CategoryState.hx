@@ -36,6 +36,8 @@ class CategoryState extends MusicBeatState
 
 	private var InMainFreeplayState:Bool = false;
 
+	var text:FlxText;
+
 	private var CurrentSongIcon:FlxSprite;
 
 	var icons:Array<FlxSprite> = [];
@@ -43,7 +45,7 @@ class CategoryState extends MusicBeatState
 	private var camFollow:FlxObject;
 	private static var prevCamFollow:FlxObject;
 
-	private var AllPossibleSongs:Array<String> = ["story", "remixes", "secret"];
+	private var AllPossibleSongs:Array<String> = ["story", "remixes", "secret", "mods"];
 
 	private var CurrentPack:Int = 0;
 
@@ -64,6 +66,7 @@ class CategoryState extends MusicBeatState
 
 	override function create()
 	{
+
 		#if MODS_ALLOWED
 		var disabledMods:Array<String> = [];
 		var directories:Array<String> = [Paths.mods(), Paths.getPreloadPath()];
@@ -163,6 +166,16 @@ class CategoryState extends MusicBeatState
 			titles.push(NameAlpha);
 		}
 
+		var textBG:FlxSprite = new FlxSprite(0, FlxG.height - 46).makeGraphic(FlxG.width, 56, 0xFF000000);
+		textBG.alpha = 0.6;
+		textBG.scrollFactor.set();
+		var leText:String = "< / > Change Category | ACCEPT to proceed | BACK to return";
+		text = new FlxText(textBG.x + -10, textBG.y + 3, FlxG.width, leText, 21);
+		text.setFormat(Paths.font("comic-sans.ttf"), 18, FlxColor.WHITE, CENTER);
+		text.scrollFactor.set();
+		add(textBG);
+		add(text);
+
 		var scale:Float = 1;
 		camFollow = new FlxObject(0, 0, 1, 1);
 		camFollow.setPosition(icons[CurrentPack].x + 256, icons[CurrentPack].y + 450);
@@ -189,9 +202,9 @@ class CategoryState extends MusicBeatState
 			case 'story':
 				FlxG.switchState(new FreeplayState());
 				categorySelected = 'story';
-			case 'extras':
+			case 'mods':
 				FlxG.switchState(new FreeplayState());
-				categorySelected = 'extras';
+				categorySelected = null;
 			case 'remixes':
 				FlxG.switchState(new FreeplayState());
 				categorySelected = 'remixes';

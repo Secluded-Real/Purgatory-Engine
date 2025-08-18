@@ -95,18 +95,25 @@ class FPS extends TextField
 			#if openfl
 			memoryMegas = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
 
+			var megaByteString = " MB";
+			var maxMegaString = " MB";
+			if (memoryMegas > 1000)
+				megaByteString = " GB";
+			if (maxMemory > 1000)
+				maxMegaString = " GB";
+
 			//eat ass
 			if (memoryMegas > maxMemory)
 				maxMemory = memoryMegas;
 
 			if (ClientPrefs.fpsCountType == 'Psych')
-				text += "\nMemory: " + memoryMegas + " MB";
+				text += "\nMemory: " + memoryMegas + megaByteString;
 			if (ClientPrefs.fpsCountType == 'Dave and Bambi')
-				text += "\nMemory:\n" + memoryMegas + " MB";
+				text += "\nMemory:\n" + memoryMegas + megaByteString;
 			if (ClientPrefs.fpsCountType == 'Gapple 1.5')
-				text += "\nRAM Used: " + memoryMegas + " MB";
+				text += "\nRAM Used: " + memoryMegas + megaByteString;
 			if (ClientPrefs.showMaxRam)
-				text += " / " + maxMemory + " MB";
+				text += " / " + maxMemory + maxMegaString;
 			#end
 
 			textColor = 0xFFFFFFFF;

@@ -52,7 +52,6 @@ class HealthIcon extends FlxSprite
 			if(!Paths.fileExists('images/' + xmlPath + '.xml', IMAGE)) xmlPath = 'icons/face'; //Prevents crash from missing icon
 
 			var xmlPath:String = 'icons/' + char + '.xml';
-            trace("XML file exists: " + xmlPath);
 			animation.addByPrefix('neutral', 'Neutral', 12, true, isPlayer);
 			animation.addByPrefix('defeat', 'Defeat', 12, true, isPlayer);
 			animation.addByPrefix('winning', 'Winning', 12, true, isPlayer);

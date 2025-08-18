@@ -419,16 +419,12 @@ class PlayState extends MusicBeatState
 
 		var rating:Rating = new Rating('sick');
 		rating.ratingMod = 1;
-		if (!ClientPrefs.removePerfects)
-			rating.ratingMod = 0.6;
 		rating.score = 350;
 		rating.noteSplash = true;
 		ratingsData.push(rating);
 
 		var rating:Rating = new Rating('good');
 		rating.ratingMod = 0.7;
-		if (!ClientPrefs.removePerfects)
-			rating.ratingMod = 0.5;
 		rating.score = 200;
 		rating.noteSplash = false;
 		ratingsData.push(rating);
@@ -1327,6 +1323,47 @@ class PlayState extends MusicBeatState
 		if(ClientPrefs.downScroll) {
 			botplayTxt.y = timeBarBG.y - 78;
 		}
+
+		var composersWatermark:String;
+		composersWatermark = SONG.songCredit;
+
+		// credits shit //
+
+		composersText = new FlxText(20, 40/*hi remember that this is the y pos*/, 0, "", 20);
+		composersText.setFormat(Paths.font("comic.ttf"), 28, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		composersText.borderSize = 1.25;
+		composersText.borderQuality = 2;
+		composersText.y = 200;
+		composersText.x -= 600;
+		composersText.scrollFactor.set();
+		composersText.cameras = [camOther];
+        composersText.text = 'Song by ' + composersWatermark;
+    	if(composersWatermark != ' ')
+	    	add(composersText);
+
+		composersBG = new FlxSprite().makeGraphic(Std.int((composersText.textField.width) + 20), Std.int((composersText.height / 2)) + 30,
+			FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]));
+        composersBG.alpha = 0.6;
+		composersBG.y = 200;
+		composersBG.x -= 600;
+		composersBG.scrollFactor.set();
+		composersBG.updateHitbox();
+		composersBG.cameras = [camOther];
+		#if !debug
+		if(composersWatermark != ' ')
+	    	insert(members.indexOf(composersText), composersBG);
+		#end
+
+		// shit for debug
+		#if debug
+		if(composersWatermark == ' ') {
+			trace('yo the song doesnt have a composer in the code, please add it if it has one');
+			composersText.text = 'Song By Unknown';
+		}
+		add(composersText);
+		insert(members.indexOf(composersText), composersBG);	
+		#end
+	    // Ends Here //
 
 		blackScreendeez.cameras = [camHUD];
 		strumLineNotes.cameras = [camHUD];
@@ -2628,6 +2665,23 @@ class PlayState extends MusicBeatState
 		FlxTween.tween(timeBar, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		FlxTween.tween(timeTxt.scale, {x: 1, y: 1}, 0.75, {ease: FlxEase.backOut});
+
+		// for the credits //
+		for (dicknballs in [composersText, composersBG]) {
+			if (dicknballs != null) {
+				FlxTween.tween(dicknballs, {x:0}, 1.5, {
+					ease: FlxEase.elasticInOut
+				});
+
+				FlxTween.tween(dicknballs, {x:-1000}, 1.5, {
+					startDelay: 6,
+					onComplete: function(tween:FlxTween) {
+						remove(dicknballs);
+					},
+					ease: FlxEase.elasticInOut
+				});
+			}
+		}
 
 		switch(curStage)
 		{
