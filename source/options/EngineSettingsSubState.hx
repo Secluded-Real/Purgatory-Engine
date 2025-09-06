@@ -70,6 +70,14 @@ class EngineSettingsSubState extends BaseOptionsMenu
 			['Disabled', 'Simple', 'Advanced']);
 		addOption(option);
 
+		var option:Option = new Option('Freeplay Shape:',
+			"Changes the shape of the Freeplay Menu",
+			'freeplayShape',
+			'string',
+			'Vanilla',
+			['Vanilla', 'C-Shape', 'D-Shape']);
+		addOption(option);
+
         super();
     }
 }
