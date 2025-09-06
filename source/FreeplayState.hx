@@ -113,6 +113,9 @@ class FreeplayState extends MusicBeatState
 		{
 			var songText:Alphabet = new Alphabet(90, 320, songs[i].songName, true);
 			songText.isMenuItem = true;
+			if (ClientPrefs.freeplayShape != 'Vanilla'){
+				songText.itemType = ClientPrefs.freeplayShape;
+			}
 			songText.targetY = i - curSelected;
 			grpSongs.add(songText);
 
