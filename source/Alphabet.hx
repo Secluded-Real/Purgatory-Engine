@@ -31,6 +31,8 @@ class Alphabet extends FlxSpriteGroup
 	public var changeX:Bool = true;
 	public var changeY:Bool = true;
 
+	public var itemType:String = "";
+
 	public var alignment(default, set):Alignment = LEFT;
 	public var scaleX(default, set):Float = 1;
 	public var scaleY(default, set):Float = 1;
@@ -158,6 +160,8 @@ class Alphabet extends FlxSpriteGroup
 
 	override function update(elapsed:Float)
 	{
+		var scaledY = FlxMath.remapToRange(targetY, 0, 1, 0, 1.3);
+		
 		if (isMenuItem)
 		{
 			var lerpVal:Float = CoolUtil.boundTo(elapsed * 9.6, 0, 1);
@@ -166,6 +170,29 @@ class Alphabet extends FlxSpriteGroup
 			if(changeY)
 				y = FlxMath.lerp(y, (targetY * 1.3 * distancePerItem.y) + startPosition.y, lerpVal);
 		}
+
+		switch (itemType)
+		{
+			case "C-Shape":
+				y = FlxMath.lerp(y, (scaledY * 65) + (FlxG.height * 0.39), 0.16);
+
+				x = FlxMath.lerp(x, Math.exp(scaledY * 0.8) * 70 + (FlxG.width * 0.1), 0.16);
+				if (scaledY < 0)
+					x = FlxMath.lerp(x, Math.exp(scaledY * -0.8) * 70 + (FlxG.width * 0.1), 0.16);
+
+				if (x > FlxG.width + 30)
+					x = FlxG.width + 30;
+			case "D-Shape":
+				y = FlxMath.lerp(y, (scaledY * 90) + (FlxG.height * 0.45), 0.16);
+	
+				x = FlxMath.lerp(x, Math.exp(scaledY * 0.8) * -70 + (FlxG.width * 0.35), 0.16);
+				if (scaledY < 0)
+					x = FlxMath.lerp(x, Math.exp(scaledY * -0.8) * -70 + (FlxG.width * 0.35), 0.16);
+	
+				if (x < -900)
+					x = -900;
+		}
+
 		super.update(elapsed);
 	}
 
