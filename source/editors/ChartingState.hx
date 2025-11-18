@@ -374,18 +374,18 @@ class ChartingState extends MusicBeatState
 		\nHold Shift to move 4x faster
 		\nHold Control and click on an arrow to select it
 		\nZ/X - Zoom in/out
+		\nCTRL + Z - Undo Change
 		\n
 		\nEsc - Test your chart inside Chart Editor
 		\nEnter - Play your chart
 		\nQ/E - Decrease/Increase Note Sustain Length
-		\nCTRL + Z - Undo Change
 		\nSpace - Stop/Resume song";
 
 		var tipTextArray:Array<String> = text.split('\n');
 		for (i in 0...tipTextArray.length) {
 			var tipText:FlxText = new FlxText(UI_box.x, UI_box.y + UI_box.height + 8, 0, tipTextArray[i], 16);
 			tipText.y += i * 12;
-			tipText.setFormat(Paths.font("vcr.ttf"), 14, FlxColor.WHITE, LEFT/*, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK*/);
+			tipText.setFormat(Paths.font("vcr.ttf"), 10, FlxColor.WHITE, LEFT/*, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK*/);
 			//tipText.borderSize = 2;
 			tipText.scrollFactor.set();
 			add(tipText);
@@ -583,7 +583,7 @@ class ChartingState extends MusicBeatState
 		blockPressWhileScrolling.push(player3DropDown);
 
 		songCreditInputText = new FlxUIInputText(player3DropDown.x, gfVersionDropDown.y, 100, "");
-		_song.songCredit = songCreditInputText.text;
+		songCreditInputText.text = _song.songCredit;
 		blockPressWhileTypingOn.push(songCreditInputText);
 		
 
