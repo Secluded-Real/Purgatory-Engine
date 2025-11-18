@@ -55,6 +55,22 @@ class VisualsUISubState extends BaseOptionsMenu
 			'Time Left',
 			['Time Left', 'Time Elapsed', 'Song Name', 'Elapsed + Song Name', 'Disabled']);
 		addOption(option);
+/*
+		var option:Option = new Option('Time Bar Text Size',
+			"Sets the size of the Time Bar's text.",
+			*/
+
+
+		var option:Option = new Option('Time Bar Text Size',
+			"Sets the size of the Time Bar's text.",
+			'barTextSize',
+			'float',
+			16);
+		option.scrollSpeed = 5;
+		option.minValue = 16;
+		option.maxValue = 32;
+		option.changeValue = 1;
+		addOption(option);
 
 		var option:Option = new Option('Flashing Lights',
 			"Uncheck this if you're sensitive to flashing lights!",

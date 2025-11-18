@@ -102,16 +102,17 @@ class ChartingState extends MusicBeatState
 		['Toggle Blocked Glitch', "Toggles the glitch effect as seen in blocked\n(On value 1: 0 = off | 1 = on)"],
 		['Show/Hide Alt Strumlines', "Shows or hides the alt strumlines\n(On value 1: 0 = off | 1 = on)"],
 		['Move Alt Strumlines', "Changes the position of the alt strumlines\nOn value 1: x, y (ex. 100,80)"],
+		['Set Alt Strumline Scrollfactor', "Sets the scrollfactor of the alt strumlines\nOn value 1: scrollx, scrolly (ex. 1.5,1.5)"],
 		['Thunderstorm type black screen', "adds a thunderstom from the shaggy mod type black screen\nValue 1: (0: Turn off, 1: turn on)"],
 		['Change Camera Speed', "Changes how fast the camrea moves.\nValue 1: Camera Speed"],
 		['Section By Text', "Displays a Section By: text on the left.\nValue 1: Composer"]
 	];
 
-	// if you're wondering "Why not just put the note types here", my answer is, i'm using this for the description ONLY.
+	// This is scrapped for now.
 	var noteStuff:Array<Dynamic> =
 	[
 		['', "Basic Note."],
-		['Alt Animation', "Makes a character sing with an alternate animation."],
+		['Alt Animation', "Makes a character sing with an alternate animation\nusing an -alt prefix"],
 		['Hey!', "Makes the character do the Hey! Pose."],
 		['Hurt Note', "Creates a note that will harm you\nupon pressing it."]
 	];
@@ -526,7 +527,7 @@ class ChartingState extends MusicBeatState
 		#end
 
 		var tempMap:Map<String, Bool> = new Map<String, Bool>();
-		var characters:Array<String> = CoolUtil.coolTextFile(Paths.txt('characterList'));
+		var characters:Array<String> = [''].concat(CoolUtil.coolTextFile(Paths.txt('characterList')));
 		for (i in 0...characters.length) {
 			tempMap.set(characters[i], true);
 		}
