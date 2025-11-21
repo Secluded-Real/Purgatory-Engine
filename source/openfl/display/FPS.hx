@@ -103,8 +103,15 @@ class FPS extends TextField
 				maxMegaString = " GB";
 
 			//eat ass
-			if (memoryMegas > maxMemory)
+			if (memoryMegas > (maxMemory - 1))
 				maxMemory = memoryMegas;
+
+			if ((System.totalMemory / 1000000) > 1024){
+				memoryMegas = FlxMath.roundDecimal(memoryMegas / 1024, 2);
+			}
+			if (maxMemory > (System.totalMemory / 1000000)){
+				maxMemory = FlxMath.roundDecimal(maxMemory / 1024, 2);
+			}
 
 			if (ClientPrefs.fpsCountType == 'Psych')
 				text += "\nMemory: " + memoryMegas + megaByteString;
