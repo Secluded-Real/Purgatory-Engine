@@ -331,6 +331,11 @@ class PlayState extends MusicBeatState
 	// piss
 	var doingSMzoom:Bool = false;
 
+	//mommy did i do a no no again
+	public var bfNoteSkin:String = null;
+	public var dadNoteSkin:String = null;
+	public var player3NoteSkin:String = null;
+
 	// how big to stretch the pixel art assets
 	public static var daPixelZoom:Float = 6;
 	private var singAnimations:Array<String> = ['singLEFT', 'singDOWN', 'singUP', 'singRIGHT'];
@@ -1064,17 +1069,20 @@ class PlayState extends MusicBeatState
 		startCharacterPos(dad, true);
 		dadGroup.add(dad);
 		startCharacterLua(dad.curCharacter);
+		dadNoteSkin = dad.daNoteSkin;
 
 		player3 = new Character(0, 0, SONG.player3);
 		if (SONG.player3 == null || SONG.player3 == '') player3.alpha = 0.00001;
 		startCharacterPos(player3, true);
 		player3Group.add(player3);
 		startCharacterLua(player3.curCharacter);
+		player3NoteSkin = player3.daNoteSkin;
 		
 		boyfriend = new Boyfriend(0, 0, SONG.player1);
 		startCharacterPos(boyfriend);
 		boyfriendGroup.add(boyfriend);
 		startCharacterLua(boyfriend.curCharacter);
+		bfNoteSkin = boyfriend.daNoteSkin;
 
 		var camPos:FlxPoint = new FlxPoint(girlfriendCameraOffset[0], girlfriendCameraOffset[1]);
 		if(gf != null)
@@ -1327,7 +1335,7 @@ class PlayState extends MusicBeatState
 		var composersWatermark:String;
 		composersWatermark = SONG.songCredit;
 
-		if (composersWatermark == null || composersWatermark == 'null')
+		if (composersWatermark == null || composersWatermark == 'null' || composersWatermark == '')
 			composersWatermark == 'Unknown!';
 
 		// credits shit //
@@ -2887,6 +2895,9 @@ class PlayState extends MusicBeatState
 		// trace(unspawnNotes.length);
 		// playerCounter += 1;
 
+		bfNoteSkin = boyfriend.daNoteSkin;
+		dadNoteSkin = dad.daNoteSkin;
+
 		unspawnNotes.sort(sortByShit);
 		if(eventNotes.length > 1) { //No need to sort if there's a single one or none at all
 			eventNotes.sort(sortByTime);
@@ -2899,6 +2910,7 @@ class PlayState extends MusicBeatState
 		switch(event.event) {
 			case 'Change Character':
 				var charType:Int = 0;
+				var shittyshit:String = null;
 				switch(event.value1.toLowerCase()) {
 					case 'gf' | 'girlfriend' | '1':
 						charType = 2;
@@ -3012,6 +3024,7 @@ class PlayState extends MusicBeatState
 				if(!ClientPrefs.opponentStrums) targetAlpha = 0;
 				else if(ClientPrefs.middleScroll) targetAlpha = 0.35;
 			}
+			var noteSkinExists:Bool = Paths.fileExists("images/noteskins/" + ((player == 0) ? dadNoteSkin : bfNoteSkin) + '.png', IMAGE);
 			var babyArrow:StrumNote;
 			if (player < 2)
 				babyArrow = new StrumNote(ClientPrefs.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, strumLine.y, i, player);
@@ -3035,6 +3048,12 @@ class PlayState extends MusicBeatState
 				}
 			} else
 				babyArrow.alpha = 0;
+
+			if (noteSkinExists)
+			{
+				babyArrow.texture = "noteskins/" + ((player == 0) ? dad.daNoteSkin : boyfriend.daNoteSkin);
+				trace('im soo stuffed. fuck me.');
+			}
 
 			if (player == 1)
 			{

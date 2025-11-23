@@ -497,7 +497,7 @@ class CharacterEditorState extends MusicBeatState
 
 	var imageInputText:FlxUIInputText;
 	var healthIconInputText:FlxUIInputText;
-	//var noteskinInputText:FlxUIInputText;
+	var noteskinInputText:FlxUIInputText;
 
 	var singDurationStepper:FlxUINumericStepper;
 	var scaleStepper:FlxUINumericStepper;
@@ -541,7 +541,7 @@ class CharacterEditorState extends MusicBeatState
 		healthIconInputText = new FlxUIInputText(15, imageInputText.y + 35, 75, leHealthIcon.getCharacter(), 8);
 
 		//saving for 0.2 - Secluded
-		//noteskinInputText = new FlxUIInputText(115, imageInputText.y + 35, 75, '', 8);
+		noteskinInputText = new FlxUIInputText(115, imageInputText.y + 35, 75, '', 8);
 
 		singDurationStepper = new FlxUINumericStepper(15, healthIconInputText.y + 45, 0.1, 4, 0, 999, 1);
 
@@ -586,7 +586,7 @@ class CharacterEditorState extends MusicBeatState
 		tab_group.add(new FlxText(15, imageInputText.y - 18, 0, 'Image file name:'));
 		tab_group.add(new FlxText(15, healthIconInputText.y - 18, 0, 'Health icon name:'));
 		//saved for 0.2 - Secluded
-		//tab_group.add(new FlxText(115, healthIconInputText.y - 18, 0, 'Noteskin name:'));
+		tab_group.add(new FlxText(115, healthIconInputText.y - 18, 0, 'Noteskin name:'));
 		tab_group.add(new FlxText(15, singDurationStepper.y - 18, 0, 'Sing Animation length:'));
 		tab_group.add(new FlxText(15, scaleStepper.y - 18, 0, 'Scale:'));
 		tab_group.add(new FlxText(positionXStepper.x, positionXStepper.y - 18, 0, 'Character X/Y:'));
@@ -597,7 +597,7 @@ class CharacterEditorState extends MusicBeatState
 		tab_group.add(decideIconColor);
 		tab_group.add(healthIconInputText);
 		//saving for 0.2 - Secluded
-		//tab_group.add(noteskinInputText);
+		tab_group.add(noteskinInputText);
 		tab_group.add(singDurationStepper);
 		tab_group.add(scaleStepper);
 		tab_group.add(flipXCheckBox);
