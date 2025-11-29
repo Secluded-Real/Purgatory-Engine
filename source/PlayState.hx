@@ -2596,6 +2596,10 @@ class PlayState extends MusicBeatState
 			+ ' | '
 			+ (ratingName != '?' ? '($ratingFC) ' + ratingName : 'N/A');
 
+		if (practiceMode){
+			scoreTxt.text = 'Practice Mode | ' + ' | Combo Breaks: ' + songMisses;
+		}
+
 		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
 		{
 			if(scoreTxtTween != null) {

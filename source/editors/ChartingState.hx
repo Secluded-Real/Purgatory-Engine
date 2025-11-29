@@ -1770,12 +1770,12 @@ class ChartingState extends MusicBeatState
 				{
 					UI_box.selected_tab -= 1;
 					if (UI_box.selected_tab < 0)
-						UI_box.selected_tab = 2;
+						UI_box.selected_tab = 4;
 				}
 				else
 				{
 					UI_box.selected_tab += 1;
-					if (UI_box.selected_tab >= 3)
+					if (UI_box.selected_tab >= 5)
 						UI_box.selected_tab = 0;
 				}
 			}
