@@ -2597,7 +2597,7 @@ class PlayState extends MusicBeatState
 			+ (ratingName != '?' ? '($ratingFC) ' + ratingName : 'N/A');
 
 		if (practiceMode){
-			scoreTxt.text = 'Practice Mode | ' + ' | Combo Breaks: ' + songMisses;
+			scoreTxt.text = 'Practice Mode' + ' | Combo Breaks: ' + songMisses;
 		}
 
 		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
@@ -4217,6 +4217,7 @@ class PlayState extends MusicBeatState
 							player3 = player3Map.get(value2);
 							player3.alpha = (value2 == '') ? 0.00001 : lastAlpha;
 							// iconP2.changeIcon(dad.healthIcon);
+							setOnLuas('player3Name', dad.curCharacter);
 						}
 				}
 				reloadHealthBarColors();

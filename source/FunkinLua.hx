@@ -179,6 +179,8 @@ class FunkinLua {
 			set('defaultPlayerStrumY' + i, 0);
 			set('defaultOpponentStrumX' + i, 0);
 			set('defaultOpponentStrumY' + i, 0);
+			set('defaultAltStrumX' + i, 0);
+			set('defaultAltStrumY' + i, 0);
 		}
 
 		// Default character positions woooo
@@ -192,6 +194,7 @@ class FunkinLua {
 		// Character shit
 		set('boyfriendName', PlayState.SONG.player1);
 		set('dadName', PlayState.SONG.player2);
+		set('player3Name', PlayState.SONG.player3);
 		set('gfName', PlayState.SONG.gfVersion);
 
 		// Some settings, no jokes
