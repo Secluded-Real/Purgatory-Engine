@@ -103,7 +103,7 @@ class FPS extends TextField
 				maxMegaString = " GB";
 
 			//eat ass
-			if (memoryMegas > (maxMemory - 1))
+			if (memoryMegas > maxMemory)
 				maxMemory = memoryMegas;
 
 			if ((System.totalMemory / 1000000) > 1024){
