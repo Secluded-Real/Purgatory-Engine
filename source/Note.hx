@@ -90,8 +90,6 @@ class Note extends FlxSprite
 
 	public var texture(default, set):String = null;
 
-	public var songData:Array<Dynamic>;
-
 	public var noAnimation:Bool = false;
 	public var noMissAnimation:Bool = false;
 	public var hitCausesMiss:Bool = false;
@@ -104,12 +102,6 @@ class Note extends FlxSprite
 		multSpeed = value;
 		//trace('fuck cock');
 		return value;
-	}
-
-	public function setStrumTime(v:Float)
-	{
-		this.songData[0] = v;
-		this.strumTime = v;
 	}
 
 	public function resizeByRatio(ratio:Float) //haha funny twitter shit
