@@ -45,7 +45,7 @@ class CategoryState extends MusicBeatState
 	private var camFollow:FlxObject;
 	private static var prevCamFollow:FlxObject;
 
-	private var AllPossibleSongs:Array<String> = ["story", "remixes", "secret", "mods"];
+	private var AllPossibleSongs:Array<String> = ["story", "mods"];
 
 	private var CurrentPack:Int = 0;
 

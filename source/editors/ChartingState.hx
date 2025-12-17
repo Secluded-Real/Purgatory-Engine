@@ -584,6 +584,9 @@ class ChartingState extends MusicBeatState
 
 		songCreditInputText = new FlxUIInputText(player3DropDown.x, gfVersionDropDown.y, 100, "");
 		songCreditInputText.text = _song.songCredit;
+		if (_song.songCredit == null || _song.songCredit == 'null' || _song.songCredit == ''){
+			songCreditInputText.text = 'Unknown!';
+		}
 		blockPressWhileTypingOn.push(songCreditInputText);
 		
 

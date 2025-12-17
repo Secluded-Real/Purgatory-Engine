@@ -1284,7 +1284,7 @@ class PlayState extends MusicBeatState
 		songinfoBar = new FlxText(5, healthBarBG.y + 50, FlxG.width, SONG.song, 20);
 		songinfoBar.setFormat(Paths.font("comic.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		songinfoBar.borderSize = 1.25;
-		songinfoBar.text += " (" + storyDifficultyText + ")";
+		songinfoBar.text += " (" + CoolUtil.difficulties[storyDifficulty] + ")";
 		if(chartingMode)
 			songinfoBar.text += ' [CHARTING MODE]';
 		songinfoBar.scrollFactor.set();

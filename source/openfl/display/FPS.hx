@@ -97,9 +97,9 @@ class FPS extends TextField
 
 			var megaByteString = " MB";
 			var maxMegaString = " MB";
-			if (memoryMegas > 1000)
+			if (memoryMegas > 1024)
 				megaByteString = " GB";
-			if (maxMemory > 1000)
+			if (maxMemory > 1024)
 				maxMegaString = " GB";
 
 			//eat ass
