@@ -231,24 +231,26 @@ class WeekData {
 		var originalLength:Int = directories.length;
 		#end
 
-		var sexList:Array<String> = CoolUtil.coolTextFile(Paths.getPreloadPath('weeks/weekList.txt'));
-		for (i in 0...sexList.length) {
-			for (j in 0...directories.length) {
-				var fileToCheck:String = directories[j] + 'weeks/story/' + sexList[i] + '.json';
-				if(!weeksLoaded.exists(sexList[i])) {
-					var week:WeekFile = getWeekFile(fileToCheck);
-					if(week != null) {
-						var weekFile:WeekData = new WeekData(week, sexList[i]);
+		if (CategoryState.categorySelected != null){
+			var sexList:Array<String> = CoolUtil.coolTextFile(Paths.getPreloadPath('weeks/weekList.txt'));
+			for (i in 0...sexList.length) {
+				for (j in 0...directories.length) {
+					var fileToCheck:String = directories[j] + 'weeks/story/' + sexList[i] + '.json';
+					if(!weeksLoaded.exists(sexList[i])) {
+						var week:WeekFile = getWeekFile(fileToCheck);
+						if(week != null) {
+							var weekFile:WeekData = new WeekData(week, sexList[i]);
 
-						#if MODS_ALLOWED
-						if(j >= originalLength) {
-							weekFile.folder = directories[j].substring(Paths.mods().length, directories[j].length-1);
-						}
-						#end
+							#if MODS_ALLOWED
+							if(j >= originalLength) {
+								weekFile.folder = directories[j].substring(Paths.mods().length, directories[j].length-1);
+							}
+							#end
 
-						if(weekFile != null && (isStoryMode == null || (isStoryMode && !weekFile.hideStoryMode) || (!isStoryMode && !weekFile.hideFreeplay))) {
-							weeksLoaded.set(sexList[i], weekFile);
-							weeksList.push(sexList[i]);
+							if(weekFile != null && (isStoryMode == null || (isStoryMode && !weekFile.hideStoryMode) || (!isStoryMode && !weekFile.hideFreeplay))) {
+								weeksLoaded.set(sexList[i], weekFile);
+								weeksList.push(sexList[i]);
+							}
 						}
 					}
 				}

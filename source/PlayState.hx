@@ -324,6 +324,9 @@ class PlayState extends MusicBeatState
 
 	public var defaultCamZoom:Float = 1.05;
 
+	public var camZoomSpeed:Float = 1;
+	public var hudZoomSpeed:Float = 1;
+
 	// shit for events
 	var allowGamecamToZoom:Bool = true;
 	var allowHUDcamToZoom:Bool = true;
@@ -3555,9 +3558,9 @@ class PlayState extends MusicBeatState
 		if (camZooming)
 		{
 			if(allowGamecamToZoom)
-				FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125 * camZoomingDecay * playbackRate), 0, 1));
+				FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, CoolUtil.boundTo(camZoomSpeed - (elapsed * 3.125 * camZoomingDecay * playbackRate), 0, 1));
 			if(allowHUDcamToZoom)
-				camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125 * camZoomingDecay * playbackRate), 0, 1));
+				camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, CoolUtil.boundTo(hudZoomSpeed - (elapsed * 3.125 * camZoomingDecay * playbackRate), 0, 1));
 		}
 
 		FlxG.watch.addQuick("secShit", curSection);
@@ -4328,6 +4331,12 @@ class PlayState extends MusicBeatState
 				} else {
 					FunkinLua.setVarInArray(this, value1, value2);
 				}
+			case 'Set Camera Zoom speed': 
+				var mZoom:Float = Std.parseFloat(value1);
+				if(Math.isNaN(mZoom)) mZoom = 1;
+
+				camZoomSpeed = mZoom;
+				hudZoomSpeed = mZoom;
 			case 'Slightly transparent Black Screen' | 'Thunderstorm type black screen': // ig u could say its for backwards compatibility??
 				var ballsId:Int = Std.parseInt(value1);
 				switch (ballsId)
