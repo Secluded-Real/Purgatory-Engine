@@ -216,6 +216,7 @@ class CategoryState extends MusicBeatState
 
 	public function UpdatePackSelection(change:Int)
 	{
+		FlxG.sound.play(Paths.sound('scrollMenu'), 0.2);
 		CurrentPack += change;
 		if (CurrentPack == -1)
 			CurrentPack = AllPossibleSongs.length - 1;

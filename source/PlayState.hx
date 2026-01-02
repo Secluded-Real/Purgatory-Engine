@@ -4220,7 +4220,7 @@ class PlayState extends MusicBeatState
 							player3 = player3Map.get(value2);
 							player3.alpha = (value2 == '') ? 0.00001 : lastAlpha;
 							// iconP2.changeIcon(dad.healthIcon);
-							setOnLuas('player3Name', dad.curCharacter);
+							setOnLuas('player3Name', player3.curCharacter);
 						}
 				}
 				reloadHealthBarColors();

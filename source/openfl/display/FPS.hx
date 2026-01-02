@@ -95,9 +95,13 @@ class FPS extends TextField
 			#if openfl
 			memoryMegas = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
 
+			if ((System.totalMemory / 1000000) > 1024){
+				memoryMegas = FlxMath.roundDecimal(memoryMegas / 1024, 2);
+			}
+
 			var megaByteString = " MB";
 			var maxMegaString = " MB";
-			if (memoryMegas > 1024)
+			if ((System.totalMemory / 1000000) > 1024)
 				megaByteString = " GB";
 			if (maxMemory > 1024)
 				maxMegaString = " GB";
@@ -105,13 +109,6 @@ class FPS extends TextField
 			//eat ass
 			if (memoryMegas > (maxMemory - 1))
 				maxMemory = memoryMegas;
-
-			if ((System.totalMemory / 1000000) > 1024){
-				memoryMegas = FlxMath.roundDecimal(memoryMegas / 1024, 2);
-			}
-			if (maxMemory > (System.totalMemory / 1000000)){
-				maxMemory = FlxMath.roundDecimal(maxMemory / 1024, 2);
-			}
 
 			if (ClientPrefs.fpsCountType == 'Psych')
 				text += "\nMemory: " + memoryMegas + megaByteString;
