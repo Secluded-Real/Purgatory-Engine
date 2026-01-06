@@ -335,9 +335,9 @@ class PlayState extends MusicBeatState
 	var doingSMzoom:Bool = false;
 
 	//mommy did i do a no no again
-	public var bfNoteSkin:String = null;
-	public var dadNoteSkin:String = null;
-	public var player3NoteSkin:String = null;
+	public static var bfNoteSkin:String = null;
+	public static var dadNoteSkin:String = null;
+	public static var player3NoteSkin:String = null;
 
 	// how big to stretch the pixel art assets
 	public static var daPixelZoom:Float = 6;
@@ -1287,7 +1287,7 @@ class PlayState extends MusicBeatState
 		songinfoBar = new FlxText(5, healthBarBG.y + 50, FlxG.width, SONG.song, 20);
 		songinfoBar.setFormat(Paths.font("comic.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		songinfoBar.borderSize = 1.25;
-		songinfoBar.text += " (" + CoolUtil.difficulties[storyDifficulty] + ")";
+		songinfoBar.text += " - " + CoolUtil.difficulties[storyDifficulty].toUpperCase();
 		if(chartingMode)
 			songinfoBar.text += ' [CHARTING MODE]';
 		songinfoBar.scrollFactor.set();
@@ -2810,6 +2810,7 @@ class PlayState extends MusicBeatState
 
 				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
 				swagNote.mustPress = gottaHitNote;
+				swagNote.player = gottaHitNote ? 0 : 1;
 				swagNote.sustainLength = songNotes[2];
 				swagNote.gfNote = (section.gfSection && (songNotes[1]<4));
 				swagNote.noteType = songNotes[3];
@@ -2818,6 +2819,7 @@ class PlayState extends MusicBeatState
 				swagNote.scrollFactor.set();
 
 				if (swagNote.noteType == 'Alt Strum') {
+					swagNote.player = 2;
 					swagNote.scrollFactor.set(1.25,1.25);
 					swagNote.cameras = [camGame];
 					swagNote.mustPress = false; // since you're probably only gonna use it for the opponent
@@ -2904,6 +2906,7 @@ class PlayState extends MusicBeatState
 
 		bfNoteSkin = boyfriend.daNoteSkin;
 		dadNoteSkin = dad.daNoteSkin;
+		player3NoteSkin = player3.daNoteSkin;
 
 		unspawnNotes.sort(sortByShit);
 		if(eventNotes.length > 1) { //No need to sort if there's a single one or none at all
@@ -3056,11 +3059,13 @@ class PlayState extends MusicBeatState
 			} else
 				babyArrow.alpha = 0;
 
+				/*
 			if (noteSkinExists)
 			{
 				babyArrow.texture = "noteskins/" + ((player == 0) ? dad.daNoteSkin : boyfriend.daNoteSkin);
 				trace('im soo stuffed. fuck me.');
 			}
+				*/
 
 			if (player == 1)
 			{
@@ -3429,6 +3434,9 @@ class PlayState extends MusicBeatState
 			glitchShader.set_Enabled(glitchCam);
 		}
 
+		bfNoteSkin = boyfriend.daNoteSkin;
+		dadNoteSkin = dad.daNoteSkin;
+		player3NoteSkin = player3.daNoteSkin;
 
 		if (controls.PAUSE && startedCountdown && canPause)
 		{

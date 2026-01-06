@@ -97,6 +97,8 @@ class Note extends FlxSprite
 
 	public var hitsoundDisabled:Bool = false;
 
+	public var player:Int = 0;
+
 	private function set_multSpeed(value:Float):Float {
 		resizeByRatio(value / multSpeed);
 		multSpeed = value;
@@ -271,8 +273,16 @@ class Note extends FlxSprite
 		var skin:String = texture;
 		if(texture.length < 1) {
 			skin = PlayState.SONG.arrowSkin;
-			if(skin == null || skin.length < 1) {
+			if(skin == null || skin.length < 1) { 
 				skin = 'NOTE_assets';
+				//if (PlayState.bfNoteSkin != null && player == 1)
+				//	skin = PlayState.bfNoteSkin;
+
+				if (PlayState.dadNoteSkin != null && player == 0)
+					skin = PlayState.dadNoteSkin;
+
+				if (PlayState.player3NoteSkin != null && PlayState.player3NoteSkin.length > 1 && player == 2)
+					skin = PlayState.player3NoteSkin;
 			}
 		}
 

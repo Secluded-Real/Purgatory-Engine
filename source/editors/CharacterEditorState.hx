@@ -777,11 +777,9 @@ class CharacterEditorState extends MusicBeatState
 			else if(sender == imageInputText) {
 				char.imageFile = imageInputText.text;
 			}
-			/*
 			else if (sender == noteskinInputText){
 				char.daNoteSkin = noteskinInputText.text;
 			}
-				*/
 		} else if(id == FlxUINumericStepper.CHANGE_EVENT && (sender is FlxUINumericStepper)) {
 			if (sender == scaleStepper)
 			{
@@ -998,7 +996,7 @@ class CharacterEditorState extends MusicBeatState
 		if(UI_characterbox != null) {
 			imageInputText.text = char.imageFile;
 			healthIconInputText.text = char.healthIcon;
-			//noteskinInputText.text = char.daNoteSkin;
+			noteskinInputText.text = char.daNoteSkin;
 			singDurationStepper.value = char.singDuration;
 			scaleStepper.value = char.jsonScale;
 			flipXCheckBox.checked = char.originalFlipX;
