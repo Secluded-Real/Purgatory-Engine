@@ -1298,10 +1298,15 @@ class PlayState extends MusicBeatState
 			add(songinfoBar);
 		}
 
+		var thatFont:String = (ClientPrefs.uiStyle == 'Dave Engine' || ClientPrefs.uiStyle == "Bambi's Purgatory") ? "Comic Sans MS Bold.ttf" : 'vcr.ttf';
 		scoreTxt = new FlxText(0, healthBarBG.y + 50, FlxG.width, "", 20);
-		scoreTxt.setFormat(Paths.font("Comic Sans MS Bold.ttf"), 17, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		//if (ClientPrefs.uiStyle == 'Base Game'){
+			//scoreTxt.x = healthBarBG.x + healthBarBG.width - 190;
+    		//scoreTxt.y = healthBarBG.y + 30;
+		//}
+		scoreTxt.setFormat(Paths.font(thatFont), ClientPrefs.uiStyle == "Bambi's Purgatory" ? 17 : 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
-		scoreTxt.borderSize = 1.25;
+		scoreTxt.borderSize = ClientPrefs.uiStyle == 'Dave Engine' ? 1.5 : 1.25;
 		scoreTxt.visible = !ClientPrefs.hideHud;
 		add(scoreTxt);
 
@@ -2594,7 +2599,14 @@ class PlayState extends MusicBeatState
 
 	public function updateScore(miss:Bool = false)
 	{
-		scoreTxt.text =  'NPS: ' + nps + ' (Max ' + maxNPS + ')' + ' | ' + 'Score: ' + songScore + ' | Combo Breaks: ' + songMisses + ' | Accuracy: ' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%' + ' | ' + (ratingName != '?' ? '($ratingFC) ' + ratingName : 'N/A');
+		if (ClientPrefs.uiStyle == 'Base Game')
+			scoreTxt.text = 'Score: ${FlxStringUtil.formatMoney(songScore, false, true)}';
+		else if (ClientPrefs.uiStyle == "Bambi's Purgatory")
+			scoreTxt.text =  'NPS: ' + nps + ' (Max ' + maxNPS + ')' + ' | ' + 'Score: ' + songScore + ' | Combo Breaks: ' + songMisses + ' | Accuracy: ' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%' + ' | ' + (ratingName != '?' ? '($ratingFC) ' + ratingName : 'N/A');
+		else if (ClientPrefs.uiStyle == 'Dave Engine')
+			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Accuracy: ' + ${Highscore.floorDecimal(ratingPercent * 100, 2)};
+		else
+			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingName + (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
 
 		if (practiceMode){
 			scoreTxt.text = 'Practice Mode' + ' | Combo Breaks: ' + songMisses;
