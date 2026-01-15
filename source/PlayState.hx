@@ -1100,6 +1100,9 @@ class PlayState extends MusicBeatState
 				gf.visible = false;
 		}
 
+		if (gf == null)
+			gf.visible = false;
+
 		switch(curStage)
 		{
 			case 'limo':
@@ -2591,13 +2594,7 @@ class PlayState extends MusicBeatState
 
 	public function updateScore(miss:Bool = false)
 	{
-		scoreTxt.text =  'NPS: ' + nps
-			+ ' (Max ' + maxNPS + ')' 
-			+ ' | ' + 'Score: ' + songScore 
-			+ ' | Combo Breaks: ' + songMisses 
-			+ ' | Accuracy: ' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%' 
-			+ ' | '
-			+ (ratingName != '?' ? '($ratingFC) ' + ratingName : 'N/A');
+		scoreTxt.text =  'NPS: ' + nps + ' (Max ' + maxNPS + ')' + ' | ' + 'Score: ' + songScore + ' | Combo Breaks: ' + songMisses + ' | Accuracy: ' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%' + ' | ' + (ratingName != '?' ? '($ratingFC) ' + ratingName : 'N/A');
 
 		if (practiceMode){
 			scoreTxt.text = 'Practice Mode' + ' | Combo Breaks: ' + songMisses;
@@ -3402,18 +3399,18 @@ class PlayState extends MusicBeatState
 		}
 
 		var balls = notesHitArray.length - 1;
-			while (balls >= 0)
-			{
-				var cock:Date = notesHitArray[balls];
-				if (cock != null && cock.getTime() + 1000 < Date.now().getTime())
-					notesHitArray.remove(cock);
-				else
-					balls = 0;
-				balls--;
-			}
-			nps = notesHitArray.length;
-			if (nps > maxNPS)
-				maxNPS = nps;
+		while (balls >= 0)
+		{
+			var cock:Date = notesHitArray[balls];
+			if (cock != null && cock.getTime() + 1000 < Date.now().getTime())
+				notesHitArray.remove(cock);
+			else
+				balls = 0;
+			balls--;
+		}
+		nps = notesHitArray.length;
+		if (nps > maxNPS)
+			maxNPS = nps;
 
 		if(botplayTxt.visible) {
 			botplaySine += 180 * elapsed;

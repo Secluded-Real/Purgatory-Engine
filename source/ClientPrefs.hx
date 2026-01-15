@@ -48,6 +48,7 @@ class ClientPrefs {
 	public static var showMaxRam:Bool = false;
 	public static var songCreditShow:Bool = true;
 	public static var freeplayShape:String = 'Vanilla';
+	public static var uiStyle:String = 'Psych';
 	// ENDS HERE
 	public static var comboStacking = true;
 	public static var gameplaySettings:Map<String, Dynamic> = [
@@ -71,7 +72,7 @@ class ClientPrefs {
 		'opponentplay' => false
 	];
 
-	public static var comboOffset:Array<Int> = [0, 0, 0, 0];
+	public static var comboOffset:Array<Int> = [-158, -76, -169, -60];
 	public static var ratingOffset:Int = 0;
 	public static var sickWindow:Int = 45;
 	public static var goodWindow:Int = 90;
@@ -162,6 +163,7 @@ class ClientPrefs {
 		FlxG.save.data.showMaxRam = showMaxRam;
 		FlxG.save.data.songCreditShow = songCreditShow;
 		FlxG.save.data.freeplayShape = freeplayShape;
+		FlxG.save.data.uiStyle = uiStyle;
 		// ENDS HERE
 		FlxG.save.data.comboStacking = comboStacking;
 	
@@ -347,6 +349,9 @@ class ClientPrefs {
 
 		if (FlxG.save.data.freeplayShape != null)
 			freeplayShape = FlxG.save.data.freeplayShape;
+
+		if (FlxG.save.data.uiStyle != null)
+			uiStyle = FlxG.save.data.uiStyle;
 		// ends here
 
 		var save:FlxSave = new FlxSave();

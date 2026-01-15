@@ -114,11 +114,19 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('UI Style:',
+			"What style should the score text use?",
+			'uiStyle',
+			'string',
+			'Psych',
+			['Psych', 'Base Game', 'Dave Engine', "Bambi's Purgatory"]);
+		addOption(option);
+
 		var option:Option = new Option('Icon Bop Type:',
 			"How should the icons bop?",
 			'iconBopShit',
 			'string',
-			'Time Left',
+			'Psych',
 			['Psych', 'Dave Engine', "Bambi's Purgatory", 'Disabled']);
 		addOption(option);
 
