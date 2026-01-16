@@ -245,6 +245,7 @@ class PlayState extends MusicBeatState
 
 	public var iconP1:HealthIcon;
 	public var iconP2:HealthIcon;
+	public var iconP3:HealthIcon;
 	public var camHUD:FlxCamera;
 	public var camGame:FlxCamera;
 	public var camOther:FlxCamera;
@@ -1284,6 +1285,12 @@ class PlayState extends MusicBeatState
 		iconP2.visible = !ClientPrefs.hideHud;
 		iconP2.alpha = ClientPrefs.healthBarAlpha;
 		add(iconP2);
+
+		iconP3 = new HealthIcon(player3.healthIcon, false);
+		iconP3.y = healthBar.y - 125;
+		iconP3.visible = !ClientPrefs.hideHud;
+		iconP3.alpha = ClientPrefs.healthBarAlpha;
+		add(iconP3);
 		reloadHealthBarColors();
 	
 
@@ -1398,12 +1405,17 @@ class PlayState extends MusicBeatState
 		songinfoBar.cameras = [camHUD];
 		iconP1.cameras = [camHUD];
 		iconP2.cameras = [camHUD];
+		iconP3.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
 		botplayTxt.cameras = [camHUD];
 		timeBar.cameras = [camHUD];
 		timeBarBG.cameras = [camHUD];
 		timeTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
+		
+		if (ClientPrefs.uiStyle == 'Base Game' || ClientPrefs.uiStyle == "Psych"){
+			setAllUItoFont("vcr.ttf");
+		}
 
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
@@ -1925,6 +1937,15 @@ class PlayState extends MusicBeatState
 			endSong();
 		else
 			startCountdown();
+	}
+
+	function setAllUItoFont(fontName:String)
+	{
+		timeTxt.font = Paths.font(fontName);
+		scoreTxt.font = Paths.font(fontName);
+		songinfoBar.font = Paths.font(fontName);
+	    botplayTxt.font = Paths.font(fontName);
+		judgementCounter.font = Paths.font(fontName);
 	}
 
 	var dialogueCount:Int = 0;
@@ -3487,6 +3508,13 @@ class PlayState extends MusicBeatState
 		iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
 		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
 
+		iconP3.x = iconP2.x - 65;
+		iconP3.y = iconP2.y - 40;
+		iconP3.scale.set(iconP2.scale.x, iconP2.scale.y);
+		iconP3.angle = iconP2.angle;
+		iconP3.alpha = player3.alpha;
+		iconP3.updateHitbox();
+		
 		if (health > 2)
 			health = 2;
 
@@ -3494,7 +3522,7 @@ class PlayState extends MusicBeatState
 		if (healthBar.percent < 20){
 			iconP1.animation.curAnim.curFrame = 1;
 			iconP2.animation.curAnim.curFrame = 2;
-
+			iconP3.animation.curAnim.curFrame = 2;
 			if (ClientPrefs.scoreTxtFlash){
 				if(curBeat % 2 == 0)
 					//FlxTween.tween(scoreTxt, {color:0xFFFF0000}, 0.1 / playbackRate);
@@ -3506,10 +3534,12 @@ class PlayState extends MusicBeatState
 		else if (healthBar.percent > 80){
 			iconP1.animation.curAnim.curFrame = 2;
 			iconP2.animation.curAnim.curFrame = 1;
+			iconP3.animation.curAnim.curFrame = 1;
 		}
 		else{
 			iconP1.animation.curAnim.curFrame = 0;
 			iconP2.animation.curAnim.curFrame = 0;
+			iconP3.animation.curAnim.curFrame = 0;
 		}
 
 		if (FlxG.keys.anyJustPressed(debugKeysCharacter) && !endingSong && !inCutscene) {
@@ -4236,7 +4266,7 @@ class PlayState extends MusicBeatState
 							player3.alpha = 0.00001;
 							player3 = player3Map.get(value2);
 							player3.alpha = (value2 == '') ? 0.00001 : lastAlpha;
-							// iconP2.changeIcon(dad.healthIcon);
+							iconP3.changeIcon(player3.healthIcon);
 							setOnLuas('player3Name', player3.curCharacter);
 						}
 				}
