@@ -229,6 +229,8 @@ class CategoryState extends MusicBeatState
 	}
 	override function update(elapsed:Float)
 	{
+		var lerpVal:Float = CoolUtil.boundTo(elapsed * 7.5, 0, 1);
+		FlxG.camera.follow(camFollow, LOCKON, lerpVal);
 
 		if (!InMainFreeplayState) 
 			{

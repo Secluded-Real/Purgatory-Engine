@@ -171,24 +171,25 @@ class Alphabet extends FlxSpriteGroup
 				y = FlxMath.lerp(y, (targetY * 1.3 * distancePerItem.y) + startPosition.y, lerpVal);
 		}
 
+		var lerpingIt:Float = CoolUtil.boundTo(elapsed * 9.6, 0, 1);
+
 		switch (itemType)
 		{
 			case "C-Shape":
-				y = FlxMath.lerp(y, (scaledY * 65) + (FlxG.height * 0.39), 0.16);
+				y = FlxMath.lerp(y, (scaledY * 65) + (FlxG.height * 0.39), lerpingIt);
 
-				x = FlxMath.lerp(x, Math.exp(scaledY * 0.8) * 70 + (FlxG.width * 0.1), 0.16);
+				x = FlxMath.lerp(x, Math.exp(scaledY * 0.8) * 70 + (FlxG.width * 0.1), lerpingIt);
 				if (scaledY < 0)
-					x = FlxMath.lerp(x, Math.exp(scaledY * -0.8) * 70 + (FlxG.width * 0.1), 0.16);
-
+					x = FlxMath.lerp(x, Math.exp(scaledY * -0.8) * 70 + (FlxG.width * 0.1), lerpingIt);
 				if (x > FlxG.width + 30)
 					x = FlxG.width + 30;
 			case "D-Shape":
-				y = FlxMath.lerp(y, (scaledY * 90) + (FlxG.height * 0.45), 0.16);
-	
-				x = FlxMath.lerp(x, Math.exp(scaledY * 0.8) * -70 + (FlxG.width * 0.35), 0.16);
+				y = FlxMath.lerp(y, (scaledY * 90) + (FlxG.height * 0.45), lerpingIt);
+
+				x = FlxMath.lerp(x, Math.exp(scaledY * 0.8) * -70 + (FlxG.width * 0.35), lerpingIt);
 				if (scaledY < 0)
-					x = FlxMath.lerp(x, Math.exp(scaledY * -0.8) * -70 + (FlxG.width * 0.35), 0.16);
-	
+					x = FlxMath.lerp(x, Math.exp(scaledY * -0.8) * -70 + (FlxG.width * 0.35), lerpingIt);
+
 				if (x < -900)
 					x = -900;
 		}

@@ -172,8 +172,9 @@ class VisualsUISubState extends BaseOptionsMenu
 			'fpsCountType',
 			'string',
 			'Dave and Bambi',
-			['Psych', 'Dave and Bambi', 'Gapple 1.5']);
+			['Psych', 'Dave and Bambi', 'Gapple 1.5', 'Base Game']);
 		addOption(option);
+		//option.onChange = remove(Main.fpsVar);
 		#end
 
 		#if !mobile

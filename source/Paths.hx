@@ -218,10 +218,12 @@ class Paths
 		return file;
 	}
 
-	inline static public function voices(song:String):Any
+	inline static public function voices(song:String, postfix:String = null, ?modsAllowed:Bool = true):Any
 	{
 		var songKey:String = '${formatToSongPath(song)}/Voices';
+		if(postfix != null) songKey += '-' + postfix;
 		var voices = returnSound('songs', songKey);
+		//trace('songKey test: $songKey');
 		return voices;
 	}
 

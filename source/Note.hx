@@ -44,6 +44,16 @@ class Note extends FlxSprite
 	public var isSustainNote:Bool = false;
 	public var noteType(default, set):String = null;
 
+	//Added for Psych v1.0 charts
+	public static final defaultNoteTypes:Array<String> = [
+		'', //Always leave this one empty pls
+		'Alt Animation',
+		'Hey!',
+		'Hurt Note',
+		'GF Sing',
+		'No Animation'
+	];
+
 	public var eventName:String = '';
 	public var eventLength:Int = 0;
 	public var eventVal1:String = '';

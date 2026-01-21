@@ -180,6 +180,7 @@ class CharacterEditorState extends MusicBeatState
 		var tabs = [
 			{name: 'Character', label: 'Character'},
 			{name: 'Animations', label: 'Animations'},
+			{name: 'Purga', label: 'Purga'},
 		];
 		UI_characterbox = new FlxUITabMenu(null, tabs, true);
 		UI_characterbox.cameras = [camMenu];
@@ -197,6 +198,7 @@ class CharacterEditorState extends MusicBeatState
 
 		addCharacterUI();
 		addAnimationsUI();
+		addPurgaUI();
 		UI_characterbox.selected_tab_id = 'Character';
 
 		FlxG.mouse.visible = true;
@@ -414,6 +416,7 @@ class CharacterEditorState extends MusicBeatState
 		}';
 
 	var charDropDown:FlxUIDropDownMenuCustom;
+
 	function addSettingsUI() {
 		var tab_group = new FlxUI(null, UI_box);
 		tab_group.name = "Settings";
@@ -611,6 +614,18 @@ class CharacterEditorState extends MusicBeatState
 		tab_group.add(healthColorStepperB);
 		tab_group.add(saveCharacterButton);
 		UI_characterbox.addGroup(tab_group);
+	}
+
+	function addPurgaUI() {
+		var tab_group = new FlxUI(null, UI_box);
+		tab_group.name = "Purga";
+
+		noteskinInputText = new FlxUIInputText(115, 30, 75, '', 8);
+
+
+
+		tab_group.add(new FlxText(115, noteskinInputText.y - 18, 0, 'Noteskin name:'));
+		tab_group.add(noteskinInputText);
 	}
 
 	var ghostDropDown:FlxUIDropDownMenuCustom;
