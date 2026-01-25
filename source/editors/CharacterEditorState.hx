@@ -401,6 +401,8 @@ class CharacterEditorState extends MusicBeatState
 			],
 			"healthicon": "face",
 			"danoteskin": "NOTE_assets",
+			"shake_game": 0,
+			"shake_hud": 0,
 			"flip_x": false,
 			"healthbar_colors": [
 				161,
@@ -476,6 +478,8 @@ class CharacterEditorState extends MusicBeatState
 				character.healthIcon = parsedJson.healthicon;
 				character.daNoteSkin = parsedJson.danoteskin;
 				character.healthColorArray = parsedJson.healthbar_colors;
+				character.screenShakeGame = parsedJson.shake_game;
+				character.screenShakeHUD = parsedJson.shake_hud;
 				character.setPosition(character.positionArray[0] + OFFSET_X + 100, character.positionArray[1]);
 			}
 
@@ -543,8 +547,7 @@ class CharacterEditorState extends MusicBeatState
 
 		healthIconInputText = new FlxUIInputText(15, imageInputText.y + 35, 75, leHealthIcon.getCharacter(), 8);
 
-		//saving for 0.2 - Secluded
-		noteskinInputText = new FlxUIInputText(115, imageInputText.y + 35, 75, '', 8);
+		//noteskinInputText = new FlxUIInputText(115, imageInputText.y + 35, 75, '', 8);
 
 		singDurationStepper = new FlxUINumericStepper(15, healthIconInputText.y + 45, 0.1, 4, 0, 999, 1);
 
@@ -599,8 +602,7 @@ class CharacterEditorState extends MusicBeatState
 		tab_group.add(reloadImage);
 		tab_group.add(decideIconColor);
 		tab_group.add(healthIconInputText);
-		//saving for 0.2 - Secluded
-		tab_group.add(noteskinInputText);
+		//tab_group.add(noteskinInputText);
 		tab_group.add(singDurationStepper);
 		tab_group.add(scaleStepper);
 		tab_group.add(flipXCheckBox);
@@ -616,16 +618,24 @@ class CharacterEditorState extends MusicBeatState
 		UI_characterbox.addGroup(tab_group);
 	}
 
+	var screenShakeHUDStepper:FlxUINumericStepper;
+	var screenShakeGameStepper:FlxUINumericStepper;
+
 	function addPurgaUI() {
 		var tab_group = new FlxUI(null, UI_box);
 		tab_group.name = "Purga";
 
-		noteskinInputText = new FlxUIInputText(115, 30, 75, '', 8);
+		noteskinInputText = new FlxUIInputText(15, 65, 75, '', 8);
 
+		screenShakeGameStepper = new FlxUINumericStepper(205, 150, 0.1, 0, 0, 1, 1);
+		screenShakeHUDStepper = new FlxUINumericStepper(265, 150, 0.1, 0, 0, 1, 1);
 
-
-		tab_group.add(new FlxText(115, noteskinInputText.y - 18, 0, 'Noteskin name:'));
+		tab_group.add(new FlxText(15, noteskinInputText.y - 18, 0, 'Noteskin name:'));
+		tab_group.add(new FlxText(screenShakeGameStepper.x, screenShakeGameStepper.y - 18, 0, 'Screen Shake Game/HUD:'));
 		tab_group.add(noteskinInputText);
+		tab_group.add(screenShakeHUDStepper);
+		tab_group.add(screenShakeGameStepper);
+		UI_characterbox.addGroup(tab_group);
 	}
 
 	var ghostDropDown:FlxUIDropDownMenuCustom;
@@ -821,6 +831,14 @@ class CharacterEditorState extends MusicBeatState
 			{
 				char.singDuration = singDurationStepper.value;//ermm you forgot this??
 			}
+			else if(sender == screenShakeGameStepper)
+			{
+				char.screenShakeGame = screenShakeGameStepper.value;
+			}
+			else if(sender == screenShakeHUDStepper)
+			{
+				char.screenShakeHUD = screenShakeHUDStepper.value;
+			}
 			else if(sender == positionYStepper)
 			{
 				char.positionArray[1] = positionYStepper.value;
@@ -1012,6 +1030,8 @@ class CharacterEditorState extends MusicBeatState
 			imageInputText.text = char.imageFile;
 			healthIconInputText.text = char.healthIcon;
 			noteskinInputText.text = char.daNoteSkin;
+			screenShakeGameStepper.value = char.screenShakeGame;
+			screenShakeHUDStepper.value = char.screenShakeHUD;
 			singDurationStepper.value = char.singDuration;
 			scaleStepper.value = char.jsonScale;
 			flipXCheckBox.checked = char.originalFlipX;
@@ -1315,7 +1335,10 @@ class CharacterEditorState extends MusicBeatState
 
 			"flip_x": char.originalFlipX,
 			"no_antialiasing": char.noAntialiasing,
-			"healthbar_colors": char.healthColorArray
+			"healthbar_colors": char.healthColorArray,
+
+			"shake_game": char.screenShakeGame,
+			"shake_hud": char.screenShakeHUD
 		};
 
 		var data:String = Json.stringify(json, "\t");

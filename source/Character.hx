@@ -27,6 +27,8 @@ typedef CharacterFile = {
 	var sing_duration:Float;
 	var healthicon:String;
 	var danoteskin:String;
+	var shake_game:Float;
+	var shake_hud:Float;
 
 	var position:Array<Float>;
 	var camera_position:Array<Float>;
@@ -67,6 +69,8 @@ class Character extends FlxSprite
 	public var healthIcon:String = 'face';
 	public var daNoteSkin:String = 'NOTE_assets';
 	public var animationsArray:Array<AnimArray> = [];
+	public var screenShakeGame:Float = 0;
+	public var screenShakeHUD:Float = 0;
 
 	public var positionArray:Array<Float> = [0, 0];
 	public var cameraPosition:Array<Float> = [0, 0];
@@ -181,6 +185,8 @@ class Character extends FlxSprite
 
 				healthIcon = json.healthicon;
 				daNoteSkin = json.danoteskin;
+				screenShakeGame = json.shake_game;
+				screenShakeHUD = json.shake_hud;
 				singDuration = json.sing_duration;
 				flipX = !!json.flip_x;
 				if(json.no_antialiasing) {

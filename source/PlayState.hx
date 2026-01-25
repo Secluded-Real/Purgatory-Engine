@@ -5391,7 +5391,32 @@ class PlayState extends MusicBeatState
 
 		if (!note.altStrum) cameraMoveOnNote(note.noteData, 'dad');
 		if(opponentVocals.length <= 0) vocals.volume = 1;
+
+		if (dad.screenShakeGame > 0)
+			FlxG.camera.shake(dad.screenShakeGame / 100, 0.1);
+		if (dad.screenShakeHUD > 0)
+			camHUD.shake(dad.screenShakeHUD / 100, 0.1);
 	}
+	/*
+
+	function screenMyShake(player:Int):Void
+	{
+		switch(player)
+		{
+			case 0:
+				if (boyfriend.screenShakeGame > 0){
+					FlxG.camera.shake(boyfriend.screenShakeGame / 100, 0.1);
+					camHUD.shake(boyfriend.screenShakeHUD / 100, 0.1);
+				}
+			default:
+				if (dad.screenShakeGame > 0){
+					FlxG.camera.shake(dad.screenShakeGame / 100, 0.1);
+					camHUD.shake(dad.screenShakeHUD / 100, 0.1);
+				}
+		}
+			
+	}
+	*/
 
 	var nps:Int = 0;
 	var maxNPS:Int = 0;
@@ -5509,6 +5534,11 @@ class PlayState extends MusicBeatState
 			var leData:Int = Math.round(Math.abs(note.noteData));
 			var leType:String = note.noteType;
 			callOnLuas('goodNoteHit', [notes.members.indexOf(note), leData, leType, isSus]);
+
+			if (boyfriend.screenShakeGame > 0)
+				FlxG.camera.shake(boyfriend.screenShakeGame / 100, 0.1);
+			if (boyfriend.screenShakeHUD > 0)
+				camHUD.shake(boyfriend.screenShakeHUD / 100, 0.1);
 
 			if (!note.isSustainNote)
 			{
