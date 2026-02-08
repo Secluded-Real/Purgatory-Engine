@@ -35,7 +35,9 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+#if desktop
 import hxwindowmode.WindowColorMode;
+#end
 import lime.app.Application;
 import openfl.Assets;
 
@@ -123,7 +125,9 @@ class TitleState extends MusicBeatState
 
 		PlayerSettings.init();
 
+		#if desktop
 		WindowColorMode.setDarkMode();
+		#end
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
 

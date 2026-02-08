@@ -106,7 +106,8 @@ class ChartingState extends MusicBeatState
 		['Thunderstorm type black screen', "adds a thunderstom from the shaggy mod type black screen\nValue 1: (0: Turn off, 1: turn on)"],
 		['Change Camera Speed', "Changes how fast the camrea moves.\nValue 1: Camera Speed"],
 		['Set Camera Zoom speed', "Changes how fast the camera zooms in.\nValue 1: Speed (Default: 1)"],
-		['Section By Text', "Displays a Section By: text on the left.\nValue 1: Composer"]
+		['Section By Text', "Displays a Section By: text on the left.\nValue 1: Composer"],
+		['Change Stage', "Changes the current stage.\nValue 1: Stage Name"]
 	];
 
 	// This is scrapped for now.

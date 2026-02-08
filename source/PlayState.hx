@@ -544,52 +544,7 @@ class PlayState extends MusicBeatState
 		SONG.stage = curStage;
 
 		var stageData:StageFile = StageData.getStageFile(curStage);
-		if(stageData == null) { //Stage couldn't be found, create a dummy stage for preventing a crash
-			stageData = {
-				directory: "",
-				defaultZoom: 0.9,
-				isPixelStage: false,
-
-				boyfriend: [770, 100],
-				girlfriend: [400, 130],
-				opponent: [100, 100],
-				hide_girlfriend: false,
-
-				camera_boyfriend: [0, 0],
-				camera_opponent: [0, 0],
-				camera_girlfriend: [0, 0],
-				camera_speed: 1
-			};
-		}
-
-		defaultCamZoom = stageData.defaultZoom;
-		isPixelStage = stageData.isPixelStage;
-		BF_X = stageData.boyfriend[0];
-		BF_Y = stageData.boyfriend[1];
-		GF_X = stageData.girlfriend[0];
-		GF_Y = stageData.girlfriend[1];
-		DAD_X = stageData.opponent[0];
-		DAD_Y = stageData.opponent[1];
-
-		if(stageData.camera_speed != null)
-			cameraSpeed = stageData.camera_speed;
-
-		boyfriendCameraOffset = stageData.camera_boyfriend;
-		if(boyfriendCameraOffset == null) //Fucks sake should have done it since the start :rolling_eyes:
-			boyfriendCameraOffset = [0, 0];
-
-		opponentCameraOffset = stageData.camera_opponent;
-		if(opponentCameraOffset == null)
-			opponentCameraOffset = [0, 0];
-
-		girlfriendCameraOffset = stageData.camera_girlfriend;
-		if(girlfriendCameraOffset == null)
-			girlfriendCameraOffset = [0, 0];
-
-		boyfriendGroup = new FlxSpriteGroup(BF_X, BF_Y);
-		dadGroup = new FlxSpriteGroup(DAD_X, DAD_Y);
-		player3Group = new FlxSpriteGroup(DAD_X-180, DAD_Y);
-		gfGroup = new FlxSpriteGroup(GF_X, GF_Y);
+		makeStage(true);
 
 		switch (curStage)
 		{
@@ -1707,6 +1662,67 @@ class PlayState extends MusicBeatState
 		return false;
 	}
 	#end
+
+	function makeStage(createFunc:Bool = false)
+	{
+		var stageData:StageFile = StageData.getStageFile(curStage);
+		if(stageData == null) { //Stage couldn't be found, create a dummy stage for preventing a crash
+			stageData = {
+				directory: "",
+				defaultZoom: 0.9,
+				isPixelStage: false,
+
+				boyfriend: [770, 100],
+				girlfriend: [400, 130],
+				opponent: [100, 100],
+				hide_girlfriend: false,
+
+				camera_boyfriend: [0, 0],
+				camera_opponent: [0, 0],
+				camera_girlfriend: [0, 0],
+				camera_speed: 1
+			};
+		}
+
+		defaultCamZoom = stageData.defaultZoom;
+		isPixelStage = stageData.isPixelStage;
+		BF_X = stageData.boyfriend[0];
+		BF_Y = stageData.boyfriend[1];
+		GF_X = stageData.girlfriend[0];
+		GF_Y = stageData.girlfriend[1];
+		DAD_X = stageData.opponent[0];
+		DAD_Y = stageData.opponent[1];
+
+		if(stageData.camera_speed != null)
+			cameraSpeed = stageData.camera_speed;
+
+		boyfriendCameraOffset = stageData.camera_boyfriend;
+		if(boyfriendCameraOffset == null) //Fucks sake should have done it since the start :rolling_eyes:
+			boyfriendCameraOffset = [0, 0];
+
+		opponentCameraOffset = stageData.camera_opponent;
+		if(opponentCameraOffset == null)
+			opponentCameraOffset = [0, 0];
+
+		girlfriendCameraOffset = stageData.camera_girlfriend;
+		if(girlfriendCameraOffset == null)
+			girlfriendCameraOffset = [0, 0];
+
+		if (createFunc)
+		{
+			boyfriendGroup = new FlxSpriteGroup(BF_X, BF_Y);
+			dadGroup = new FlxSpriteGroup(DAD_X, DAD_Y);
+			player3Group = new FlxSpriteGroup(DAD_X-180, DAD_Y);
+			gfGroup = new FlxSpriteGroup(GF_X, GF_Y);
+		}
+		else
+		{
+			boyfriend.setPosition(BF_X, BF_Y);
+			dad.setPosition(DAD_X, DAD_Y);
+			player3.setPosition(DAD_X-180, DAD_Y);
+			gf.setPosition(GF_X, GF_Y);
+		}
+	}
 
 	function set_songSpeed(value:Float):Float
 	{
@@ -4385,6 +4401,27 @@ class PlayState extends MusicBeatState
 					case 1: 
 						shakeCam = true;
 				}
+
+			case 'Change Stage':
+				curStage = value1;
+				SONG.stage = curStage;
+				makeStage();
+				#if (MODS_ALLOWED && LUA_ALLOWED)
+				var doPush:Bool = false;
+				var luaFile:String = 'stages/' + curStage + '.lua';
+				if(FileSystem.exists(Paths.modFolders(luaFile))) {
+					luaFile = Paths.modFolders(luaFile);
+					doPush = true;
+				} else {
+					luaFile = Paths.getPreloadPath(luaFile);
+					if(FileSystem.exists(luaFile)) {
+						doPush = true;
+					}
+				}
+
+				if(doPush)
+					luaArray.push(new FunkinLua(luaFile));
+				#end
 
 			case 'Toggle Blocked Glitch':
 				var newvariable:Int = Std.parseInt(value1);
