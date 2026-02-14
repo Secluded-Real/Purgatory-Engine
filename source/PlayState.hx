@@ -336,6 +336,9 @@ class PlayState extends MusicBeatState
 	// piss
 	var doingSMzoom:Bool = false;
 
+	//fuuck
+	var stageShit:Array<String> = [];
+
 	//mommy did i do a no no again
 	public static var bfNoteSkin:String = null;
 	public static var dadNoteSkin:String = null;
@@ -352,6 +355,7 @@ class PlayState extends MusicBeatState
 	public var boyfriendCameraOffset:Array<Float> = null;
 	public var opponentCameraOffset:Array<Float> = null;
 	public var girlfriendCameraOffset:Array<Float> = null;
+	public var player3CameraOffset:Array<Float> = null;
 
 	#if desktop
 	// Discord RPC variables
@@ -1665,6 +1669,20 @@ class PlayState extends MusicBeatState
 
 	function makeStage(createFunc:Bool = false)
 	{
+		/*
+
+		redoing this laterrrr
+
+		if (stageShit.length > 0)
+		{
+			for (hello in stageShit)
+			{
+				remove(hello);
+				hello.destroy();
+			}
+			stageShit = [];
+		}
+			*/
 		var stageData:StageFile = StageData.getStageFile(curStage);
 		if(stageData == null) { //Stage couldn't be found, create a dummy stage for preventing a crash
 			stageData = {
@@ -1680,6 +1698,7 @@ class PlayState extends MusicBeatState
 				camera_boyfriend: [0, 0],
 				camera_opponent: [0, 0],
 				camera_girlfriend: [0, 0],
+				camera_player3: [0, 0],
 				camera_speed: 1
 			};
 		}
@@ -1703,6 +1722,10 @@ class PlayState extends MusicBeatState
 		opponentCameraOffset = stageData.camera_opponent;
 		if(opponentCameraOffset == null)
 			opponentCameraOffset = [0, 0];
+
+		player3CameraOffset = stageData.camera_player3;
+		if(player3CameraOffset == null)
+			player3CameraOffset = [0, 0];
 
 		girlfriendCameraOffset = stageData.camera_girlfriend;
 		if(girlfriendCameraOffset == null)
@@ -4404,7 +4427,6 @@ class PlayState extends MusicBeatState
 
 			case 'Change Stage':
 				curStage = value1;
-				SONG.stage = curStage;
 				makeStage();
 				#if (MODS_ALLOWED && LUA_ALLOWED)
 				var doPush:Bool = false;
@@ -4498,16 +4520,18 @@ class PlayState extends MusicBeatState
 			return;
 		}
 
-		if (!SONG.notes[curSection].mustHitSection)
+		if (player3 != null && SONG.notes[curSection].player3Section)
 		{
-			moveCamera(true);
-			callOnLuas('onMoveCamera', ['dad']);
+			camFollow.set(player3.getMidpoint().x, player3.getMidpoint().y);
+			camFollow.x += player3.cameraPosition[0] + player3CameraOffset[0];
+			camFollow.y += player3.cameraPosition[1] + player3CameraOffset[1];
+			tweenCamIn();
+			callOnLuas('onMoveCamera', ['player3']);
+			return;
 		}
-		else
-		{
-			moveCamera(false);
-			callOnLuas('onMoveCamera', ['boyfriend']);
-		}
+
+		moveCamera(!SONG.notes[curSection].mustHitSection);
+		callOnLuas('onMoveCamera', !SONG.notes[curSection].mustHitSection ? ['dad'] : ['boyfriend']);
 	}
 
 	var cameraTwn:FlxTween;

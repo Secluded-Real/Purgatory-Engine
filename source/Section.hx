@@ -6,6 +6,7 @@ typedef SwagSection =
 	var sectionBeats:Float;
 	var typeOfSection:Int;
 	var mustHitSection:Bool;
+	var player3Section:Bool;
 	var gfSection:Bool;
 	var bpm:Float;
 	var changeBPM:Bool;
@@ -20,6 +21,7 @@ class Section
 	public var gfSection:Bool = false;
 	public var typeOfSection:Int = 0;
 	public var mustHitSection:Bool = true;
+	public var player3Section:Bool = false;
 
 	/**
 	 *	Copies the first section into the second section!
