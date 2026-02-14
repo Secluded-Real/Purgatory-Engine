@@ -49,6 +49,7 @@ class ClientPrefs {
 	public static var songCreditShow:Bool = true;
 	public static var freeplayShape:String = 'Vanilla';
 	public static var uiStyle:String = 'Psych';
+	public static var ratingStyle:String = 'Psych';
 	// ENDS HERE
 	public static var comboStacking = true;
 	public static var gameplaySettings:Map<String, Dynamic> = [
@@ -164,6 +165,7 @@ class ClientPrefs {
 		FlxG.save.data.songCreditShow = songCreditShow;
 		FlxG.save.data.freeplayShape = freeplayShape;
 		FlxG.save.data.uiStyle = uiStyle;
+		FlxG.save.data.ratingStyle = ratingStyle;
 		// ENDS HERE
 		FlxG.save.data.comboStacking = comboStacking;
 	
@@ -352,6 +354,9 @@ class ClientPrefs {
 
 		if (FlxG.save.data.uiStyle != null)
 			uiStyle = FlxG.save.data.uiStyle;
+
+		if (FlxG.save.data.ratingStyle != null)
+			ratingStyle = FlxG.save.data.ratingStyle;
 		// ends here
 
 		var save:FlxSave = new FlxSave();

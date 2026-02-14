@@ -216,6 +216,7 @@ class PlayState extends MusicBeatState
 
 	var bfNoteCamOffset:Array<Float> = new Array<Float>();
 	var dadNoteCamOffset:Array<Float> = new Array<Float>();
+	var player3NoteCamOffset:Array<Float> = new Array<Float>();
 
 	public var ratingsData:Array<Rating> = [];
 	public var perfects:Int = 0;
@@ -999,34 +1000,46 @@ class PlayState extends MusicBeatState
 			SONG.gfVersion = gfVersion; //Fix for the Chart Editor
 		}
 
-		if (!stageData.hide_girlfriend)
+		try //bro what the fuck
 		{
+			if (!stageData.hide_girlfriend)
+			{
+				gf = new Character(0, 0, gfVersion);
+				startCharacterPos(gf);
+				gf.scrollFactor.set(0.95, 0.95);
+				gfGroup.add(gf);
+				startCharacterLua(gf.curCharacter);
+
+				if(gfVersion == 'pico-speaker')
+				{
+					if(!ClientPrefs.lowQuality)
+					{
+						var firstTank:TankmenBG = new TankmenBG(20, 500, true);
+						firstTank.resetShit(20, 600, true);
+						firstTank.strumTime = 10;
+						tankmanRun.add(firstTank);
+
+						for (i in 0...TankmenBG.animationNotes.length)
+						{
+							if(FlxG.random.bool(16)) {
+								var tankBih = tankmanRun.recycle(TankmenBG);
+								tankBih.strumTime = TankmenBG.animationNotes[i][0];
+								tankBih.resetShit(500, 200 + FlxG.random.int(50, 100), TankmenBG.animationNotes[i][1] < 2);
+								tankmanRun.add(tankBih);
+							}
+						}
+					}
+				}
+			}
+		}
+		catch (e:Dynamic)
+		{
+			trace("Girlfriend will crash and I don't know how to fix it :P");
 			gf = new Character(0, 0, gfVersion);
 			startCharacterPos(gf);
 			gf.scrollFactor.set(0.95, 0.95);
 			gfGroup.add(gf);
 			startCharacterLua(gf.curCharacter);
-
-			if(gfVersion == 'pico-speaker')
-			{
-				if(!ClientPrefs.lowQuality)
-				{
-					var firstTank:TankmenBG = new TankmenBG(20, 500, true);
-					firstTank.resetShit(20, 600, true);
-					firstTank.strumTime = 10;
-					tankmanRun.add(firstTank);
-
-					for (i in 0...TankmenBG.animationNotes.length)
-					{
-						if(FlxG.random.bool(16)) {
-							var tankBih = tankmanRun.recycle(TankmenBG);
-							tankBih.strumTime = TankmenBG.animationNotes[i][0];
-							tankBih.resetShit(500, 200 + FlxG.random.int(50, 100), TankmenBG.animationNotes[i][1] < 2);
-							tankmanRun.add(tankBih);
-						}
-					}
-				}
-			}
 		}
 
 		dad = new Character(0, 0, SONG.player2);
@@ -4520,23 +4533,33 @@ class PlayState extends MusicBeatState
 			return;
 		}
 
-		if (player3 != null && SONG.notes[curSection].player3Section)
-		{
-			camFollow.set(player3.getMidpoint().x, player3.getMidpoint().y);
-			camFollow.x += player3.cameraPosition[0] + player3CameraOffset[0];
-			camFollow.y += player3.cameraPosition[1] + player3CameraOffset[1];
-			tweenCamIn();
-			callOnLuas('onMoveCamera', ['player3']);
-			return;
-		}
-
-		moveCamera(!SONG.notes[curSection].mustHitSection);
+		moveCamera(!SONG.notes[curSection].mustHitSection, SONG.notes[curSection].player3Section);
 		callOnLuas('onMoveCamera', !SONG.notes[curSection].mustHitSection ? ['dad'] : ['boyfriend']);
 	}
 
 	var cameraTwn:FlxTween;
-	public function moveCamera(isDad:Bool)
+	public function moveCamera(isDad:Bool, isPlayer3:Bool = false)
 	{
+		if (isPlayer3)
+		{
+			camFollow.set(player3.getMidpoint().x + 150, player3.getMidpoint().y - 100);
+			camFollow.x += player3.cameraPosition[0] + player3CameraOffset[0];
+			camFollow.y += player3.cameraPosition[1] + player3CameraOffset[1];
+
+			cameraOnDad = true;
+			cameraOnBF = false;
+
+			tweenCamIn();
+
+			bfNoteCamOffset[0] = 0;
+			bfNoteCamOffset[1] = 0;
+
+			dadNoteCamOffset[0] = 0;
+			dadNoteCamOffset[1] = 0;
+
+			camFollow.x += player3NoteCamOffset[0];
+			camFollow.y += player3NoteCamOffset[1];
+		}
 		if(isDad)
 		{
 			camFollow.set(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
@@ -4550,6 +4573,9 @@ class PlayState extends MusicBeatState
 
 			bfNoteCamOffset[0] = 0;
 			bfNoteCamOffset[1] = 0;
+
+			player3NoteCamOffset[0] = 0;
+			player3NoteCamOffset[1] = 0;
 
 			camFollow.x += dadNoteCamOffset[0];
 			camFollow.y += dadNoteCamOffset[1];
@@ -4575,6 +4601,9 @@ class PlayState extends MusicBeatState
 
 			dadNoteCamOffset[0] = 0;
 			dadNoteCamOffset[1] = 0;
+
+			player3NoteCamOffset[0] = 0;
+			player3NoteCamOffset[1] = 0;
 
 			camFollow.x += bfNoteCamOffset[0];
 			camFollow.y += bfNoteCamOffset[1];
@@ -5274,6 +5303,8 @@ class PlayState extends MusicBeatState
 		}
 		switch (character)
 		{
+			case 'player3':
+				player3NoteCamOffset = amount;
 			case 'dad':
 				dadNoteCamOffset = amount;
 			case 'bf':
@@ -5345,22 +5376,26 @@ class PlayState extends MusicBeatState
 		if (!boyfriend.stunned)
 		{
 			health -= 0.05 * healthLoss;
-			if(instakillOnMiss)
-			{
-				vocals.volume = 0;
-				doDeathCheck(true);
-			}
 
-			if (combo > 5 && gf != null && gf.animOffsets.exists('sad'))
+			if (ClientPrefs.ratingStyle != 'Vanilla')
 			{
-				gf.playAnim('sad');
-			}
-			combo = 0;
+				if(instakillOnMiss)
+				{
+					vocals.volume = 0;
+					doDeathCheck(true);
+				}
 
+				if (combo > 5 && gf != null && gf.animOffsets.exists('sad'))
+				{
+					gf.playAnim('sad');
+				}
+				combo = 0;
+
+				if(!endingSong) {
+					songMisses++;
+				}
+			}
 			if(!practiceMode) songScore -= 10;
-			if(!endingSong) {
-				songMisses++;
-			}
 			totalPlayed++;
 			RecalculateRating(true);
 
@@ -5435,13 +5470,10 @@ class PlayState extends MusicBeatState
 		if(note.isSustainNote && !note.animation.curAnim.name.endsWith('end')) {
 			time += 0.15;
 		}
-		if(!note.altStrum)
-			StrumPlayAnim(true, Std.int(Math.abs(note.noteData)), time);
-		else
-			StrumPlayAnim(true, Std.int(Math.abs(note.noteData)), time, true);
+		StrumPlayAnim(true, Std.int(Math.abs(note.noteData)), time, note.altStrum);
 		note.hitByOpponent = true;
 
-		callOnLuas('opponentNoteHit', [notes.members.indexOf(note), Math.abs(note.noteData), note.noteType, note.isSustainNote]);
+		callOnLuas(note.altStrum ? 'player3NoteHit' : 'opponentNoteHit', [notes.members.indexOf(note), Math.abs(note.noteData), note.noteType, note.isSustainNote]);
 
 		if (!note.isSustainNote)
 		{
@@ -5450,17 +5482,12 @@ class PlayState extends MusicBeatState
 			note.destroy();
 		}
 
-		if (!note.altStrum) cameraMoveOnNote(note.noteData, 'dad');
+		cameraMoveOnNote(note.noteData, note.altStrum ? 'player3' : 'dad');
 		if(opponentVocals.length <= 0) vocals.volume = 1;
-
-		if (dad.screenShakeGame > 0)
-			FlxG.camera.shake(dad.screenShakeGame / 100, 0.1);
-		if (dad.screenShakeHUD > 0)
-			camHUD.shake(dad.screenShakeHUD / 100, 0.1);
+		doScreenShake(note.altStrum ? 2 : 0);
 	}
-	/*
 
-	function screenMyShake(player:Int):Void
+	function doScreenShake(player:Int):Void
 	{
 		switch(player)
 		{
@@ -5469,15 +5496,18 @@ class PlayState extends MusicBeatState
 					FlxG.camera.shake(boyfriend.screenShakeGame / 100, 0.1);
 					camHUD.shake(boyfriend.screenShakeHUD / 100, 0.1);
 				}
+			case 2:
+				if (player3.screenShakeGame > 0){
+					FlxG.camera.shake(player3.screenShakeGame / 100, 0.1);
+					camHUD.shake(player3.screenShakeHUD / 100, 0.1);
+				}
 			default:
 				if (dad.screenShakeGame > 0){
 					FlxG.camera.shake(dad.screenShakeGame / 100, 0.1);
 					camHUD.shake(dad.screenShakeHUD / 100, 0.1);
 				}
 		}
-			
 	}
-	*/
 
 	var nps:Int = 0;
 	var maxNPS:Int = 0;
@@ -5527,7 +5557,7 @@ class PlayState extends MusicBeatState
 			if(!note.noMissAnimation)
 			{
 				switch(note.noteType) {
-					case 'Restart PC Note': //used for rsod
+					case 'Restart PC Note':
 						camHUD.shake(0.0055, 0.35);
 						if(allowHUDcamToZoom) camHUD.zoom = 1.115;
 						if(allowGamecamToZoom && !doingSMzoom) FlxG.camera.zoom += 0.055;
@@ -5595,11 +5625,7 @@ class PlayState extends MusicBeatState
 			var leData:Int = Math.round(Math.abs(note.noteData));
 			var leType:String = note.noteType;
 			callOnLuas('goodNoteHit', [notes.members.indexOf(note), leData, leType, isSus]);
-
-			if (boyfriend.screenShakeGame > 0)
-				FlxG.camera.shake(boyfriend.screenShakeGame / 100, 0.1);
-			if (boyfriend.screenShakeHUD > 0)
-				camHUD.shake(boyfriend.screenShakeHUD / 100, 0.1);
+			doScreenShake(note.altStrum ? 2 : 0);
 
 			if (!note.isSustainNote)
 			{

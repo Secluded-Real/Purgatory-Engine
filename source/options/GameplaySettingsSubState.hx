@@ -77,6 +77,14 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Accuracy Style:',
+			"Changes how accuaracy is calculated.",
+			'ratingStyle',
+			'string',
+			'Psych',
+			['Psych', 'Vanilla', 'MS-Based']);
+		addOption(option);
+
 		var option:Option = new Option('Disable Reset Button',
 			"If checked, pressing Reset won't do anything.",
 			'noReset',
