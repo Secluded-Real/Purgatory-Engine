@@ -79,6 +79,10 @@ import vlc.MP4Handler;
 
 import FunkinLua;
 
+/*
+
+someone else fix this :sob:
+
 import psychlua.LuaUtils;
 import psychlua.HScript;
 
@@ -88,6 +92,7 @@ import crowplexus.iris.Iris;
 import crowplexus.hscript.Expr.Error as IrisError;
 import crowplexus.hscript.Printer;
 #end
+*/
 
 
 using StringTools;
@@ -122,6 +127,10 @@ class PlayState extends MusicBeatState
 	public var camGameShaders:Array<ShaderEffect> = [];
 	public var camHUDShaders:Array<ShaderEffect> = [];
 	public var camOtherShaders:Array<ShaderEffect> = [];
+
+	#if HSCRIPT_ALLOWED
+	public var hscriptArray:Array<HScript> = [];
+	#end
 
 	#if (haxe >= "4.0.0")
 	public var boyfriendMap:Map<String, Boyfriend> = new Map();
@@ -6061,7 +6070,7 @@ class PlayState extends MusicBeatState
 		callOnLuas('onSectionHit', []);
 	}
 
-	
+	/*
 	#if LUA_ALLOWED
 	public function startLuasNamed(luaFile:String)
 	{
@@ -6245,9 +6254,9 @@ class PlayState extends MusicBeatState
 		}
 		#end
 	}
-		
+		*/
 
-	/*
+	
 	public function callOnLuas(event:String, args:Array<Dynamic>, ignoreStops = true, exclusions:Array<String> = null):Dynamic {
 		var returnVal:Dynamic = FunkinLua.Function_Continue;
 		#if LUA_ALLOWED
@@ -6278,7 +6287,6 @@ class PlayState extends MusicBeatState
 		}
 		#end
 	}
-		*/
 	
 
 	function StrumPlayAnim(isDad:Bool, id:Int, time:Float, isAlt:Bool = false) {

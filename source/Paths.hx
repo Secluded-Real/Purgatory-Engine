@@ -180,27 +180,33 @@ class Paths
 		currentLevel = name.toLowerCase();
 	}
 
-	public static function getPath(file:String, type:AssetType, ?library:Null<String> = null, ?modsAllowed:Bool = true)
+	public static function getPath(file:String, ?type:AssetType = TEXT, ?parentfolder:String, ?modsAllowed:Bool = true)
 	{
-		if (library != null)
-			return getLibraryPath(file, library);
-
-		if (currentLevel != null)
+		#if MODS_ALLOWED
+		if(modsAllowed)
 		{
-			var levelPath:String = '';
-			if(currentLevel != 'shared') {
-				levelPath = getLibraryPathForce(file, currentLevel);
-				if (OpenFlAssets.exists(levelPath, type))
-					return levelPath;
-			}
+			var customFile:String = file;
+			if (parentfolder != null) customFile = '$parentfolder/$file';
 
-			levelPath = getLibraryPathForce(file, "shared");
+			var modded:String = modFolders(customFile);
+			if(FileSystem.exists(modded)) return modded;
+		}
+		#end
+
+		if (parentfolder != null)
+			return getFolderPath(file, parentfolder);
+
+		if (currentLevel != null && currentLevel != 'shared')
+		{
+			var levelPath = getFolderPath(file, currentLevel);
 			if (OpenFlAssets.exists(levelPath, type))
 				return levelPath;
 		}
-
-		return getPreloadPath(file);
+		return getSharedPath(file);
 	}
+
+	inline static public function getFolderPath(file:String, folder = "shared")
+		return 'assets/$folder/$file';
 
 	static public function getLibraryPath(file:String, library = "preload")
 	{
@@ -217,6 +223,9 @@ class Paths
 	{
 		return 'assets/$file';
 	}
+
+	inline public static function getSharedPath(file:String = '')
+		return 'assets/shared/$file';
 
 	inline static public function file(file:String, type:AssetType = TEXT, ?library:String)
 	{

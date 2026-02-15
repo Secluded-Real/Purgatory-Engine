@@ -4,6 +4,9 @@ import flixel.FlxBasic;
 import Character;
 import psychlua.LuaUtils;
 import psychlua.CustomSubstate;
+import flixel.FlxG;
+import flixel.util.FlxColor;
+import flixel.FlxObject;
 
 #if LUA_ALLOWED
 import FunkinLua;
@@ -153,12 +156,12 @@ class HScript extends Iris
 		set('FlxSprite', flixel.FlxSprite);
 		set('FlxText', flixel.text.FlxText);
 		set('FlxCamera', flixel.FlxCamera);
-		set('PsychCamera', backend.PsychCamera);
+		//set('PsychCamera', backend.PsychCamera);
 		set('FlxTimer', flixel.util.FlxTimer);
 		set('FlxTween', flixel.tweens.FlxTween);
 		set('FlxEase', flixel.tweens.FlxEase);
 		set('FlxColor', CustomFlxColor);
-		set('Countdown', backend.BaseStage.Countdown);
+		//set('Countdown', backend.BaseStage.Countdown);
 		set('PlayState', PlayState);
 		set('Paths', Paths);
 		set('Conductor', Conductor);
@@ -168,11 +171,11 @@ class HScript extends Iris
 		#end
 		set('Character', Character);
 		set('Alphabet', Alphabet);
-		set('Note', objects.Note);
+		set('Note', Note);
 		set('CustomSubstate', CustomSubstate);
 		#if (!flash && sys)
 		set('FlxRuntimeShader', flixel.addons.display.FlxRuntimeShader);
-		set('ErrorHandledRuntimeShader', shaders.ErrorHandledShader.ErrorHandledRuntimeShader);
+		//set('ErrorHandledRuntimeShader', shaders.ErrorHandledShader.ErrorHandledRuntimeShader);
 		#end
 		set('ShaderFilter', openfl.filters.ShaderFilter);
 		set('StringTools', StringTools);
@@ -469,14 +472,14 @@ class HScript extends Iris
 	function set_varsToBring(values:Any) {
 		if (varsToBring != null)
 			for (key in Reflect.fields(varsToBring))
-				if (exists(key.trim()))
-					interp.variables.remove(key.trim());
+				if (exists(LuaUtils.trim(key)))
+					interp.variables.remove(LuaUtils.trim(key));
 
 		if (values != null)
 		{
 			for (key in Reflect.fields(values))
 			{
-				key = key.trim();
+				key = LuaUtils.trim(key);
 				set(key, Reflect.field(values, key));
 			}
 		}

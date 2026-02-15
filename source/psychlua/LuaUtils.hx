@@ -1,19 +1,19 @@
 package psychlua;
 
-import WeekData;
-import Character;
 import StageData;
 
-import flixel.FlxObject;
+import haxe.Json;
+
 import flixel.FlxSprite;
 import flixel.FlxCamera;
+import flixel.FlxG;
+import flixel.util.FlxColor;
+import flixel.FlxObject;
 
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 
 import flixel.group.FlxSpriteGroup;
-
-import flixel.graphics.frames.FlxAtlasFrames;
 
 import openfl.display.BlendMode;
 import Type.ValueType;
@@ -174,7 +174,6 @@ class LuaUtils
 				}
 				catch(e:Dynamic)
 				{
-					var errorTitle = 'Mod name: ' + Mods.currentModDirectory;
 					var errorMsg = 'An error occurred: $e';
 					#if windows
 					lime.app.Application.current.window.alert(errorMsg, errorTitle);
@@ -535,7 +534,7 @@ class LuaUtils
 		return camera;
 	}
 
-	static function trim(s:String):String {
+	public static function trim(s:String):String {
         if (s == null || s.length == 0) return s;
 
         var start = 0;
@@ -554,7 +553,7 @@ class LuaUtils
         return s.substr(start, end - start + 1);
     }
 
-    static function isSpace(code:Int):Bool {
+    public static function isSpace(code:Int):Bool {
         return switch (code) {
             case 9, 10, 11, 12, 13, 32: true; // tab, newline, carriage return, space
             default: false;
