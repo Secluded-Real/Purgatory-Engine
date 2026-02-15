@@ -78,9 +78,6 @@ import vlc.MP4Handler;
 #end
 
 import FunkinLua;
-/*
-
-fuck this shit.
 
 import psychlua.LuaUtils;
 import psychlua.HScript;
@@ -91,7 +88,7 @@ import crowplexus.iris.Iris;
 import crowplexus.hscript.Expr.Error as IrisError;
 import crowplexus.hscript.Printer;
 #end
-*/
+
 
 using StringTools;
 
@@ -5646,7 +5643,7 @@ class PlayState extends MusicBeatState
 			var leData:Int = Math.round(Math.abs(note.noteData));
 			var leType:String = note.noteType;
 			callOnLuas('goodNoteHit', [notes.members.indexOf(note), leData, leType, isSus]);
-			doScreenShake(note.altStrum ? 2 : 0);
+			doScreenShake(note.altStrum ? 2 : 1);
 
 			if (!note.isSustainNote)
 			{
@@ -6064,7 +6061,7 @@ class PlayState extends MusicBeatState
 		callOnLuas('onSectionHit', []);
 	}
 
-	/*
+	
 	#if LUA_ALLOWED
 	public function startLuasNamed(luaFile:String)
 	{
@@ -6248,8 +6245,9 @@ class PlayState extends MusicBeatState
 		}
 		#end
 	}
-		*/
+		
 
+	/*
 	public function callOnLuas(event:String, args:Array<Dynamic>, ignoreStops = true, exclusions:Array<String> = null):Dynamic {
 		var returnVal:Dynamic = FunkinLua.Function_Continue;
 		#if LUA_ALLOWED
@@ -6280,6 +6278,7 @@ class PlayState extends MusicBeatState
 		}
 		#end
 	}
+		*/
 	
 
 	function StrumPlayAnim(isDad:Bool, id:Int, time:Float, isAlt:Bool = false) {

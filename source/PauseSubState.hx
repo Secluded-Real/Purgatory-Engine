@@ -81,7 +81,7 @@ class PauseSubState extends MusicBeatSubstate
 		var levelInfo:FlxText = new FlxText(20, 15, 0, "", 32);
 		levelInfo.text += PlayState.SONG.song;
 		if (PlayState.SONG.songCredit != null && PlayState.SONG.songCredit != "")
-			levelInfo.text += " By: " + PlayState.SONG.songCredit;
+			levelInfo.text += " | By: " + PlayState.SONG.songCredit;
 		levelInfo.scrollFactor.set();
 		levelInfo.setFormat(Paths.font("vcr.ttf"), 32);
 		levelInfo.updateHitbox();
