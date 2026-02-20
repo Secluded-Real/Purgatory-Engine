@@ -156,7 +156,6 @@ class ModsMenuState extends MusicBeatState
 		selector.xAdd = -205;
 		selector.yAdd = -68;
 		selector.alphaMult = 0.5;
-		makeSelectorGraphic();
 		add(selector);
 		visibleWhenHasMods.push(selector);
 
@@ -235,6 +234,7 @@ class ModsMenuState extends MusicBeatState
 
 		var enableDisableBg:FlxSprite = FlxSpriteUtil.drawRoundRect(new FlxSprite().makeGraphic(buttonWidth, buttonHeight, FlxColor.TRANSPARENT), 0, 0, buttonWidth, buttonHeight, 15, 15, FlxColor.WHITE);
 		enableDisableBg.color = FlxColor.GREEN;
+		enableDisableBg.alpha = 0.6;
 		add(enableDisableBg);
 
 		var myY = buttonReload.y + enableDisableBg.height + 20;
@@ -256,10 +256,12 @@ class ModsMenuState extends MusicBeatState
 				}
 			}
 			updateButtonToggle();
+			//checkToggleButtons();
 			FlxG.sound.play(Paths.sound('scrollMenu'), 0.6);
 		});
-		buttonEnableAll.setGraphicSize(170, 50);
+		buttonEnableAll.setGraphicSize(buttonWidth, buttonHeight);
 		buttonEnableAll.updateHitbox();
+		buttonEnableAll.alpha = 0;
 		buttonEnableAll.label.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.BLACK, CENTER);
 		buttonEnableAll.label.fieldWidth = 170;
 		setAllLabelsOffset(buttonEnableAll, 0, 10);
@@ -269,7 +271,7 @@ class ModsMenuState extends MusicBeatState
 		visibleWhenHasMods.push(buttonEnableAll);
 		
 		startX -= 190;
-		buttonDisableAll = new FlxButton(startX, 0, "DISABLE ALL", function() {
+		buttonDisableAll = new FlxButton(buttonX, myY, "DISABLE ALL", function() {
 			for (i in modsList)
 			{
 				i[1] = false;
@@ -283,10 +285,12 @@ class ModsMenuState extends MusicBeatState
 				}
 			}
 			updateButtonToggle();
+			//checkToggleButtons();
 			FlxG.sound.play(Paths.sound('scrollMenu'), 0.6);
 		});
-		buttonDisableAll.setGraphicSize(170, 50);
+		buttonDisableAll.setGraphicSize(buttonWidth, buttonHeight);
 		buttonDisableAll.updateHitbox();
+		buttonDisableAll.alpha = 0;
 		buttonDisableAll.label.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.BLACK, CENTER);
 		buttonDisableAll.label.fieldWidth = 170;
 		setAllLabelsOffset(buttonDisableAll, 0, 10);
@@ -319,7 +323,7 @@ class ModsMenuState extends MusicBeatState
 			var newMod:ModMetadata = new ModMetadata(values[0]);
 			mods.push(newMod);
 
-			newMod.alphabet = new Alphabet(180, modNameInitialY, mods[i].name, true);
+			newMod.alphabet = new Alphabet(550, modNameInitialY, mods[i].name, true);
 			var scale:Float = Math.min(840 / newMod.alphabet.width, 1);
 			newMod.alphabet.scaleX = scale;
 			newMod.alphabet.scaleY = scale;
@@ -510,6 +514,13 @@ class ModsMenuState extends MusicBeatState
 			point.set(x, y);
 		}
 	}
+	/*
+	function checkToggleButtons()
+	{
+		buttonEnableAll.visible = modsList.disabled.length > 0;
+		buttonDisableAll.visible = !buttonEnableAll.visible;
+	}
+		*/
 
 	function changeSelection(change:Int = 0)
 	{
@@ -595,22 +606,6 @@ class ModsMenuState extends MusicBeatState
 	}
 
 	var cornerSize:Int = 11;
-	function makeSelectorGraphic()
-	{
-		selector.makeGraphic(1100, 450, FlxColor.BLACK);
-		selector.pixels.fillRect(new Rectangle(0, 190, selector.width, 5), 0x0);
-
-		// Why did i do this? Because i'm a lmao stupid, of course
-		// also i wanted to understand better how fillRect works so i did this shit lol???
-		selector.pixels.fillRect(new Rectangle(0, 0, cornerSize, cornerSize), 0x0);														 //top left
-		drawCircleCornerOnSelector(false, false);
-		selector.pixels.fillRect(new Rectangle(selector.width - cornerSize, 0, cornerSize, cornerSize), 0x0);							 //top right
-		drawCircleCornerOnSelector(true, false);
-		selector.pixels.fillRect(new Rectangle(0, selector.height - cornerSize, cornerSize, cornerSize), 0x0);							 //bottom left
-		drawCircleCornerOnSelector(false, true);
-		selector.pixels.fillRect(new Rectangle(selector.width - cornerSize, selector.height - cornerSize, cornerSize, cornerSize), 0x0); //bottom right
-		drawCircleCornerOnSelector(true, true);
-	}
 
 	function drawCircleCornerOnSelector(flipX:Bool, flipY:Bool)
 	{
