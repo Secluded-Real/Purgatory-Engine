@@ -7,6 +7,7 @@ import animateatlas.AtlasFrameMaker;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
+import flixel.math.FlxMath;
 import flixel.FlxState;
 import flixel.FlxCamera;
 import flixel.input.keyboard.FlxKey;
@@ -77,6 +78,8 @@ class CharacterEditorState extends MusicBeatState
 
 	var cameraFollowPointer:FlxSprite;
 	var healthBarBG:FlxSprite;
+
+	var selectedFormat:FlxTextFormat = new FlxTextFormat(FlxColor.LIME);
 
 	override function create()
 	{
@@ -1137,6 +1140,7 @@ class CharacterEditorState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		textAnim.removeFormat(selectedFormat);
 		MusicBeatState.camBeat = FlxG.camera;
 		if(char.animationsArray[curAnim] != null) {
 			textAnim.text = char.animationsArray[curAnim].anim;
@@ -1147,6 +1151,7 @@ class CharacterEditorState extends MusicBeatState
 			}
 		} else {
 			textAnim.text = '';
+			textAnim.addFormat(selectedFormat);
 		}
 
 		var inputTexts:Array<FlxUIInputText> = [animationInputText, imageInputText, healthIconInputText, animationNameInputText, animationIndicesInputText];
@@ -1162,6 +1167,16 @@ class CharacterEditorState extends MusicBeatState
 		FlxG.sound.muteKeys = TitleState.muteKeys;
 		FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
 		FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
+
+		var shiftMult:Float = 1;
+		var ctrlMult:Float = 1;
+		var shiftMultBig:Float = 1;
+		if(FlxG.keys.pressed.SHIFT)
+		{
+			shiftMult = 4;
+			shiftMultBig = 10;
+		}
+		if(FlxG.keys.pressed.CONTROL) ctrlMult = 0.25;
 
 		if(!charDropDown.dropPanel.visible) {
 			if (FlxG.keys.justPressed.ESCAPE) {
@@ -1205,24 +1220,20 @@ class CharacterEditorState extends MusicBeatState
 					camFollow.x += addToCam;
 			}
 
+			// CHARACTER CONTROLS
+			var changedAnim:Bool = false;
 			if(char.animationsArray.length > 0) {
-				if (FlxG.keys.justPressed.W)
+				if(FlxG.keys.justPressed.W && (changedAnim = true)) curAnim--;
+				else if(FlxG.keys.justPressed.S && (changedAnim = true)) curAnim++;
+
+				if(changedAnim)
 				{
-					curAnim -= 1;
+					curAnim = FlxMath.wrap(curAnim, 0, char.animationsArray.length-1);
+					char.playAnim(char.animationsArray[curAnim].anim, true);
+					genBoyOffsets();
 				}
 
-				if (FlxG.keys.justPressed.S)
-				{
-					curAnim += 1;
-				}
-
-				if (curAnim < 0)
-					curAnim = char.animationsArray.length - 1;
-
-				if (curAnim >= char.animationsArray.length)
-					curAnim = 0;
-
-				if (FlxG.keys.justPressed.S || FlxG.keys.justPressed.W || FlxG.keys.justPressed.SPACE)
+				if (FlxG.keys.justPressed.SPACE)
 				{
 					char.playAnim(char.animationsArray[curAnim].anim, true);
 					genBoyOffsets();

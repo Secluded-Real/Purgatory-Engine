@@ -6,6 +6,7 @@ import Discord.DiscordClient;
 import flash.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.util.FlxSpriteUtil;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.addons.ui.FlxButtonPlus;
@@ -40,6 +41,15 @@ class ModsMenuState extends MusicBeatState
 	var bg:FlxSprite;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
+
+	//the extra shit
+	var bgList:FlxSprite;
+
+	var buttonReload:FlxButton;
+
+	var bgTitle:FlxSprite;
+	var bgDescription:FlxSprite;
+	var modNameInitialY:Float = 0;
 
 	var noModsTxt:FlxText;
 	var selector:AttachedSprite;
@@ -80,6 +90,9 @@ class ModsMenuState extends MusicBeatState
 		add(bg);
 		bg.screenCenter();
 
+		bgList = FlxSpriteUtil.drawRoundRect(new FlxSprite(40, 40).makeGraphic(340, 440, FlxColor.TRANSPARENT), 0, 0, 340, 440, 15, 15, FlxColor.BLACK);
+		bgList.alpha = 0.6;
+
 		noModsTxt = new FlxText(0, 0, FlxG.width, "NO MODS INSTALLED\nPRESS BACK TO EXIT AND INSTALL A MOD", 48);
 		if(FlxG.random.bool(0.1)) noModsTxt.text += '\nBITCH.'; //meanie
 		noModsTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -118,6 +131,26 @@ class ModsMenuState extends MusicBeatState
 			}
 		}
 		saveTxt();
+
+		var buttonX = bgList.x;
+		var buttonWidth = Std.int(bgList.width);
+		var buttonHeight = 80;
+
+		buttonReload = new FlxButton(buttonX, bgList.y + bgList.height + 20, 'RELOAD', function() {
+			FlxG.sound.play(Paths.sound('scrollMenu'), 0.6);
+		});
+		buttonReload.setGraphicSize(buttonWidth, buttonHeight);
+		buttonReload.updateHitbox();
+		buttonReload.label.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, CENTER);
+		add(buttonReload);
+
+		bgTitle = FlxSpriteUtil.drawRoundRectComplex(new FlxSprite(bgList.x + bgList.width + 20, 40).makeGraphic(840, 180, FlxColor.TRANSPARENT), 0, 0, 840, 180, 15, 15, 0, 0, FlxColor.BLACK);
+		bgTitle.alpha = 0.6;
+		add(bgTitle);
+
+		bgDescription = FlxSpriteUtil.drawRoundRectComplex(new FlxSprite(bgTitle.x, bgTitle.y + 200).makeGraphic(840, 450, FlxColor.TRANSPARENT), 0, 0, 840, 450, 0, 0, 15, 15, FlxColor.BLACK);
+		bgDescription.alpha = 0.6;
+		add(bgDescription);
 
 		selector = new AttachedSprite();
 		selector.xAdd = -205;
@@ -198,7 +231,43 @@ class ModsMenuState extends MusicBeatState
 		buttonsArray.push(buttonTop);
 		visibleWhenHasMods.push(buttonTop);
 
+		startX -= 190;
 
+		var enableDisableBg:FlxSprite = FlxSpriteUtil.drawRoundRect(new FlxSprite().makeGraphic(buttonWidth, buttonHeight, FlxColor.TRANSPARENT), 0, 0, buttonWidth, buttonHeight, 15, 15, FlxColor.WHITE);
+		enableDisableBg.color = FlxColor.GREEN;
+		add(enableDisableBg);
+
+		var myY = buttonReload.y + enableDisableBg.height + 20;
+
+		enableDisableBg.y = myY;
+		enableDisableBg.x = buttonX;
+
+		buttonEnableAll = new FlxButton(buttonX, myY, "ENABLE ALL", function() {
+			for (i in modsList)
+			{
+				i[1] = true;
+			}
+			for (mod in mods)
+			{
+				if (mod.restart)
+				{
+					needaReset = true;
+					break;
+				}
+			}
+			updateButtonToggle();
+			FlxG.sound.play(Paths.sound('scrollMenu'), 0.6);
+		});
+		buttonEnableAll.setGraphicSize(170, 50);
+		buttonEnableAll.updateHitbox();
+		buttonEnableAll.label.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.BLACK, CENTER);
+		buttonEnableAll.label.fieldWidth = 170;
+		setAllLabelsOffset(buttonEnableAll, 0, 10);
+		enableDisableBg.color = FlxColor.GREEN;
+		add(buttonEnableAll);
+		buttonsArray.push(buttonEnableAll);
+		visibleWhenHasMods.push(buttonEnableAll);
+		
 		startX -= 190;
 		buttonDisableAll = new FlxButton(startX, 0, "DISABLE ALL", function() {
 			for (i in modsList)
@@ -225,93 +294,13 @@ class ModsMenuState extends MusicBeatState
 		buttonsArray.push(buttonDisableAll);
 		visibleWhenHasMods.push(buttonDisableAll);
 
-		startX -= 190;
-		buttonEnableAll = new FlxButton(startX, 0, "ENABLE ALL", function() {
-			for (i in modsList)
-			{
-				i[1] = true;
-			}
-			for (mod in mods)
-			{
-				if (mod.restart)
-				{
-					needaReset = true;
-					break;
-				}
-			}
-			updateButtonToggle();
-			FlxG.sound.play(Paths.sound('scrollMenu'), 0.6);
-		});
-		buttonEnableAll.setGraphicSize(170, 50);
-		buttonEnableAll.updateHitbox();
-		buttonEnableAll.label.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.BLACK, CENTER);
-		buttonEnableAll.label.fieldWidth = 170;
-		setAllLabelsOffset(buttonEnableAll, 0, 10);
-		add(buttonEnableAll);
-		buttonsArray.push(buttonEnableAll);
-		visibleWhenHasMods.push(buttonEnableAll);
+		add(bgList);
 
 		// more buttons
 		var startX:Int = 1100;
 
-
-
-
-		/*
-		installButton = new FlxButton(startX, 620, "Install Mod", function()
-		{
-			installMod();
-		});
-		installButton.setGraphicSize(150, 70);
-		installButton.updateHitbox();
-		installButton.color = FlxColor.GREEN;
-		installButton.label.fieldWidth = 135;
-		installButton.label.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER);
-		setAllLabelsOffset(installButton, 2, 24);
-		add(installButton);
-		startX -= 180;
-
-		removeButton = new FlxButton(startX, 620, "Delete Selected Mod", function()
-		{
-			var path = haxe.io.Path.join([Paths.mods(), modsList[curSelected][0]]);
-			if(FileSystem.exists(path) && FileSystem.isDirectory(path))
-			{
-				trace('Trying to delete directory ' + path);
-				try
-				{
-					FileSystem.deleteFile(path); //FUCK YOU HAXE WHY DONT YOU WORK WAAAAAAAAAAAAH
-
-					var icon = mods[curSelected].icon;
-					var alphabet = mods[curSelected].alphabet;
-					remove(icon);
-					remove(alphabet);
-					icon.destroy();
-					alphabet.destroy();
-					modsList.remove(modsList[curSelected]);
-					mods.remove(mods[curSelected]);
-
-					if(curSelected >= mods.length) --curSelected;
-					changeSelection();
-				}
-				catch(e)
-				{
-					trace('Error deleting directory: ' + e);
-				}
-			}
-		});
-		removeButton.setGraphicSize(150, 70);
-		removeButton.updateHitbox();
-		removeButton.color = FlxColor.RED;
-		removeButton.label.fieldWidth = 135;
-		removeButton.label.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER);
-		setAllLabelsOffset(removeButton, 2, 15);
-		add(removeButton);
-		visibleWhenHasMods.push(removeButton);*/
-
-		///////
-		descriptionTxt = new FlxText(148, 0, FlxG.width - 216, "", 32);
-		descriptionTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, LEFT);
-		descriptionTxt.scrollFactor.set();
+		descriptionTxt = new FlxText(bgDescription.x + 15, bgDescription.y + 15, bgDescription.width - 30, "", 24);
+		descriptionTxt.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, LEFT);
 		add(descriptionTxt);
 		visibleWhenHasMods.push(descriptionTxt);
 
@@ -326,15 +315,16 @@ class ModsMenuState extends MusicBeatState
 				continue;
 			}
 
+			modNameInitialY = 275;
 			var newMod:ModMetadata = new ModMetadata(values[0]);
 			mods.push(newMod);
 
-			newMod.alphabet = new Alphabet(0, 0, mods[i].name, true);
+			newMod.alphabet = new Alphabet(180, modNameInitialY, mods[i].name, true);
 			var scale:Float = Math.min(840 / newMod.alphabet.width, 1);
 			newMod.alphabet.scaleX = scale;
 			newMod.alphabet.scaleY = scale;
-			newMod.alphabet.y = i * 150;
-			newMod.alphabet.x = 310;
+			//newMod.alphabet.y = i * 150;
+			//newMod.alphabet.x = 310;
 			add(newMod.alphabet);
 			//Don't ever cache the icons, it's a waste of loaded memory
 			var loadedIcon:BitmapData = null;
@@ -591,18 +581,10 @@ class ModsMenuState extends MusicBeatState
 		{
 			var intendedPos:Float = (i - curSelected) * 225 + 200;
 			if(i > curSelected) intendedPos += 225;
-			if(elapsed == -1)
-			{
-				mod.alphabet.y = intendedPos;
-			}
-			else
-			{
-				mod.alphabet.y = FlxMath.lerp(mod.alphabet.y, intendedPos, CoolUtil.boundTo(elapsed * 12, 0, 1));
-			}
 
 			if(i == curSelected)
 			{
-				descriptionTxt.y = mod.alphabet.y + 160;
+				//descriptionTxt.y = mod.alphabet.y + 160;
 				for (button in buttonsArray)
 				{
 					button.y = mod.alphabet.y + 320;
