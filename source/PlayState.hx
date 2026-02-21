@@ -4915,6 +4915,7 @@ class PlayState extends MusicBeatState
 		if(!note.ratingDisabled) daRating.increase();
 		note.rating = daRating.name;
 		score = daRating.score;
+		if ((daRating.name == 'bad' || daRating.name == 'shit') && ClientPrefs.ratingStyle == 'Vanilla') { noteMiss(note); return;}
 
 		if(daRating.noteSplash && !note.noteSplashDisabled)
 		{
@@ -5423,7 +5424,6 @@ class PlayState extends MusicBeatState
 				}
 			}
 			if(!practiceMode) songScore -= 10;
-			totalPlayed++;
 			RecalculateRating(true);
 
 			FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
