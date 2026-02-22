@@ -594,8 +594,6 @@ class CharacterEditorState extends MusicBeatState
 
 		tab_group.add(new FlxText(15, imageInputText.y - 18, 0, 'Image file name:'));
 		tab_group.add(new FlxText(15, healthIconInputText.y - 18, 0, 'Health icon name:'));
-		//saved for 0.2 - Secluded
-		tab_group.add(new FlxText(115, healthIconInputText.y - 18, 0, 'Noteskin name:'));
 		tab_group.add(new FlxText(15, singDurationStepper.y - 18, 0, 'Sing Animation length:'));
 		tab_group.add(new FlxText(15, scaleStepper.y - 18, 0, 'Scale:'));
 		tab_group.add(new FlxText(positionXStepper.x, positionXStepper.y - 18, 0, 'Character X/Y:'));
@@ -634,6 +632,7 @@ class CharacterEditorState extends MusicBeatState
 		screenShakeHUDStepper = new FlxUINumericStepper(265, 150, 0.1, 0, 0, 1, 1);
 
 		tab_group.add(new FlxText(15, noteskinInputText.y - 18, 0, 'Noteskin name:'));
+		tab_group.add(new FlxText(screenShakeGameStepper.x, screenShakeGameStepper.y - 65, 0, 'Health Drain:'));
 		tab_group.add(new FlxText(screenShakeGameStepper.x, screenShakeGameStepper.y - 18, 0, 'Screen Shake Game/HUD:'));
 		tab_group.add(noteskinInputText);
 		tab_group.add(screenShakeHUDStepper);
