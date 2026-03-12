@@ -13,6 +13,7 @@ using StringTools;
 class DiscordClient
 {
 	public static var isInitialized:Bool = false;
+	public static var _clientID:String = "1402500228950790174";
 	public function new()
 	{
 		trace("Discord Client starting...");
@@ -68,6 +69,22 @@ class DiscordClient
 		trace("Discord Client initialized");
 		isInitialized = true;
 	}
+
+	/*
+	#if MODS_ALLOWED
+	public static function loadModRPC()
+	{
+		var pack:Dynamic = Mods.getPack();
+		if(pack != null && pack.discordRPC != null && pack.discordRPC != _clientID)
+		{
+			DiscordRpc.presence({
+				clientID: pack.discordRPC
+			});
+		}
+	}
+	#end
+
+	*/
 
 	public static function changePresence(details:String, state:Null<String>, ?smallImageKey : String, ?hasStartTimestamp : Bool, ?endTimestamp: Float)
 	{

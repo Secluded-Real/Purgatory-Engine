@@ -1201,7 +1201,7 @@ class PlayState extends MusicBeatState
 
 		// startCountdown();
 
-		generateSong(SONG.song);
+		generateSong();
 
 		// After all characters being loaded, it makes then invisible 0.01s later so that the player won't freeze when you change characters
 		// add(strumLine);
@@ -2847,7 +2847,7 @@ class PlayState extends MusicBeatState
 	var debugNum:Int = 0;
 	private var noteTypeMap:Map<String, Bool> = new Map<String, Bool>();
 	private var eventPushedMap:Map<String, Bool> = new Map<String, Bool>();
-	private function generateSong(dataPath:String):Void
+	private function generateSong():Void
 	{
 		// FlxG.log.add(ChartParser.parse());
 		songSpeedType = ClientPrefs.getGameplaySetting('scrolltype','multiplicative');
@@ -2874,7 +2874,6 @@ class PlayState extends MusicBeatState
 			vocals = new FlxSound();
 		*/
 		if (SONG.needsVoices){
-			trace('oh my god im gonna tickle my own butt oh yeahh');
 			vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
 			opponentVocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song, 'Opponent'));
 		}
@@ -2882,6 +2881,7 @@ class PlayState extends MusicBeatState
 			vocals = new FlxSound();
 			opponentVocals = new FlxSound();
 		}
+		
 		/*
 		try
 		{
@@ -2894,8 +2894,13 @@ class PlayState extends MusicBeatState
 				opponentVocals.loadEmbedded(oppVocals);
 			}
 		}
-		catch (e:Dynamic) {}
+		catch (e:Dynamic) {
+			trace('could not load vocals');
+			vocals = new FlxSound();
+			opponentVocals = new FlxSound();
+		}
 			*/
+		
 
 		vocals.pitch = playbackRate;
 		opponentVocals.pitch = playbackRate;
