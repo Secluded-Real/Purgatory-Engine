@@ -257,7 +257,8 @@ class ChartingState extends MusicBeatState
 			PlayState.SONG = _song;
 		}
 
-		// Paths.clearMemory();
+		Paths.clearStoredMemory();
+		Paths.clearUnusedMemory();
 
 		#if desktop
 		// Updating Discord Rich Presence
@@ -1735,6 +1736,8 @@ class ChartingState extends MusicBeatState
 			}
 			if (FlxG.keys.justPressed.ENTER)
 			{
+				Paths.clearStoredMemory();
+				Paths.clearUnusedMemory();
 				autosaveSong();
 				FlxG.mouse.visible = false;
 				PlayState.SONG = _song;

@@ -1,10 +1,6 @@
 package;
 
 import flixel.FlxSprite;
-import openfl.utils.Assets as OpenFlAssets;
-import openfl.utils.Assets;
-import openfl.utils.AssetType;
-
 
 using StringTools;
 
@@ -41,25 +37,15 @@ class HealthIcon extends FlxSprite
 	public function changeIcon(char:String) {
 		if(this.char != char) {
 			var name:String = 'icons/' + char;
-			var xmlPath:String = 'icons/' + char; //shitty.
 			if(!Paths.fileExists('images/' + name + '.png', IMAGE)) name = 'icons/icon-' + char; //Older versions of psych engine's support
 			if(!Paths.fileExists('images/' + name + '.png', IMAGE)) name = 'icons/icon-face'; //Prevents crash from missing icon
 			if(!Paths.fileExists('images/' + name + '.png', IMAGE)) name = 'icons/face'; //Prevents crash from missing icon
 
-			//Prevents crashes on Animated icons (i think???).
-			if(!Paths.fileExists('images/' + xmlPath + '.xml', IMAGE)) xmlPath = 'icons/icon-' + char; //Older versions of psych engine's support
-			if(!Paths.fileExists('images/' + xmlPath + '.xml', IMAGE)) xmlPath = 'icons/icon-face'; //Prevents crash from missing icon
-			if(!Paths.fileExists('images/' + xmlPath + '.xml', IMAGE)) xmlPath = 'icons/face'; //Prevents crash from missing icon
-
-			var xmlPath:String = 'icons/' + char + '.xml';
 			animation.addByPrefix('neutral', 'Neutral', 12, true, isPlayer);
 			animation.addByPrefix('defeat', 'Defeat', 12, true, isPlayer);
 			animation.addByPrefix('winning', 'Winning', 12, true, isPlayer);
 			animation.play('neutral');
-			if (Assets.exists(xmlPath))
-				trace("holy shit it works");
 					
-			if (char != 'bambiGod2d'){
 			var graphic = Paths.image(name);
 			var iSize:Float = Math.round(graphic.width / graphic.height);
 			loadGraphic(graphic, true, Math.floor(graphic.width / iSize), Math.floor(graphic.height));
@@ -70,7 +56,6 @@ class HealthIcon extends FlxSprite
 			animation.add(char, [for(i in 0...frames.frames.length) i], 0, false, isPlayer);
 			animation.play(char);
 			this.char = char;
-			}
 		}
 	}
 

@@ -4924,6 +4924,8 @@ class PlayState extends MusicBeatState
 
 		if(daRating.noteSplash && !note.noteSplashDisabled)
 		{
+			Paths.clearStoredMemory();
+			Paths.clearUnusedMemory();
 			spawnNoteSplashOnNote(note);
 		}
 
