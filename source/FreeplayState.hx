@@ -86,6 +86,14 @@ class FreeplayState extends MusicBeatState
 				leChars.push(leWeek.songs[j][1]);
 			}
 
+			if ((leSongs.length < 1 || Paths.currentModDirectory == '' || leWeek.songs.length < 1) && CategoryState.categorySelected == null)
+			{
+				addWeek(["Test"], 0, ["bf"]);
+				leSongs.push("Test");
+				leChars.push("bf");
+			}
+			//this doesn't work
+
 			WeekData.setDirectoryFromWeek(leWeek);
 			for (song in leWeek.songs)
 			{
@@ -206,6 +214,21 @@ class FreeplayState extends MusicBeatState
 	public function addSong(songName:String, weekNum:Int, songCharacter:String, color:Int)
 	{
 		songs.push(new FixedSongMetadata(songName, weekNum, songCharacter, color));
+	}
+
+	public function addWeek(songs:Array<String>, weekNum:Int, ?songCharacters:Array<String>) //literally only for a bugfix
+	{
+		if (songCharacters == null)
+			songCharacters = ['bf'];
+
+		var num:Int = 0;
+		for (song in songs)
+		{
+			addSong(song, weekNum, songCharacters[num], FlxColor.fromRGB(146, 113, 253));
+
+			if (songCharacters.length != 1)
+				num++;
+		}
 	}
 
 	function weekIsLocked(name:String):Bool {

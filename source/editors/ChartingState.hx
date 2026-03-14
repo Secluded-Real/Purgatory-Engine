@@ -1736,8 +1736,6 @@ class ChartingState extends MusicBeatState
 			}
 			if (FlxG.keys.justPressed.ENTER)
 			{
-				Paths.clearStoredMemory();
-				Paths.clearUnusedMemory();
 				autosaveSong();
 				FlxG.mouse.visible = false;
 				PlayState.SONG = _song;

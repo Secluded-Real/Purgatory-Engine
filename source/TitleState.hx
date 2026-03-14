@@ -484,6 +484,11 @@ class TitleState extends MusicBeatState
 			if (titleTimer > 2) titleTimer -= 2;
 		}
 
+		if (pressedEnter && transitioning && skippedIntro)
+		{
+			FlxG.switchState(new MainMenuState());
+		}
+
 		// EASTER EGG
 
 		if (initialized && !transitioning && skippedIntro)
