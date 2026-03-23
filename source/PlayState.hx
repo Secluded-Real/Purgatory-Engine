@@ -122,6 +122,19 @@ class PlayState extends MusicBeatState
 		['AAAAA', 1] //The value on this one isn't used actually, since Perfect is always "1" // your m
 	];
 
+	public static var psychEngineRatings:Array<Dynamic> = [
+		['You Suck!', 0.2], //From 0% to 19%
+		['Shit', 0.4], //From 20% to 39%
+		['Bad', 0.5], //From 40% to 49%
+		['Bruh', 0.6], //From 50% to 59%
+		['Meh', 0.69], //From 60% to 68%
+		['Nice', 0.7], //69%
+		['Good', 0.8], //From 70% to 79%
+		['Great', 0.9], //From 80% to 89%
+		['Sick!', 1], //From 90% to 99%
+		['Perfect!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
+	];
+
 	//event variables
 	private var isCameraOnForcedPos:Bool = false;
 	public var camGameShaders:Array<ShaderEffect> = [];
@@ -5950,7 +5963,7 @@ class PlayState extends MusicBeatState
 		}
 
 		//idk.
-		var funny:Float = Math.max(Math.min(healthBar.value,1.9),0.1);//Math.clamp(healthBar.value,0.02,1.98);//Math.min(Math.min(healthBar.value,1.98),0.02);
+		var funny:Float = Math.max(Math.min(healthBar.value,1.9),0.1);
 
 		if (ClientPrefs.iconBopShit == 'Dave Engine' || ClientPrefs.iconBopShit == "Bambi's Purgatory"){
 			iconP1.setGraphicSize(Std.int(iconP1.width + (50 * (funny + 0.1))),Std.int(iconP1.height - (25 * funny)));
